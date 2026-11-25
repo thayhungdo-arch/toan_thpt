@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>BÀI TỰ LUẬN: VECTƠ TRONG MẶT PHẲNG TỌA ĐỘ</title>
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-light: #eff6ff;
+      --primary-border: #bfdbfe;
+      --accent: #0f766e;
+      --accent-light: #f0fdfa;
+      --success: #15803d;
+      --success-light: #f0fdf4;
+      --danger: #b91c1c;
+      --danger-light: #fef2f2;
+      --warning: #b45309;
+      --warning-light: #fffbeb;
+      --purple: #6d28d9;
+      --purple-light: #f5f3ff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --radius: 10px;
+      --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f1f5f9;
+      color: var(--gray-800);
+      line-height: 1.65;
+      padding: 12px;
+      -webkit-text-size-adjust: 100%;
+    }
+    .app-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    /* Fallback when mobile quick viewer disables JS */
+    .no-js-banner {
+      display: none;
+      background: #fef3c7;
+      color: #92400e;
+      border-bottom: 1.5px solid #fcd34d;
+      padding: 10px 16px;
+      font-size: 0.88rem;
+    }
+    html.no-js .no-js-banner { display: block; }
+    html.no-js .js-only { display: none !important; }
+    html.no-js .page-content { display: block !important; }
+
+    /* Header */
+    .hero-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%);
+      color: #ffffff;
+      padding: 20px 24px 16px;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.84rem;
+      opacity: 0.95;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,0.18);
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .hero-title {
+      font-size: 1.42rem;
+      font-weight: 800;
+      margin-top: 8px;
+    }
+    .hero-subtitle {
+      font-size: 0.92rem;
+      opacity: 0.92;
+      margin-top: 4px;
+    }
+
+    /* 3-Page Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: var(--gray-50);
+      border-bottom: 1.5px solid var(--gray-200);
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .tab-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid var(--gray-300);
+      background: #ffffff;
+      color: var(--gray-700);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { background: var(--gray-100); }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.28);
+    }
+    .teacher-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid #c4b5fd;
+      background: var(--purple-light);
+      color: var(--purple);
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .teacher-btn:hover {
+      background: var(--purple);
+      color: #ffffff;
+      border-color: var(--purple);
+    }
+
+    /* Pages */
+    .page-content {
+      padding: 20px 24px 28px;
+      display: none;
+    }
+    .page-content.active { display: block; }
+
+    .section-heading {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      border-left: 4px solid var(--primary);
+      padding: 6px 12px;
+      background: var(--primary-light);
+      border-radius: 0 8px 8px 0;
+      margin: 18px 0 14px;
+    }
+    .section-heading:first-child { margin-top: 0; }
+
+    /* Question Cards (Page 1) */
+    .q-card {
+      border: 1px solid var(--gray-200);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 14px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .q-title { font-weight: 800; color: var(--primary-dark); font-size: 1.02rem; }
+    .q-pts {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+    }
+    .q-body p { margin-bottom: 6px; }
+
+    /* Page 2: Student Form & Mobile Camera Upload */
+    .form-card {
+      background: var(--gray-50);
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 18px;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+      min-width: 180px;
+    }
+    .field-group label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--gray-700);
+    }
+    .field-group input, .field-group select {
+      padding: 10px 12px;
+      min-height: 44px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+    }
+    .field-group input:focus { border-color: var(--primary); }
+
+    .upload-box {
+      border: 2px dashed var(--primary-border);
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .upload-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    /* Native visible file input styled directly — 100% reliable on iPhone iOS Safari & Android */
+    .ios-native-file {
+      display: block;
+      width: 100%;
+      max-width: 340px;
+      padding: 8px;
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      color: var(--gray-700);
+      cursor: pointer;
+    }
+    .ios-native-file::file-selector-button,
+    .ios-native-file::-webkit-file-upload-button {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 16px;
+      margin-right: 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+    .ios-cam-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      max-width: 340px;
+      min-height: 46px;
+      padding: 10px 16px;
+      border-radius: 9px;
+      border: 1.5px solid var(--gray-300);
+      background: #ffffff;
+      color: var(--gray-800);
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+    .sr-file-input {
+      position: fixed;
+      left: -9999px;
+      top: 0;
+      width: 1px;
+      height: 1px;
+      opacity: 0.01;
+    }
+    .file-btn-wrap {
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .file-btn-wrap input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .preview-item {
+      position: relative;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+    .preview-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .preview-caption {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 4px;
+      background: var(--gray-50);
+      color: var(--gray-700);
+    }
+    .preview-del {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(185, 28, 28, 0.9);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    button { font-family: inherit; cursor: pointer; }
+    .btn {
+      padding: 10px 16px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 0.92rem;
+      transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #166534; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #991b1b; }
+    .btn-outline { background: #fff; border-color: var(--gray-300); color: var(--gray-700); }
+    .btn-outline:hover { background: var(--gray-100); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    /* Page 3: AI Grading & Feedback */
+    .loading-card {
+      display: none;
+      text-align: center;
+      padding: 28px 16px;
+      background: var(--primary-light);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+    .loading-card.show { display: block; }
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 4px solid #bfdbfe;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .score-hero {
+      background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+      border: 2px solid var(--primary-border);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .score-big {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--primary);
+    }
+    .grade-card {
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .grade-ok-box {
+      background: var(--success-light);
+      border-left: 3.5px solid var(--success);
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      color: #14532d;
+    }
+    .grade-err-box {
+      background: var(--danger-light);
+      border-left: 3.5px solid var(--danger);
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      color: #7f1d1d;
+    }
+    .grade-fix-box {
+      background: var(--warning-light);
+      border-left: 3.5px solid #f59e0b;
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      color: #78350f;
+    }
+
+    details.rubric-drawer {
+      margin-top: 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: var(--gray-50);
+      padding: 10px 14px;
+    }
+    details.rubric-drawer summary {
+      font-weight: 700;
+      color: var(--primary-dark);
+      cursor: pointer;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+    .rubric-table th, .rubric-table td {
+      border: 1px solid var(--gray-200);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .rubric-table th { background: var(--gray-100); font-weight: 700; }
+
+    /* Modals */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      padding: 20px 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+    }
+    .modal-box.modal-wide {
+      max-width: 940px;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+    .modal-title { font-size: 1.12rem; font-weight: 800; color: var(--primary-dark); }
+    .close-btn { background: none; border: none; font-size: 1.6rem; color: var(--gray-600); padding: 2px 8px; }
+    .error-msg { color: var(--danger); font-size: 0.85rem; margin-top: 6px; min-height: 18px; font-weight: 600; }
+
+    .teacher-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .t-tab {
+      padding: 8px 14px;
+      border-radius: 7px;
+      border: 1px solid var(--gray-300);
+      background: var(--gray-50);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .t-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .stat-card {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-val { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .stat-lbl { font-size: 0.78rem; color: var(--gray-600); }
+
+    .teacher-toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+      margin-bottom: 12px;
+    }
+    .data-table th, .data-table td {
+      border: 1px solid var(--gray-200);
+      padding: 8px;
+      text-align: left;
+    }
+    .data-table th { background: var(--gray-100); font-weight: 700; }
+    .detail-box {
+      display: none;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+    .detail-box.show { display: block; }
+
+    /* MathML Core styling for mobile readability */
+    math {
+      font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", serif;
+      font-size: 1.06em;
+    }
+    math[display="block"] {
+      display: block;
+      overflow-x: auto;
+      padding: 6px 0;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 14px;
+      border-top: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      font-size: 0.82rem;
+      background: var(--gray-50);
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 6px; }
+      .app-shell { border-radius: 10px; }
+      .hero-header, .page-content { padding: 14px; }
+      .nav-bar { padding: 8px 10px; }
+      .nav-tabs { width: 100%; }
+      .tab-btn { flex: 1; padding: 9px 6px; font-size: 0.82rem; text-align: center; }
+      .teacher-btn { width: 100%; text-align: center; }
+      .hero-title { font-size: 1.18rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="no-js-banner">
+    <strong>📱 Lưu ý trên điện thoại:</strong> Trình xem nhanh hiện đang tắt JavaScript nên em mới chỉ đọc được <strong>Đề bài</strong>. Để <strong>tải ảnh bài làm lên cho AI chấm điểm & phân tích lỗi sai</strong>, hãy chọn <strong>Mở bằng Chrome / Safari</strong> (hoặc mở đường link web của thầy/cô).
+  </div>
+
+  <header class="hero-header">
+    <div class="hero-top">
+      <span id="hdr-curriculum">Chương trình GDPT 2018 • Công văn 5512/BGDĐT • Phương pháp tọa độ trong mặt phẳng</span>
+      <span class="hero-tag" id="hdr-grade">Toán 10 • Kết nối tri thức</span>
+    </div>
+    <div class="hero-title" id="hdr-title">BÀI TỰ LUẬN: VECTƠ TRONG MẶT PHẲNG TỌA ĐỘ</div>
+    <div class="hero-subtitle" id="hdr-subtitle">Bài 3: Trong mặt phẳng tọa độ Oxy, cho A(2; -3), B(-1; 1), C(0; 3) • Tổng điểm: 10,0 điểm</div>
+  </header>
+
+  <nav class="nav-bar js-only">
+    <div class="nav-tabs">
+      <button class="tab-btn active" id="tab-1" onclick="switchPage(1)">📄 Trang 1: Đề bài</button>
+      <button class="tab-btn" id="tab-2" onclick="switchPage(2)">📸 Trang 2: Bài làm</button>
+      <button class="tab-btn" id="tab-3" onclick="switchPage(3)">🤖 Trang 3: Chấm & Chữa</button>
+    </div>
+    <button class="teacher-btn" onclick="openPasswordModal()">🔒 Giáo viên</button>
+  </nav>
+
+  <!-- TRANG 1: ĐỀ BÀI (PRE-RENDERED SẴN MATHML CORE) -->
+  <main id="page-1" class="page-content active">
+    <div class="section-heading">ĐỀ BÀI TỰ LUẬN</div>
+    <div id="exam-questions-container">
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-title">Câu a (Nhận biết)</span>
+        <span class="q-pts">3 điểm</span>
+      </div>
+      <div class="q-body"><p>Trong mặt phẳng tọa độ <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>O</mi><mi>x</mi><mi>y</mi></math>, cho các điểm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mrow><mo>(</mo><mn>2</mn><mo>;</mo><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math>, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>B</mi><mrow><mo>(</mo><mo>-</mo><mn>1</mn><mo>;</mo><mn>1</mn><mo>)</mo></mrow></math>, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>C</mi><mrow><mo>(</mo><mn>0</mn><mo>;</mo><mn>3</mn><mo>)</mo></mrow></math>.</p><p>Tính tọa độ các vectơ <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mover><mrow><mi>A</mi><mi>B</mi></mrow><mo>→</mo></mover></math>, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mover><mrow><mi>A</mi><mi>C</mi></mrow><mo>→</mo></mover></math>.</p></div>
+    </div>
+  
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-title">Câu b (Nhận biết)</span>
+        <span class="q-pts">3 điểm</span>
+      </div>
+      <div class="q-body"><p>Tính độ dài các đoạn thẳng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mi>B</mi></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mi>C</mi></math>.</p></div>
+    </div>
+  
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-title">Câu c (Thông hiểu)</span>
+        <span class="q-pts">2 điểm</span>
+      </div>
+      <div class="q-body"><p>Tìm tọa độ trung điểm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi></math> của đoạn thẳng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mi>B</mi></math> và tọa độ trọng tâm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>G</mi></math> của tam giác <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mi>B</mi><mi>C</mi></math>.</p></div>
+    </div>
+  
+
+    <div class="q-card">
+      <div class="q-header">
+        <span class="q-title">Câu d (Vận dụng thấp)</span>
+        <span class="q-pts">2 điểm</span>
+      </div>
+      <div class="q-body"><p>Tìm tọa độ điểm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>D</mi></math> để tứ giác <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mi>B</mi><mi>C</mi><mi>D</mi></math> là hình bình hành.</p></div>
+    </div>
+  </div>
+    <div class="js-only" style="text-align: right; margin-top: 20px;">
+      <button class="btn btn-primary" onclick="switchPage(2)">Làm xong rồi → Chụp ảnh nộp bài (Trang 2)</button>
+    </div>
+  </main>
+
+  <!-- TRANG 2: BÀI LÀM CỦA HỌC SINH -->
+  <main id="page-2" class="page-content">
+    <div class="section-heading">THÔNG TIN & NỘP ẢNH BÀI LÀM</div>
+    <div class="form-card">
+      <div class="form-row">
+        <div class="field-group">
+          <label for="stu-name">Họ và tên học sinh (*)</label>
+          <input type="text" id="stu-name" placeholder="Ví dụ: Nguyễn Minh Anh">
+        </div>
+        <div class="field-group" style="max-width: 200px;">
+          <label for="stu-class">Lớp (*)</label>
+          <input type="text" id="stu-class" placeholder="Ví dụ: 11A1">
+        </div>
+      </div>
+    </div>
+
+    <div class="upload-box">
+      <div style="font-weight: 800; color: var(--primary-dark); font-size: 1.02rem;">
+        📸 Tải ảnh bài làm tự luận viết tay từ điện thoại
+      </div>
+      <p style="font-size: 0.88rem; color: var(--gray-600); margin-top: 4px;">
+        Chụp rõ nét, đủ ánh sáng, thẳng trang giấy. Có thể tải lên nhiều trang ảnh.
+      </p>
+      <div class="upload-actions">
+        <input type="file" id="gallery-input" class="ios-native-file" accept="image/*" multiple onchange="handleImageFiles(event)" aria-label="Chọn hoặc chụp ảnh bài làm">
+        <label for="camera-input" class="ios-cam-label">📷 Hoặc mở thẳng Camera chụp ảnh</label>
+        <input type="file" id="camera-input" class="sr-file-input" accept="image/*" capture="environment" onchange="handleImageFiles(event)">
+      </div>
+      <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 8px;">
+        💡 Trên iPhone: bấm nút xanh <strong>Chọn tệp</strong> phía trên rồi chọn <em>Chụp ảnh</em> hoặc <em>Thư viện ảnh</em>.
+      </div>
+      <div id="upload-status" style="font-size: 0.85rem; color: var(--accent); margin-top: 10px; font-weight: 600;"></div>
+      <div id="preview-grid" class="preview-grid"></div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <button id="btn-submit-ai" class="btn btn-success" onclick="submitAndGradeWithAI()" style="font-size: 1.02rem; padding: 12px 28px; width: 100%; max-width: 360px;">
+        🤖 Nộp bài & Chấm chữa bằng AI
+      </button>
+    </div>
+  </main>
+
+  <!-- TRANG 3: CHẤM VÀ CHỮA BÀI (CHỈ HIỆN KẾT QUẢ & PHÂN TÍCH LỖI SAI SAU KHI NỘP BÀI) -->
+  <main id="page-3" class="page-content">
+    <div class="section-heading">KẾT QUẢ CHẤM & PHÂN TÍCH LỖI SAI</div>
+
+    <div id="ai-loading" class="loading-card">
+      <div class="spinner"></div>
+      <div style="font-weight: 800; color: var(--primary-dark); font-size: 1.05rem;">AI đang đọc ảnh bài làm viết tay và chấm theo biểu điểm...</div>
+      <div style="font-size: 0.88rem; color: var(--gray-600); margin-top: 4px;">Quá trình này mất khoảng 5 – 15 giây tùy số trang ảnh. Vui lòng giữ nguyên màn hình.</div>
+    </div>
+
+    <div id="ai-result-container">
+      <div class="form-card" style="text-align: center; color: var(--gray-600);">
+        🔒 Em chưa nộp bài. Hãy sang <strong>Trang 2: Bài làm</strong> để nhập Họ tên, Lớp và chụp ảnh bài làm nộp lên.<br>
+        Kết quả điểm số và phân tích lỗi sai chi tiết sẽ chỉ hiển thị sau khi em nộp bài thành công!
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Ứng dụng Tự luận Toán THPT chấm chữa bằng AI • Thiết kế bởi Skill tu_luan (GDPT 2018 – Công văn 5512 – Kết Nối Tri Thức)
+  </footer>
+</div>
+
+<!-- MODAL MẬT KHẨU GIÁO VIÊN (080397) -->
+<div id="modal-pass" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔒 Xác thực Giáo viên</div>
+      <button class="close-btn" onclick="closeModal('modal-pass')">&times;</button>
+    </div>
+    <p style="font-size: 0.9rem; color: var(--gray-600); margin-bottom: 10px;">
+      Nhập mật khẩu giáo viên để xem bảng kết quả học sinh, tải file phân tích và cấu hình AI.
+    </p>
+    <input type="password" id="teacher-pass-input" inputmode="numeric" placeholder="Nhập mật khẩu..." style="width: 100%; padding: 10px 12px; min-height: 44px; border: 1.5px solid var(--gray-300); border-radius: 7px; font-size: 1rem;" onkeydown="if(event.key==='Enter') verifyTeacherPassword()">
+    <div id="pass-error" class="error-msg"></div>
+    <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px;">
+      <button class="btn btn-outline" onclick="closeModal('modal-pass')">Hủy</button>
+      <button class="btn btn-primary" onclick="verifyTeacherPassword()">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CỔNG GIÁO VIÊN -->
+<div id="modal-teacher" class="modal-backdrop">
+  <div class="modal-box modal-wide">
+    <div class="modal-header">
+      <div class="modal-title">👩‍🏫 Cổng Quản lý Giáo viên — Kết quả Tự luận</div>
+      <button class="close-btn" onclick="closeModal('modal-teacher')">&times;</button>
+    </div>
+
+    <div class="teacher-tabs">
+      <button class="t-tab active" id="ttab-results" onclick="switchTeacherTab('results')">📊 Kết quả học sinh</button>
+      <button class="t-tab" id="ttab-ai" onclick="switchTeacherTab('ai')">⚙️ Cài đặt AI chấm bài</button>
+    </div>
+
+    <!-- TAB KẾT QUẢ -->
+    <div id="teacher-panel-results">
+      <div class="stats-row" id="teacher-stats"></div>
+      <div class="teacher-toolbar">
+        <button class="btn btn-success" onclick="exportCSV()">📊 Tải bảng kết quả Excel (.csv)</button>
+        <button class="btn btn-primary" onclick="exportAllJSON()">💾 Tải sao lưu toàn bộ (.json)</button>
+        <div class="btn btn-outline file-btn-wrap">
+          <span>📂 Nhập / Gộp bài làm HS (.json)</span>
+          <input type="file" accept=".json" multiple onchange="importSubmissions(event)">
+        </div>
+        <button class="btn btn-danger" onclick="clearAllSubmissions()">🗑️ Xóa tất cả</button>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Họ và tên</th>
+              <th>Lớp</th>
+              <th>Thời gian</th>
+              <th>Tổng điểm</th>
+              <th>Điểm từng câu</th>
+              <th>Lỗi sai chính</th>
+              <th>Chi tiết</th>
+            </tr>
+          </thead>
+          <tbody id="teacher-table-body"></tbody>
+        </table>
+      </div>
+      <div id="student-detail-box" class="detail-box"></div>
+    </div>
+
+    <!-- TAB CÀI ĐẶT AI -->
+    <div id="teacher-panel-ai" style="display: none;">
+      <div class="form-card">
+        <div style="font-weight: 800; color: var(--primary-dark); margin-bottom: 8px;">Cấu hình Gemini Vision AI để chấm ảnh bài làm tự luận</div>
+        <p style="font-size: 0.86rem; color: var(--gray-600); margin-bottom: 12px;">
+          Giáo viên lấy khóa miễn phí tại <strong>aistudio.google.com/apikey</strong> và dán vào ô dưới đây. Khóa được lưu trên trình duyệt để AI đọc ảnh bài viết tay của học sinh và chấm theo đúng biểu điểm.
+        </p>
+        <div class="field-group" style="margin-bottom: 12px;">
+          <label for="ai-api-key">Gemini API Key</label>
+          <input type="password" id="ai-api-key" placeholder="AIzaSy...">
+        </div>
+        <div class="field-group" style="margin-bottom: 14px; max-width: 320px;">
+          <label for="ai-model-select">Model AI chấm bài</label>
+          <select id="ai-model-select">
+            <option value="gemini-3.6-flash">gemini-3.6-flash (Khuyên dùng — Ổn định & Nhanh)</option>
+            <option value="gemini-3.5-flash">gemini-3.5-flash (Dự phòng ổn định)</option>
+            <option value="gemini-3.8-flash">gemini-3.8-flash (Mới nhất)</option>
+            <option value="gemini-flash-latest">gemini-flash-latest (Tự động mới nhất)</option>
+          </select>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="saveAIConfig()">💾 Lưu cấu hình AI</button>
+          <button class="btn btn-outline" onclick="testAIConnection()">🔌 Kiểm tra kết nối</button>
+        </div>
+        <div id="ai-config-msg" style="margin-top: 10px; font-size: 0.88rem; font-weight: 600;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.remove('no-js');
+
+/* === DATA START === */
+const EXAM_DATA = {"id":"tuluan-toan10-vecto-trong-mptd","grade":"Toán 10 • Kết nối tri thức","curriculum":"Chương trình GDPT 2018 • Công văn 5512/BGDĐT • Phương pháp tọa độ trong mặt phẳng","title":"BÀI TỰ LUẬN: VECTƠ TRONG MẶT PHẲNG TỌA ĐỘ","subtitle":"Bài 3: Trong mặt phẳng tọa độ Oxy, cho A(2; -3), B(-1; 1), C(0; 3) • Tổng điểm: 10,0 điểm","totalPoints":10,"questions":[{"id":"qa","number":"a","points":3,"level":"Nhận biết","prompt":["Trong mặt phẳng tọa độ $Oxy$, cho các điểm $A(2; -3)$, $B(-1; 1)$, $C(0; 3)$.","Tính tọa độ các vectơ $\\overrightarrow{AB}$, $\\overrightarrow{AC}$."],"rubric":[{"step":"Viết công thức tọa độ vectơ $\\overrightarrow{AB}$","points":0.5,"detail":"Ta có: $\\overrightarrow{AB} = (x_B - x_A; y_B - y_A)$."},{"step":"Tính tọa độ vectơ $\\overrightarrow{AB}$","points":1,"detail":"$\\Rightarrow \\overrightarrow{AB} = (-1 - 2; 1 - (-3)) = (-3; 4)$."},{"step":"Viết công thức tọa độ vectơ $\\overrightarrow{AC}$","points":0.5,"detail":"Tương tự: $\\overrightarrow{AC} = (x_C - x_A; y_C - y_A)$."},{"step":"Tính tọa độ vectơ $\\overrightarrow{AC}$","points":1,"detail":"$\\Rightarrow \\overrightarrow{AC} = (0 - 2; 3 - (-3)) = (-2; 6)$."}]},{"id":"qb","number":"b","points":3,"level":"Nhận biết","prompt":["Tính độ dài các đoạn thẳng $AB$ và $AC$."],"rubric":[{"step":"Tính độ dài đoạn thẳng $AB$","points":1.5,"detail":"Độ dài đoạn thẳng $AB$ là: $AB = \\sqrt{(-3)^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$."},{"step":"Tính độ dài đoạn thẳng $AC$","points":1.5,"detail":"Độ dài đoạn thẳng $AC$ là: $AC = \\sqrt{(-2)^2 + 6^2} = \\sqrt{4 + 36} = \\sqrt{40} = 2\\sqrt{10}$."}]},{"id":"qc","number":"c","points":2,"level":"Thông hiểu","prompt":["Tìm tọa độ trung điểm $I$ của đoạn thẳng $AB$ và tọa độ trọng tâm $G$ của tam giác $ABC$."],"rubric":[{"step":"Tìm tọa độ trung điểm $I$ của đoạn thẳng $AB$","points":1,"detail":"Gọi $I(x_I; y_I)$ là trung điểm của đoạn thẳng $AB$. Ta có $x_I = \\dfrac{x_A + x_B}{2} = \\dfrac{2 + (-1)}{2} = \\dfrac{1}{2}$ và $y_I = \\dfrac{y_A + y_B}{2} = \\dfrac{-3 + 1}{2} = -1$. Vậy $I\\left(\\dfrac{1}{2}; -1\\right)$."},{"step":"Tìm tọa độ trọng tâm $G$ của tam giác $ABC$","points":1,"detail":"Gọi $G(x_G; y_G)$ là trọng tâm của tam giác $ABC$. Ta có $x_G = \\dfrac{x_A + x_B + x_C}{3} = \\dfrac{2 + (-1) + 0}{3} = \\dfrac{1}{3}$ và $y_G = \\dfrac{y_A + y_B + y_C}{3} = \\dfrac{-3 + 1 + 3}{3} = \\dfrac{1}{3}$. Vậy $G\\left(\\dfrac{1}{3}; \\dfrac{1}{3}\\right)$."}]},{"id":"qd","number":"d","points":2,"level":"Vận dụng thấp","prompt":["Tìm tọa độ điểm $D$ để tứ giác $ABCD$ là hình bình hành."],"rubric":[{"step":"Gọi tọa độ điểm $D$ và tính tọa độ vectơ $\\overrightarrow{DC}$","points":0.5,"detail":"Gọi $D(x_D; y_D)$. Ta có: $\\overrightarrow{DC} = (0 - x_D; 3 - y_D) = (-x_D; 3 - y_D)$."},{"step":"Nêu điều kiện tứ giác $ABCD$ là hình bình hành","points":0.5,"detail":"Tứ giác $ABCD$ là hình bình hành $\\Leftrightarrow \\overrightarrow{AB} = \\overrightarrow{DC}$ (do $A, B, C$ không thẳng hàng vì $\\dfrac{-3}{-2} \\neq \\dfrac{4}{6}$)."},{"step":"Lập và giải hệ phương trình tìm $x_D, y_D$","points":0.5,"detail":"Ta có hệ phương trình: $\\begin{cases} -x_D = -3 \\\\ 3 - y_D = 4 \\end{cases} \\Leftrightarrow \\begin{cases} x_D = 3 \\\\ y_D = -1 \\end{cases}$."},{"step":"Kết luận (chấp nhận cách giải đúng khác)","points":0.5,"detail":"Vậy $D(3; -1)$ là điểm cần tìm. (Lưu ý: Học sinh giải theo cách khác đúng về mặt toán học như dùng điều kiện hai đường chéo $AC$ và $BD$ cắt nhau tại trung điểm mỗi đường vẫn cho điểm tối đa tương ứng với từng bước)."}]}]};
+/* === DATA END === */
+
+// Mật khẩu Cổng Giáo viên theo yêu cầu: 080397
+const TEACHER_PASS = "080397";
+
+// Cấu hình AI tự động nạp bởi build_html.js (giáo viên không cần cài lại mỗi lần ra đề mới)
+/* === AI CONFIG START === */
+const DEFAULT_AI_CONFIG = {"keyB64":"QVEuQWI4Uk42TGl0ckFURnFuYW43OFkxaUJWZFpBM3Z6OU5obXVaT0swdzdzXzBoLVZCMmc=","model":"gemini-3.6-flash"};
+/* === AI CONFIG END === */
+const FALLBACK_MODELS = ["gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.8-flash", "gemini-3.7-flash", "gemini-flash-latest"];
+const RETIRED_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"];
+const STORAGE_SUBS_KEY = "tuluan_subs_" + (EXAM_DATA.id || "default");
+const STORAGE_AI_KEY = "tuluan_ai_cfg";
+
+function decodeDefaultKey() {
+  try {
+    return DEFAULT_AI_CONFIG.keyB64 ? atob(DEFAULT_AI_CONFIG.keyB64) : "";
+  } catch (e) {
+    return "";
+  }
+}
+
+let memorySubs = [];
+let uploadedImages = []; // [{ dataUrl, base64, mimeType, thumbUrl }]
+let lastSubmission = null;
+
+// =========================================================
+// MATHML CORE PARSER (Dùng cho bài chữa AI trả về để bọc công thức trên điện thoại)
+// =========================================================
+function parseTexInner(tex) {
+  var s = String(tex || '').trim();
+  s = s.replace(/\\left\s*([\(\[\|])/g, '$1').replace(/\\right\s*([\)\]\|])/g, '$1');
+
+  function findBrace(str, openIdx) {
+    if (str[openIdx] !== '{') return -1;
+    var depth = 0;
+    for (var i = openIdx; i < str.length; i++) {
+      if (str[i] === '{') depth++;
+      else if (str[i] === '}') {
+        depth--;
+        if (depth === 0) return i;
+      }
+    }
+    return -1;
+  }
+
+  function tokenizePlain(chunk) {
+    var out = '', i = 0;
+    while (i < chunk.length) {
+      var ch = chunk[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      if (/\d/.test(ch)) {
+        var j = i;
+        while (j < chunk.length && /[\d,.]/.test(chunk[j])) {
+          if ((chunk[j] === ',' || chunk[j] === '.') && !/\d/.test(chunk[j + 1] || '')) break;
+          j++;
+        }
+        out += '<mn>' + chunk.slice(i, j) + '</mn>';
+        i = j;
+        continue;
+      }
+      if (/[a-zA-Z]/.test(ch)) { out += '<mi>' + ch + '</mi>'; i++; continue; }
+      var esc = ch === '<' ? '&lt;' : (ch === '>' ? '&gt;' : (ch === '&' ? '&amp;' : ch));
+      out += '<mo>' + esc + '</mo>';
+      i++;
+    }
+    return out;
+  }
+
+  function parseSeq(str) {
+    var items = [], i = 0, n = str.length;
+    var symMap = {
+      'infty': '<mi>∞</mi>', 'Leftrightarrow': '<mo>⇔</mo>', 'iff': '<mo>⇔</mo>',
+      'Rightarrow': '<mo>⇒</mo>', 'implies': '<mo>⇒</mo>', 'to': '<mo>→</mo>',
+      'rightarrow': '<mo>→</mo>', 'setminus': '<mo>\\</mo>', 'neq': '<mo>≠</mo>',
+      'ge': '<mo>≥</mo>', 'geq': '<mo>≥</mo>', 'le': '<mo>≤</mo>', 'leq': '<mo>≤</mo>',
+      'pm': '<mo>±</mo>', 'cdot': '<mo>·</mo>', 'times': '<mo>×</mo>',
+      'in': '<mo>∈</mo>', 'notin': '<mo>∉</mo>', 'subset': '<mo>⊂</mo>',
+      'cup': '<mo>∪</mo>', 'cap': '<mo>∩</mo>', 'forall': '<mo>∀</mo>',
+      'exists': '<mo>∃</mo>', 'Delta': '<mi>Δ</mi>', 'pi': '<mi>π</mi>',
+      'alpha': '<mi>α</mi>', 'beta': '<mi>β</mi>', 'varphi': '<mi>φ</mi>', 'phi': '<mi>φ</mi>'
+    };
+    var bbMap = { R: 'ℝ', N: 'ℕ', Z: 'ℤ', Q: 'ℚ', C: 'ℂ' };
+
+    function readArg() {
+      while (i < n && /\s/.test(str[i])) i++;
+      if (i >= n) return '<mrow></mrow>';
+      if (str[i] === '{') {
+        var end = findBrace(str, i);
+        if (end !== -1) {
+          var inner = str.slice(i + 1, end);
+          i = end + 1;
+          return '<mrow>' + parseSeq(inner).join('') + '</mrow>';
+        }
+      }
+      if (str[i] === '\\') {
+        var m = str.slice(i + 1).match(/^[a-zA-Z]+/);
+        if (m) {
+          var cmd = m[0];
+          i += 1 + cmd.length;
+          return symMap[cmd] || ('<mo>' + cmd + '</mo>');
+        }
+      }
+      return tokenizePlain(str[i++]);
+    }
+
+    while (i < n) {
+      var ch = str[i];
+      if (/\s/.test(ch)) { i++; continue; }
+
+      if (ch === '(' || ch === '[') {
+        var closeCh = ch === '(' ? ')' : ']';
+        var depth = 0, j = i;
+        for (; j < n; j++) {
+          if (str[j] === ch) depth++;
+          else if (str[j] === closeCh) { depth--; if (depth === 0) break; }
+        }
+        if (j < n && str[j] === closeCh) {
+          items.push('<mrow><mo>' + ch + '</mo>' + parseSeq(str.slice(i + 1, j)).join('') + '<mo>' + closeCh + '</mo></mrow>');
+          i = j + 1;
+          continue;
+        }
+      }
+
+      if (ch === '{') {
+        var end = findBrace(str, i);
+        if (end !== -1) {
+          items.push('<mrow>' + parseSeq(str.slice(i + 1, end)).join('') + '</mrow>');
+          i = end + 1;
+          continue;
+        }
+      }
+
+      if (ch === '^' || ch === '_') {
+        var isSup = ch === '^';
+        i++;
+        var arg = readArg();
+        var base = items.length ? items.pop() : '<mrow></mrow>';
+        items.push(isSup ? ('<msup>' + base + arg + '</msup>') : ('<msub>' + base + arg + '</msub>'));
+        continue;
+      }
+
+      if (ch === '\\') {
+        if (str[i + 1] === '{' || str[i + 1] === '}') {
+          items.push('<mo>' + str[i + 1] + '</mo>');
+          i += 2;
+          continue;
+        }
+        var m = str.slice(i + 1).match(/^[a-zA-Z]+/);
+        if (!m) { i++; continue; }
+        var cmd = m[0];
+        i += 1 + cmd.length;
+
+        if (cmd === 'begin') {
+          var endName = findBrace(str, i);
+          var env = str.slice(i + 1, endName);
+          i = endName + 1;
+          var endTag = '\\end{' + env + '}';
+          var endIdx = str.indexOf(endTag, i);
+          var body = endIdx !== -1 ? str.slice(i, endIdx) : str.slice(i);
+          i = endIdx !== -1 ? endIdx + endTag.length : n;
+          if (env === 'cases') {
+            var rows = body.split(/\\\\/).map(function(row) {
+              var cols = row.split('&').map(function(c) { return '<mtd>' + parseSeq(c).join('') + '</mtd>'; }).join('');
+              return '<mtr>' + cols + '</mtr>';
+            }).join('');
+            items.push('<mrow><mo>{</mo><mtable columnalign="left">' + rows + '</mtable></mrow>');
+          }
+          continue;
+        }
+        if (cmd === 'frac' || cmd === 'dfrac' || cmd === 'tfrac') { items.push('<mfrac>' + readArg() + readArg() + '</mfrac>'); continue; }
+        if (cmd === 'sqrt') {
+          while (i < n && /\s/.test(str[i])) i++;
+          if (str[i] === '[') {
+            var closeIdx = str.indexOf(']', i);
+            var rootIdx = str.slice(i + 1, closeIdx);
+            i = closeIdx + 1;
+            items.push('<mroot>' + readArg() + '<mrow>' + parseSeq(rootIdx).join('') + '</mrow></mroot>');
+          } else {
+            items.push('<msqrt>' + readArg() + '</msqrt>');
+          }
+          continue;
+        }
+        if (cmd === 'lim') {
+          while (i < n && /\s/.test(str[i])) i++;
+          if (str[i] === '_') { i++; items.push('<munder><mo>lim</mo>' + readArg() + '</munder>'); }
+          else items.push('<mo>lim</mo>');
+          continue;
+        }
+        if (cmd === 'text') {
+          while (i < n && /\s/.test(str[i])) i++;
+          var endT = findBrace(str, i);
+          var txt = endT !== -1 ? str.slice(i + 1, endT) : '';
+          i = endT !== -1 ? endT + 1 : i;
+          items.push('<mtext>' + txt + '</mtext>');
+          continue;
+        }
+        if (cmd === 'mathbb') {
+          while (i < n && /\s/.test(str[i])) i++;
+          var endB = findBrace(str, i);
+          var chSet = endB !== -1 ? str.slice(i + 1, endB).trim() : '';
+          i = endB !== -1 ? endB + 1 : i;
+          items.push('<mi>' + (bbMap[chSet] || chSet) + '</mi>');
+          continue;
+        }
+        if (cmd === 'vec' || cmd === 'overrightarrow') { items.push('<mover>' + readArg() + '<mo>→</mo></mover>'); continue; }
+        if (symMap[cmd]) { items.push(symMap[cmd]); continue; }
+        items.push('<mo>' + cmd + '</mo>');
+        continue;
+      }
+
+      if (/\d/.test(ch)) {
+        var j2 = i;
+        while (j2 < n && /[\d,.]/.test(str[j2])) {
+          if ((str[j2] === ',' || str[j2] === '.') && !/\d/.test(str[j2 + 1] || '')) break;
+          j2++;
+        }
+        items.push('<mn>' + str.slice(i, j2) + '</mn>');
+        i = j2;
+        continue;
+      }
+      if (/[a-zA-Z]/.test(ch)) { items.push('<mi>' + ch + '</mi>'); i++; continue; }
+      var esc2 = ch === '<' ? '&lt;' : (ch === '>' ? '&gt;' : (ch === '&' ? '&amp;' : ch));
+      items.push('<mo>' + esc2 + '</mo>');
+      i++;
+    }
+    return items;
+  }
+
+  return parseSeq(s).join('');
+}
+
+function renderMathInHtml(text) {
+  if (!text) return '';
+  var res = String(text)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  res = res.replace(/\$\$([\s\S]+?)\$\$/g, function(_, tex) {
+    return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">' + parseTexInner(tex) + '</math>';
+  });
+  res = res.replace(/\$([^\$]+?)\$/g, function(_, tex) {
+    return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">' + parseTexInner(tex) + '</math>';
+  });
+  res = res.replace(/\n/g, '<br>');
+  return res;
+}
+
+// =========================================================
+// SAFE STORAGE & NAVIGATION
+// =========================================================
+function loadSubmissions() {
+  try {
+    var raw = window.localStorage.getItem(STORAGE_SUBS_KEY);
+    if (raw) { memorySubs = JSON.parse(raw); return memorySubs; }
+  } catch (e) {}
+  return memorySubs;
+}
+
+function saveSubmissions(list) {
+  memorySubs = list;
+  try { window.localStorage.setItem(STORAGE_SUBS_KEY, JSON.stringify(list)); } catch (e) {}
+}
+
+function getAIConfig() {
+  var defKey = decodeDefaultKey();
+  var defModel = DEFAULT_AI_CONFIG.model || 'gemini-3.6-flash';
+  if (RETIRED_MODELS.indexOf(defModel) !== -1) defModel = 'gemini-3.6-flash';
+  try {
+    var raw = window.localStorage.getItem(STORAGE_AI_KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      var savedModel = parsed.model || defModel;
+      if (RETIRED_MODELS.indexOf(savedModel) !== -1) savedModel = defModel;
+      return {
+        apiKey: (parsed.apiKey && parsed.apiKey.trim()) ? parsed.apiKey.trim() : defKey,
+        model: savedModel
+      };
+    }
+  } catch (e) {}
+  return { apiKey: defKey, model: defModel };
+}
+
+// Tự động gọi Gemini API với chuỗi model dự phòng (chống lỗi 404 / 503 / 429)
+function callGeminiWithFallback(apiKey, preferredModel, payloadObj) {
+  var modelsToTry = [];
+  if (preferredModel && RETIRED_MODELS.indexOf(preferredModel) === -1) {
+    modelsToTry.push(preferredModel);
+  }
+  FALLBACK_MODELS.forEach(function(m) {
+    if (modelsToTry.indexOf(m) === -1) modelsToTry.push(m);
+  });
+
+  var idx = 0;
+  function tryNext(lastErr) {
+    if (idx >= modelsToTry.length) {
+      return Promise.reject(lastErr || new Error('Tất cả các model AI đều đang bận. Vui lòng thử lại sau vài giây!'));
+    }
+    var modelName = modelsToTry[idx++];
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
+      encodeURIComponent(modelName) + ':generateContent?key=' + encodeURIComponent(apiKey);
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payloadObj)
+    }).then(function(resp) {
+      if (resp.ok) {
+        return resp.json().then(function(data) {
+          return { data: data, usedModel: modelName };
+        });
+      }
+      return resp.text().then(function(t) {
+        var err = new Error('HTTP ' + resp.status + ' (' + modelName + '): ' + t.slice(0, 180));
+        // Auto fallback on 404 (not found/retired), 503 (overloaded), 429 (quota/rate)
+        if (resp.status === 404 || resp.status === 503 || resp.status === 429) {
+          return tryNext(err);
+        }
+        throw err;
+      });
+    });
+  }
+  return tryNext(null);
+}
+
+function switchPage(num) {
+  [1, 2, 3].forEach(function(n) {
+    document.getElementById('page-' + n).classList.toggle('active', n === num);
+    document.getElementById('tab-' + n).classList.toggle('active', n === num);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =========================================================
+// TRANG 2: CHỤP / TẢI ẢNH TỪ ĐIỆN THOẠI (TỐI ƯU 100% iPHONE iOS SAFARI & HEIC)
+// =========================================================
+function readFileAsDataUrlFallback(file) {
+  return new Promise(function(resolve, reject) {
+    var reader = new FileReader();
+    reader.onerror = function() { reject(new Error('Không thể đọc tệp ảnh từ bộ nhớ điện thoại.')); };
+    reader.onload = function(ev) {
+      var dataUrl = String(ev.target.result || '');
+      var b64 = dataUrl.indexOf(',') !== -1 ? dataUrl.split(',')[1] : '';
+      if (!b64) { reject(new Error('Dữ liệu ảnh trống.')); return; }
+      var mime = (file.type && file.type.indexOf('image/') === 0) ? file.type : 'image/jpeg';
+      resolve({ dataUrl: dataUrl, base64: b64, mimeType: mime, thumbUrl: dataUrl });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function drawSourceToJpeg(source, natW, natH, maxWidth, quality) {
+  var scale = Math.min(1, maxWidth / Math.max(natW, natH));
+  var w = Math.max(1, Math.round(natW * scale));
+  var h = Math.max(1, Math.round(natH * scale));
+
+  var canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, w, h);
+  ctx.drawImage(source, 0, 0, w, h);
+  var dataUrl = canvas.toDataURL('image/jpeg', quality);
+  if (!dataUrl || dataUrl.length < 100) return null;
+
+  if (dataUrl.length > 1500000) {
+    var s2 = Math.min(1, 960 / Math.max(w, h));
+    var c2 = document.createElement('canvas');
+    c2.width = Math.max(1, Math.round(w * s2));
+    c2.height = Math.max(1, Math.round(h * s2));
+    c2.getContext('2d').drawImage(canvas, 0, 0, c2.width, c2.height);
+    var d2 = c2.toDataURL('image/jpeg', 0.62);
+    if (d2 && d2.length > 100) dataUrl = d2;
+  }
+
+  var tScale = Math.min(1, 200 / Math.max(w, h));
+  var tc = document.createElement('canvas');
+  tc.width = Math.max(1, Math.round(w * tScale));
+  tc.height = Math.max(1, Math.round(h * tScale));
+  tc.getContext('2d').drawImage(canvas, 0, 0, tc.width, tc.height);
+  var thumbUrl = tc.toDataURL('image/jpeg', 0.55);
+
+  return {
+    dataUrl: dataUrl,
+    base64: dataUrl.split(',')[1],
+    mimeType: 'image/jpeg',
+    thumbUrl: (thumbUrl && thumbUrl.length > 50) ? thumbUrl : dataUrl
+  };
+}
+
+function compressImageFile(file, maxWidth, quality) {
+  // Tier 1: createImageBitmap (native iOS Safari 15+ HEIC/48MP hardware decoder — never overflows RAM)
+  if (typeof window.createImageBitmap === 'function') {
+    return window.createImageBitmap(file).then(function(bmp) {
+      try {
+        var res = drawSourceToJpeg(bmp, bmp.width || 1000, bmp.height || 1000, maxWidth, quality);
+        if (bmp.close) bmp.close();
+        if (res && res.base64) return res;
+        return readFileAsDataUrlFallback(file);
+      } catch (e) {
+        if (bmp.close) try { bmp.close(); } catch (_) {}
+        return readFileAsDataUrlFallback(file);
+      }
+    }).catch(function() {
+      return compressViaObjectUrl(file, maxWidth, quality);
+    });
+  }
+  return compressViaObjectUrl(file, maxWidth, quality);
+}
+
+function compressViaObjectUrl(file, maxWidth, quality) {
+  return new Promise(function(resolve, reject) {
+    var objUrl = null;
+    try {
+      objUrl = (window.URL || window.webkitURL).createObjectURL(file);
+    } catch (e) {
+      readFileAsDataUrlFallback(file).then(resolve, reject);
+      return;
+    }
+
+    var img = new Image();
+    img.onerror = function() {
+      if (objUrl) try { (window.URL || window.webkitURL).revokeObjectURL(objUrl); } catch (e) {}
+      readFileAsDataUrlFallback(file).then(resolve, reject);
+    };
+    img.onload = function() {
+      try {
+        var natW = img.naturalWidth || img.width || 1000;
+        var natH = img.naturalHeight || img.height || 1000;
+        var res = drawSourceToJpeg(img, natW, natH, maxWidth, quality);
+        if (objUrl) try { (window.URL || window.webkitURL).revokeObjectURL(objUrl); } catch (e) {}
+        if (res && res.base64) resolve(res);
+        else readFileAsDataUrlFallback(file).then(resolve, reject);
+      } catch (err) {
+        if (objUrl) try { (window.URL || window.webkitURL).revokeObjectURL(objUrl); } catch (e) {}
+        readFileAsDataUrlFallback(file).then(resolve, reject);
+      }
+    };
+    img.src = objUrl;
+  });
+}
+
+function handleImageFiles(event) {
+  var input = event.target;
+  var files = Array.prototype.slice.call(input.files || []);
+  if (!files.length) return;
+  var statusEl = document.getElementById('upload-status');
+  statusEl.style.color = 'var(--accent)';
+  statusEl.innerText = '⏳ Đang xử lý ' + files.length + ' ảnh bài làm...';
+
+  var tasks = files.map(function(f) {
+    return compressImageFile(f, 1024, 0.76).catch(function(err) {
+      return { __error: (err && err.message) ? err.message : 'Lỗi đọc ảnh' };
+    });
+  });
+
+  Promise.all(tasks).then(function(results) {
+    var added = 0;
+    var failed = 0;
+    var lastErr = '';
+    results.forEach(function(r) {
+      if (r && !r.__error && r.base64) {
+        uploadedImages.push(r);
+        added++;
+      } else {
+        failed++;
+        if (r && r.__error) lastErr = r.__error;
+      }
+    });
+    renderImagePreviews();
+    if (added > 0 && failed === 0) {
+      statusEl.style.color = 'var(--success)';
+      statusEl.innerText = '✅ Đã tải lên ' + uploadedImages.length + ' trang ảnh bài làm sẵn sàng chấm!';
+    } else if (added > 0 && failed > 0) {
+      statusEl.style.color = 'var(--warning)';
+      statusEl.innerText = '⚠️ Đã nhận ' + added + ' ảnh (' + failed + ' ảnh lỗi: ' + lastErr + ').';
+    } else {
+      statusEl.style.color = 'var(--danger)';
+      statusEl.innerText = '❌ Không đọc được ảnh (' + (lastErr || 'định dạng không hỗ trợ') + '). Hãy mở link bằng trình duyệt Safari/Chrome!';
+    }
+    try { input.value = ''; } catch (e) {}
+  });
+}
+
+function renderImagePreviews() {
+  var grid = document.getElementById('preview-grid');
+  grid.innerHTML = uploadedImages.map(function(img, idx) {
+    return '<div class="preview-item">' +
+      '<button class="preview-del" onclick="removeImage(' + idx + ')" title="Xóa ảnh">&times;</button>' +
+      '<img src="' + img.dataUrl + '" alt="Trang ' + (idx + 1) + '">' +
+      '<div class="preview-caption">Trang ' + (idx + 1) + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function removeImage(idx) {
+  uploadedImages.splice(idx, 1);
+  renderImagePreviews();
+  document.getElementById('upload-status').innerText =
+    uploadedImages.length ? ('Còn ' + uploadedImages.length + ' trang ảnh.') : '';
+}
+
+// =========================================================
+// TRANG 3: AI CHẤM BÀI & CHỈ RA LỖI SAI THEO BIỂU ĐIỂM
+// =========================================================
+function buildGradingPrompt(stuName, stuClass) {
+  var rubricText = (EXAM_DATA.questions || []).map(function(q) {
+    var steps = (q.rubric || []).map(function(r, i) {
+      return '   - Mục ' + (i + 1) + ' (' + r.points + ' điểm): ' + r.step + ' — ' + r.detail;
+    }).join('\n');
+    return 'CÂU ' + q.number + ' (' + q.points + ' điểm):\n' +
+      '  Đề bài: ' + (Array.isArray(q.prompt) ? q.prompt.join(' ') : q.prompt) + '\n' +
+      '  Biểu điểm chuẩn:\n' + steps;
+  }).join('\n\n');
+
+  return 'Bạn là giáo viên Toán THPT giỏi chuyên môn (GDPT 2018, Công văn 5512, bộ sách Kết nối tri thức).\n' +
+    'Hãy đọc kỹ ảnh bài làm tự luận viết tay của học sinh ' + stuName + ' (Lớp ' + stuClass + ') và chấm điểm công tâm theo ĐÚNG biểu điểm dưới đây.\n\n' +
+    'ĐỀ BÀI VÀ BIỂU ĐIỂM CHẤM TỰ LUẬN (Tổng ' + (EXAM_DATA.totalPoints || 10) + ' điểm):\n' + rubricText + '\n\n' +
+    'YÊU CẦU TRẢ VỀ: Chỉ trả về 1 đối tượng JSON hợp lệ (không bọc markdown ```json), mọi công thức toán đặt trong $...$ (dùng LaTeX chuẩn, ví dụ $\\frac{1}{2}$, $\\lim_{x \\to 2}$, $x^2 - 4$), cấu trúc:\n' +
+    '{\n' +
+    '  "totalScore": <số thực tổng điểm làm tròn 0.25>,\n' +
+    '  "overallComment": "<nhận xét tổng quan ngắn gọn, động viên và định hướng học sinh>",\n' +
+    '  "mainErrorSummary": "<tóm tắt ngắn các lỗi sai chính trong 1 câu để ghi vào bảng điểm giáo viên>",\n' +
+    '  "questions": [\n' +
+    '    {\n' +
+    '      "number": 1,\n' +
+    '      "earnedPoints": <điểm đạt>,\n' +
+    '      "maxPoints": <điểm tối đa>,\n' +
+    '      "strengths": "<những ý học sinh làm đúng>",\n' +
+    '      "errors": "<chỉ rõ lỗi sai cụ thể trong bài viết tay của học sinh; nếu đúng hoàn toàn ghi Không có lỗi sai>",\n' +
+    '      "correction": "<hướng dẫn sửa lỗi và lời giải ngắn gọn chuẩn xác cho câu này>"\n' +
+    '    }\n' +
+    '  ]\n' +
+    '}';
+}
+
+function submitAndGradeWithAI() {
+  var stuName = document.getElementById('stu-name').value.trim();
+  var stuClass = document.getElementById('stu-class').value.trim();
+  if (!stuName || !stuClass) {
+    alert('Em hãy nhập đầy đủ Họ và tên và Lớp trước khi nộp bài nhé!');
+    document.getElementById(!stuName ? 'stu-name' : 'stu-class').focus();
+    return;
+  }
+  if (!uploadedImages.length) {
+    alert('Em hãy chụp hoặc tải lên ít nhất 1 ảnh bài làm trước khi bấm Nộp bài!');
+    return;
+  }
+
+  var cfg = getAIConfig();
+  switchPage(3);
+
+  if (!cfg.apiKey) {
+    document.getElementById('ai-result-container').innerHTML =
+      '<div class="grade-fix-box">' +
+      '<strong>⚠️ Hệ thống chấm bài AI chưa được kích hoạt</strong><br>' +
+      'Vui lòng báo thầy/cô vào mục <strong>🔒 Giáo viên</strong> → <strong>⚙️ Cài đặt AI chấm bài</strong> để kích hoạt khóa API.' +
+      '</div>';
+    return;
+  }
+
+  var btn = document.getElementById('btn-submit-ai');
+  btn.disabled = true;
+  document.getElementById('ai-loading').classList.add('show');
+  document.getElementById('ai-result-container').innerHTML = '';
+
+  var parts = [{ text: buildGradingPrompt(stuName, stuClass) }];
+  uploadedImages.forEach(function(img) {
+    parts.push({ inline_data: { mime_type: img.mimeType, data: img.base64 } });
+  });
+
+  callGeminiWithFallback(cfg.apiKey, cfg.model, {
+    contents: [{ parts: parts }],
+    generationConfig: { temperature: 0.2, responseMimeType: 'application/json' }
+  })
+  .then(function(res) {
+    var data = res.data;
+    var rawText = (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text) || '';
+    var cleaned = rawText.replace(/^```json\s*/i, '').replace(/```$/i, '').trim();
+    var graded = JSON.parse(cleaned);
+
+    var submission = {
+      examId: EXAM_DATA.id,
+      name: stuName,
+      className: stuClass,
+      submittedAt: new Date().toLocaleString('vi-VN'),
+      totalScore: Number(graded.totalScore) || 0,
+      maxTotal: EXAM_DATA.totalPoints || 10,
+      overallComment: graded.overallComment || '',
+      mainErrorSummary: graded.mainErrorSummary || '',
+      questions: graded.questions || [],
+      thumbs: uploadedImages.map(function(i) { return i.thumbUrl; })
+    };
+
+    lastSubmission = submission;
+    var allSubs = loadSubmissions();
+    allSubs.push(submission);
+    saveSubmissions(allSubs);
+
+    renderAIResult(submission);
+  })
+  .catch(function(err) {
+    document.getElementById('ai-result-container').innerHTML =
+      '<div class="grade-err-box"><strong>❌ Lỗi kết nối AI chấm bài:</strong> ' + err.message +
+      '<br>Vui lòng kiểm tra lại kết nối mạng hoặc Gemini API Key trong Cổng Giáo viên.</div>';
+  })
+  .finally(function() {
+    btn.disabled = false;
+    document.getElementById('ai-loading').classList.remove('show');
+  });
+}
+
+function renderAIResult(sub) {
+  var qCards = (sub.questions || []).map(function(q) {
+    return '<div class="grade-card">' +
+      '<div class="q-header">' +
+        '<span class="q-title">Câu ' + q.number + '</span>' +
+        '<span class="q-pts">' + q.earnedPoints + ' / ' + q.maxPoints + ' điểm</span>' +
+      '</div>' +
+      '<div class="grade-ok-box"><strong>✅ Phần làm đúng:</strong> ' + renderMathInHtml(q.strengths || 'Không có') + '</div>' +
+      '<div class="grade-err-box"><strong>⚠️ Lỗi sai AI phát hiện:</strong> ' + renderMathInHtml(q.errors || 'Không có lỗi sai') + '</div>' +
+      '<div class="grade-fix-box"><strong>✏️ Hướng dẫn chữa bài:</strong> ' + renderMathInHtml(q.correction || '') + '</div>' +
+    '</div>';
+  }).join('');
+
+  document.getElementById('ai-result-container').innerHTML =
+    '<div class="score-hero">' +
+      '<div style="font-weight:700; color:var(--gray-600);">ĐIỂM BÀI LÀM TỰ LUẬN</div>' +
+      '<div class="score-big">' + sub.totalScore + ' / ' + sub.maxTotal + ' điểm</div>' +
+      '<div style="font-size:0.94rem; margin-top:4px;"><strong>' + sub.name + '</strong> — Lớp <strong>' + sub.className + '</strong> (' + sub.submittedAt + ')</div>' +
+      '<div style="margin-top:10px; font-size:0.94rem; color:var(--gray-800);">' + renderMathInHtml(sub.overallComment) + '</div>' +
+      '<div style="margin-top:12px; display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">' +
+        '<button class="btn btn-outline" onclick="downloadMyResult()">📥 Tải phiếu kết quả (.json) gửi GV</button>' +
+        '<button class="btn btn-primary" onclick="switchPage(2)">📸 Chụp lại / Nộp bài mới</button>' +
+      '</div>' +
+    '</div>' + qCards;
+}
+
+function downloadMyResult() {
+  if (!lastSubmission) return;
+  var blob = new Blob([JSON.stringify(lastSubmission, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'KetQua_' + lastSubmission.className + '_' + lastSubmission.name.replace(/\s+/g, '_') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// =========================================================
+// CỔNG GIÁO VIÊN (MẬT KHẨU: 080397)
+// =========================================================
+function openPasswordModal() {
+  document.getElementById('teacher-pass-input').value = '';
+  document.getElementById('pass-error').innerText = '';
+  document.getElementById('modal-pass').classList.add('show');
+  setTimeout(function() { document.getElementById('teacher-pass-input').focus(); }, 80);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+function verifyTeacherPassword() {
+  var val = document.getElementById('teacher-pass-input').value.trim();
+  if (val === TEACHER_PASS) {
+    closeModal('modal-pass');
+    var cfg = getAIConfig();
+    document.getElementById('ai-api-key').value = cfg.apiKey || '';
+    document.getElementById('ai-model-select').value = cfg.model || 'gemini-2.5-flash';
+    renderTeacherDashboard();
+    document.getElementById('modal-teacher').classList.add('show');
+  } else {
+    document.getElementById('pass-error').innerText = 'Mật khẩu không chính xác. Vui lòng thử lại!';
+  }
+}
+
+function switchTeacherTab(tab) {
+  document.getElementById('teacher-panel-results').style.display = tab === 'results' ? 'block' : 'none';
+  document.getElementById('teacher-panel-ai').style.display = tab === 'ai' ? 'block' : 'none';
+  document.getElementById('ttab-results').classList.toggle('active', tab === 'results');
+  document.getElementById('ttab-ai').classList.toggle('active', tab === 'ai');
+}
+
+function saveAIConfig() {
+  var key = document.getElementById('ai-api-key').value.trim();
+  var model = document.getElementById('ai-model-select').value;
+  try {
+    window.localStorage.setItem(STORAGE_AI_KEY, JSON.stringify({ apiKey: key, model: model }));
+    document.getElementById('ai-config-msg').innerHTML = '<span style="color:var(--success);">✅ Đã lưu cấu hình AI thành công!</span>';
+  } catch (e) {
+    document.getElementById('ai-config-msg').innerHTML = '<span style="color:var(--danger);">❌ Không thể lưu vào localStorage trên trình duyệt này.</span>';
+  }
+}
+
+function testAIConnection() {
+  var key = document.getElementById('ai-api-key').value.trim();
+  var model = document.getElementById('ai-model-select').value;
+  var msg = document.getElementById('ai-config-msg');
+  if (!key) { msg.innerHTML = '<span style="color:var(--danger);">Vui lòng dán Gemini API Key trước.</span>'; return; }
+  msg.innerHTML = 'Đang kiểm tra kết nối...';
+  callGeminiWithFallback(key, model, { contents: [{ parts: [{ text: 'Trả lời đúng 1 từ: OK' }] }] })
+  .then(function(res) { msg.innerHTML = '<span style="color:var(--success);">✅ Kết nối Gemini AI thành công (Model: ' + res.usedModel + ')! Sẵn sàng chấm bài.</span>'; })
+  .catch(function(e) { msg.innerHTML = '<span style="color:var(--danger);">❌ Lỗi kết nối: ' + e.message + '</span>'; });
+}
+
+function renderTeacherDashboard() {
+  var subs = loadSubmissions();
+  var statsEl = document.getElementById('teacher-stats');
+  var tbody = document.getElementById('teacher-table-body');
+  document.getElementById('student-detail-box').classList.remove('show');
+
+  var count = subs.length;
+  var avg = count ? (subs.reduce(function(s, x) { return s + (Number(x.totalScore) || 0); }, 0) / count).toFixed(2) : '0.00';
+  var maxS = count ? Math.max.apply(null, subs.map(function(x) { return Number(x.totalScore) || 0; })).toFixed(2) : '0.00';
+  var minS = count ? Math.min.apply(null, subs.map(function(x) { return Number(x.totalScore) || 0; })).toFixed(2) : '0.00';
+
+  statsEl.innerHTML =
+    '<div class="stat-card"><div class="stat-val">' + count + '</div><div class="stat-lbl">Tổng bài nộp</div></div>' +
+    '<div class="stat-card"><div class="stat-val">' + avg + '</div><div class="stat-lbl">Điểm TB</div></div>' +
+    '<div class="stat-card"><div class="stat-val">' + maxS + '</div><div class="stat-lbl">Cao nhất</div></div>' +
+    '<div class="stat-card"><div class="stat-val">' + minS + '</div><div class="stat-lbl">Thấp nhất</div></div>';
+
+  if (!count) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#64748b; padding:18px;">Chưa có kết quả học sinh nào. Giáo viên có thể nhập/gộp các file .json học sinh gửi về để tổng hợp và xuất Excel!</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = subs.map(function(s, idx) {
+    var qSummary = (s.questions || []).map(function(q) {
+      return 'C' + q.number + ': <strong>' + q.earnedPoints + '</strong>/' + q.maxPoints;
+    }).join(' | ');
+    return '<tr>' +
+      '<td>' + (idx + 1) + '</td>' +
+      '<td><strong>' + s.name + '</strong></td>' +
+      '<td>' + s.className + '</td>' +
+      '<td>' + s.submittedAt + '</td>' +
+      '<td><strong style="color:var(--primary);">' + s.totalScore + '</strong>/' + (s.maxTotal || 10) + '</td>' +
+      '<td>' + qSummary + '</td>' +
+      '<td>' + renderMathInHtml(s.mainErrorSummary || '') + '</td>' +
+      '<td><button class="btn btn-outline" style="padding:4px 8px; min-height:32px; font-size:0.8rem;" onclick="showStudentDetail(' + idx + ')">Xem</button></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function showStudentDetail(idx) {
+  var s = loadSubmissions()[idx];
+  if (!s) return;
+  var box = document.getElementById('student-detail-box');
+  var imgsHtml = (s.thumbs || []).map(function(u, i) {
+    return '<img src="' + u + '" alt="Trang ' + (i + 1) + '" style="height:120px; border-radius:6px; border:1px solid #cbd5e1; margin-right:8px;">';
+  }).join('');
+  var rows = (s.questions || []).map(function(q) {
+    return '<tr>' +
+      '<td>Câu ' + q.number + '</td>' +
+      '<td><strong>' + q.earnedPoints + ' / ' + q.maxPoints + '</strong></td>' +
+      '<td>' + renderMathInHtml(q.errors || '') + '</td>' +
+      '<td>' + renderMathInHtml(q.correction || '') + '</td>' +
+    '</tr>';
+  }).join('');
+
+  box.innerHTML =
+    '<div style="font-weight:800; margin-bottom:8px; color:var(--primary-dark);">Chi tiết bài làm: ' + s.name + ' (' + s.className + ') — Điểm: ' + s.totalScore + '/' + (s.maxTotal || 10) + '</div>' +
+    (imgsHtml ? ('<div style="margin-bottom:10px; display:flex; flex-wrap:wrap; gap:6px;">' + imgsHtml + '</div>') : '') +
+    '<div style="margin-bottom:8px;"><strong>Nhận xét chung:</strong> ' + renderMathInHtml(s.overallComment || '') + '</div>' +
+    '<table class="data-table" style="margin-bottom:0;"><thead><tr><th>Câu</th><th>Điểm</th><th>Lỗi sai AI phát hiện</th><th>Hướng dẫn chữa</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  box.classList.add('show');
+}
+
+function exportCSV() {
+  var subs = loadSubmissions();
+  if (!subs.length) { alert('Chưa có dữ liệu kết quả để tải về!'); return; }
+  var qHeaders = (EXAM_DATA.questions || []).map(function(q) { return 'Cau_' + q.number + '_(' + q.points + 'd)'; });
+  var header = ['STT', 'Ho_va_ten', 'Lop', 'Thoi_gian_nop', 'Tong_diem'].concat(qHeaders, ['Loi_sai_chinh', 'Nhan_xet_AI']).join(',');
+  var rows = subs.map(function(s, idx) {
+    var qCols = (EXAM_DATA.questions || []).map(function(eq) {
+      var found = (s.questions || []).find(function(x) { return String(x.number).toLowerCase() === String(eq.number).toLowerCase(); });
+      return found ? found.earnedPoints : '';
+    });
+    var esc = function(v) { return '"' + String(v || '').replace(/"/g, '""') + '"'; };
+    return [idx + 1, esc(s.name), esc(s.className), esc(s.submittedAt), s.totalScore].concat(qCols, [esc(s.mainErrorSummary), esc(s.overallComment)]).join(',');
+  });
+  var csv = '\uFEFF' + [header].concat(rows).join('\r\n');
+  var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'BangKetQua_TuLuan_' + (EXAM_DATA.id || 'Toan') + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportAllJSON() {
+  var subs = loadSubmissions();
+  var blob = new Blob([JSON.stringify(subs, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'SaoLuu_TuLuan_' + (EXAM_DATA.id || 'Toan') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importSubmissions(event) {
+  var files = Array.prototype.slice.call(event.target.files || []);
+  if (!files.length) return;
+  var subs = loadSubmissions();
+  var done = 0;
+  files.forEach(function(file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        var data = JSON.parse(e.target.result);
+        if (Array.isArray(data)) subs = subs.concat(data);
+        else if (data && data.name) subs.push(data);
+      } catch (err) {}
+      done++;
+      if (done === files.length) {
+        saveSubmissions(subs);
+        renderTeacherDashboard();
+        event.target.value = '';
+      }
+    };
+    reader.readAsText(file, 'UTF-8');
+  });
+}
+
+function clearAllSubmissions() {
+  if (confirm('Thầy/cô có chắc chắn muốn xóa toàn bộ kết quả học sinh đã lưu?')) {
+    saveSubmissions([]);
+    renderTeacherDashboard();
+  }
+}
+</script>
+</body>
+</html>
