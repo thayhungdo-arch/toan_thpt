@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>PHIẾU HƯỚNG DẪN TỰ HỌC: KHỬ CÁC DẠNG VÔ ĐỊNH 0/0 VÀ ∞/∞</title>
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-light: #eff6ff;
+      --primary-border: #bfdbfe;
+      --accent: #0f766e;
+      --accent-light: #f0fdfa;
+      --success: #15803d;
+      --success-light: #f0fdf4;
+      --danger: #b91c1c;
+      --danger-light: #fef2f2;
+      --warning: #b45309;
+      --warning-light: #fffbeb;
+      --purple: #6d28d9;
+      --purple-light: #f5f3ff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --radius: 10px;
+      --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f1f5f9;
+      color: var(--gray-800);
+      line-height: 1.65;
+      padding: 12px;
+      -webkit-text-size-adjust: 100%;
+    }
+    .app-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .no-js-banner {
+      display: none;
+      background: #fef3c7;
+      color: #92400e;
+      border-bottom: 1.5px solid #fcd34d;
+      padding: 10px 16px;
+      font-size: 0.86rem;
+    }
+    html.no-js .no-js-banner { display: block; }
+    html.no-js .page-content { display: block !important; }
+
+    /* Header */
+    .hero-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 60%, #2563eb 100%);
+      color: #ffffff;
+      padding: 20px 24px 16px;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.84rem;
+      opacity: 0.95;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,0.18);
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .hero-title { font-size: 1.45rem; font-weight: 800; margin-top: 8px; }
+    .hero-subtitle { font-size: 0.93rem; opacity: 0.92; margin-top: 4px; }
+
+    /* Topic Tabs Navigation */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: var(--gray-50);
+      border-bottom: 1.5px solid var(--gray-200);
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .tab-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid var(--gray-300);
+      background: #ffffff;
+      color: var(--gray-700);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { background: var(--gray-100); }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.28);
+    }
+    .teacher-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid #c4b5fd;
+      background: var(--purple-light);
+      color: var(--purple);
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .teacher-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+    /* Student bar */
+    .student-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 20px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 0.88rem;
+    }
+    .student-strip input {
+      padding: 7px 10px;
+      min-height: 38px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 6px;
+      font-size: 0.92rem;
+      outline: none;
+    }
+    .student-strip input:focus { border-color: var(--primary); }
+
+    /* Pages */
+    .page-content {
+      padding: 20px 24px 28px;
+      display: none;
+    }
+    .page-content.active { display: block; }
+
+    .topic-banner {
+      background: linear-gradient(90deg, #eff6ff 0%, #f0fdfa 100%);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+    }
+    .section-heading {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      border-left: 4px solid var(--primary);
+      padding: 5px 12px;
+      background: var(--primary-light);
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0 12px;
+    }
+
+    /* Method card */
+    .method-card {
+      border: 1px solid #99f6e4;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+    }
+    .method-card p { margin-bottom: 6px; }
+
+    /* Example card */
+    .example-card {
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+    .example-header {
+      background: var(--primary-light);
+      padding: 9px 16px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .example-body { padding: 14px 16px; overflow-x: auto; }
+    details.example-details {
+      margin-top: 10px;
+      background: var(--success-light);
+      border-left: 3.5px solid var(--success);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: #14532d;
+    }
+    details.example-details summary {
+      font-weight: 700;
+      color: var(--success);
+      cursor: pointer;
+      list-style: none;
+      min-height: 30px;
+    }
+    details.example-details summary::-webkit-details-marker { display: none; }
+    details.example-details[open] summary { margin-bottom: 6px; }
+
+    /* Practice toolbar */
+    .practice-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 9px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+    }
+    .progress-pill {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid var(--primary-border);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    /* Buttons */
+    button { font-family: inherit; cursor: pointer; }
+    .btn {
+      padding: 9px 14px;
+      min-height: 42px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 0.88rem;
+      transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-sm { padding: 7px 12px; min-height: 38px; font-size: 0.84rem; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { background: #115e59; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #166534; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-outline { background: #fff; border-color: var(--gray-300); color: var(--gray-700); }
+    .btn-outline:hover { background: var(--gray-100); }
+
+    /* Exercise cards */
+    .q-card {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .q-card.correct { border-left: 5px solid var(--success); }
+    .q-card.incorrect { border-left: 5px solid var(--danger); }
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .q-num { font-weight: 800; color: var(--primary); }
+    .q-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+    .q-text { margin-bottom: 10px; }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      min-height: 44px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 7px;
+      background: var(--gray-50);
+      cursor: pointer;
+    }
+    .opt-label.selected { background: var(--primary-light); border-color: var(--primary); }
+    .opt-label.is-correct { background: var(--success-light); border-color: var(--success); color: var(--success); font-weight: 700; }
+    .opt-label.is-wrong { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+
+    .short-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .short-input {
+      padding: 9px 12px;
+      min-height: 44px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 7px;
+      font-size: 1rem;
+      width: 210px;
+      max-width: 100%;
+    }
+    .short-input.is-correct { border-color: var(--success); background: var(--success-light); }
+    .short-input.is-wrong { border-color: var(--danger); background: var(--danger-light); }
+
+    .q-check-row { margin-bottom: 8px; }
+
+    /* Feedback toast: Green background when right (khích lệ), Red background when wrong (động viên) */
+    .praise-toast {
+      display: none;
+      margin: 10px 0;
+      padding: 11px 14px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      animation: popIn 0.25s ease;
+    }
+    .praise-toast.show-ok {
+      display: block;
+      background: #dcfce7;
+      border: 1.5px solid #22c55e;
+      color: #14532d;
+    }
+    .praise-toast.show-err {
+      display: block;
+      background: #fee2e2;
+      border: 1.5px solid #ef4444;
+      color: #991b1b;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Native <details> drawers for 2 shortcuts: Gợi ý & Lời giải chi tiết */
+    .q-drawers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    details.q-drawer summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      min-height: 38px;
+      border-radius: 7px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      list-style: none;
+    }
+    details.q-drawer summary::-webkit-details-marker { display: none; }
+    details.q-drawer-hint summary { background: var(--warning-light); border: 1px solid #fcd34d; color: var(--warning); }
+    details.q-drawer-sol summary { background: var(--success-light); border: 1px solid #86efac; color: var(--success); }
+    details.q-drawer .drawer-body {
+      margin-top: 6px;
+      padding: 11px 14px;
+      border-radius: 7px;
+      overflow-x: auto;
+    }
+    details.q-drawer-hint .drawer-body { background: var(--warning-light); border-left: 3.5px solid #f59e0b; color: #78350f; }
+    details.q-drawer-sol .drawer-body { background: var(--success-light); border-left: 3.5px solid var(--success); color: #14532d; }
+
+    /* Completion Slogan Banner when all exercises on a page are completed */
+    .slogan-banner {
+      display: none;
+      margin-top: 22px;
+      padding: 22px 18px;
+      border-radius: 12px;
+      text-align: center;
+      background: linear-gradient(135deg, #eff6ff 0%, #fef3c7 50%, #dcfce7 100%);
+      border: 2px solid #f59e0b;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.18);
+      animation: popIn 0.35s ease;
+    }
+    .slogan-banner.show { display: block; }
+    .slogan-icon { font-size: 2.2rem; margin-bottom: 6px; }
+    .slogan-text { font-size: 1.18rem; font-weight: 900; color: #92400e; }
+    .slogan-sub { font-size: 0.94rem; color: var(--gray-700); margin-top: 6px; }
+
+    /* Modals */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      padding: 20px 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .modal-box.modal-wide { max-width: 920px; max-height: 90vh; overflow-y: auto; }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+    .modal-title { font-size: 1.1rem; font-weight: 800; color: var(--primary-dark); }
+    .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--gray-600); padding: 2px 8px; }
+    .error-msg { color: var(--danger); font-size: 0.85rem; margin-top: 6px; min-height: 18px; font-weight: 600; }
+
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-bottom: 12px; }
+    .data-table th, .data-table td { border: 1px solid var(--gray-200); padding: 8px; text-align: left; }
+    .data-table th { background: var(--gray-100); font-weight: 700; }
+    .file-btn-wrap { position: relative; overflow: hidden; display: inline-flex; align-items: center; cursor: pointer; }
+    .file-btn-wrap input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    math { font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", serif; font-size: 1.05em; }
+    math[display="block"] { display: block; overflow-x: auto; padding: 6px 0; text-align: center; }
+
+    footer {
+      text-align: center;
+      padding: 14px;
+      border-top: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      font-size: 0.82rem;
+      background: var(--gray-50);
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 6px; }
+      .hero-header, .page-content { padding: 14px; }
+      .nav-bar { padding: 8px 10px; }
+      .teacher-btn { width: 100%; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="no-js-banner">
+    <strong>📱 Chế độ xem nhanh:</strong> Trình xem tệp hiện đang tắt JavaScript, em vẫn xem được đầy đủ Cách giải, Ví dụ, Bài tập và Gợi ý / Lời giải chi tiết. Hãy mở bằng <strong>Chrome / Safari</strong> để dùng tính năng <em>Kiểm tra nhận lời động viên</em> và <em>Sinh bài tập tương tự</em>!
+  </div>
+
+  <header class="hero-header">
+    <div class="hero-top">
+      <span>Chương trình GDPT 2018 • Công văn 5512 • Kết nối tri thức</span>
+      <span class="hero-tag">Toán 11 • Chương V</span>
+    </div>
+    <div class="hero-title">PHIẾU HƯỚNG DẪN TỰ HỌC: KHỬ CÁC DẠNG VÔ ĐỊNH 0/0 VÀ ∞/∞</div>
+    <div class="hero-subtitle">Luyện tập chuyên sâu theo từng dạng bài — Có phím tự sinh bài tập tương tự</div>
+  </header>
+
+  <nav class="nav-bar">
+    <div class="nav-tabs"><button class="tab-btn active" id="tab-t-0" onclick="switchTopic(0)">📘 Dạng 1: Vô định 0/0</button>
+<button class="tab-btn " id="tab-t-1" onclick="switchTopic(1)">📘 Dạng 2: Vô định ∞/∞</button></div>
+    <button class="teacher-btn" onclick="openPasswordModal()">🔒 Giáo viên: Xem kết quả</button>
+  </nav>
+
+  <div class="student-strip">
+    <div style="display:flex; gap:8px; flex-wrap:wrap; width:100%; align-items:center;">
+      <input type="text" id="stu-name" placeholder="Họ và tên học sinh..." style="flex:1; min-width:160px;">
+      <input type="text" id="stu-class" placeholder="Lớp (VD: 11A1)" style="width:125px;">
+      <button class="btn btn-outline btn-sm" onclick="downloadMyProgress()">📥 Tải bài làm</button>
+    </div>
+  </div>
+
+  <!-- CÁC TRANG DẠNG BÀI (MỖI TRANG = 1 DẠNG BÀI) -->
+  
+      <main id="page-t-0" class="page-content active">
+        <div class="topic-banner">DẠNG 1. GIỚI HẠN VÔ ĐỊNH DẠNG <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>0</mn></mrow><mrow><mn>0</mn></mrow></mfrac></math></div>
+
+        <div class="section-heading">I. Cách giải</div>
+        <div class="method-card"><p>Khi tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><msub><mi>x</mi><mn>0</mn></msub></mrow></munder><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></math>, nếu thay trực tiếp <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub></math> vào tử và mẫu đều nhận được giá trị bằng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math> (tức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo></mrow><mo>=</mo><mn>0</mn></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>g</mi><mrow><mo>(</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo></mrow><mo>=</mo><mn>0</mn></math>), ta gặp dạng vô định <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>0</mn></mrow><mrow><mn>0</mn></mrow></mfrac></math>. Quy trình giải gồm 3 bước:</p><p><strong>• Bước 1:</strong> Phân tích tử thức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math> và mẫu thức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math> thành nhân tử để làm xuất hiện nhân tử chung <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo></mrow></math>. Nếu có căn thức, nhân cả tử và mẫu với biểu thức liên hợp thích hợp trước khi phân tích nhân tử.</p><p><strong>• Bước 2:</strong> Rút gọn (triệt tiêu) nhân tử chung <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><msub><mi>x</mi><mn>0</mn></msub><mo>)</mo></mrow></math> của tử thức và mẫu thức (vì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><msub><mi>x</mi><mn>0</mn></msub><mo>⇒</mo><mi>x</mi><mo>≠</mo><msub><mi>x</mi><mn>0</mn></msub></math>).</p><p><strong>• Bước 3:</strong> Thay số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>=</mo><msub><mi>x</mi><mn>0</mn></msub></math> vào biểu thức đã rút gọn để tính giá trị giới hạn cuối cùng.</p><p><strong>Công thức bổ trợ cần nhớ:</strong></p><p>— Hằng đẳng thức: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>a</mi><mn>2</mn></msup><mo>-</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><mrow><mo>(</mo><mi>a</mi><mo>-</mo><mi>b</mi><mo>)</mo></mrow><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow></math>; <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>a</mi><mn>3</mn></msup><mo>-</mo><msup><mi>b</mi><mn>3</mn></msup><mo>=</mo><mrow><mo>(</mo><mi>a</mi><mo>-</mo><mi>b</mi><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><mi>a</mi><mi>b</mi><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>)</mo></mrow></math>; <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>a</mi><mn>3</mn></msup><mo>+</mo><msup><mi>b</mi><mn>3</mn></msup><mo>=</mo><mrow><mo>(</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>a</mi><mn>2</mn></msup><mo>-</mo><mi>a</mi><mi>b</mi><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>)</mo></mrow></math>.</p><p>— Tam thức bậc hai: Nếu <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><mi>x</mi><mo>+</mo><mi>c</mi><mo>=</mo><mn>0</mn></math> có hai nghiệm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msub><mi>x</mi><mn>1</mn></msub><mo>,</mo><msub><mi>x</mi><mn>2</mn></msub></math> thì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><mi>x</mi><mo>+</mo><mi>c</mi><mo>=</mo><mi>a</mi><mrow><mo>(</mo><mi>x</mi><mo>-</mo><msub><mi>x</mi><mn>1</mn></msub><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><msub><mi>x</mi><mn>2</mn></msub><mo>)</mo></mrow></math>.</p><p>— Biểu thức liên hợp: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>-</mo><mi>B</mi><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>+</mo><mi>B</mi><mo>)</mo></mrow><mo>=</mo><mi>A</mi><mo>-</mo><msup><mi>B</mi><mn>2</mn></msup></math>; <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>-</mo><msqrt><mrow><mi>B</mi></mrow></msqrt><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>A</mi></mrow></msqrt><mo>+</mo><msqrt><mrow><mi>B</mi></mrow></msqrt><mo>)</mo></mrow><mo>=</mo><mi>A</mi><mo>-</mo><mi>B</mi></math>.</p></div>
+
+        <div class="section-heading">II. Ví dụ minh họa</div>
+        
+      <div class="example-card">
+        <div class="example-header">Ví dụ 1 (Cả tử và mẫu ở dạng đa thức)</div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>3</mn></mrow></munder><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>5</mn><mi>x</mi><mo>+</mo><mn>6</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>8</mn><mi>x</mi><mo>+</mo><mn>15</mn></mrow></mfrac></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p>Thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>=</mo><mn>3</mn></math> vào tử và mẫu ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mn>3</mn><mn>2</mn></msup><mo>-</mo><mn>5</mn><mo>·</mo><mn>3</mn><mo>+</mo><mn>6</mn><mo>=</mo><mn>0</mn></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mn>3</mn><mn>2</mn></msup><mo>-</mo><mn>8</mn><mo>·</mo><mn>3</mn><mo>+</mo><mn>15</mn><mo>=</mo><mn>0</mn></math>. Đây là dạng vô định <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>0</mn></mrow><mrow><mn>0</mn></mrow></mfrac></math>.</p><p><strong>• Bước 1 (Phân tích nhân tử):</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>5</mn><mi>x</mi><mo>+</mo><mn>6</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>8</mn><mi>x</mi><mo>+</mo><mn>15</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow></math>.</p><p><strong>• Bước 2 (Rút gọn nhân tử chung <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math>):</strong></p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>L</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>3</mn></mrow></munder><mfrac><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>3</mn></mrow></munder><mfrac><mrow><mi>x</mi><mo>-</mo><mn>2</mn></mrow><mrow><mi>x</mi><mo>-</mo><mn>5</mn></mrow></mfrac></math></p><p><strong>• Bước 3 (Thay số):</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>=</mo><mfrac><mrow><mn>3</mn><mo>-</mo><mn>2</mn></mrow><mrow><mn>3</mn><mo>-</mo><mn>5</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math>.</p>
+          </details>
+        </div>
+      </div>
+    
+
+      <div class="example-card">
+        <div class="example-header">Ví dụ 2 (Tử có căn bậc hai, mẫu ở dạng đa thức)</div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>6</mn></mrow></munder><mfrac><mrow><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>-</mo><mn>3</mn></mrow><mrow><mi>x</mi><mo>-</mo><mn>6</mn></mrow></mfrac></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p>Thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>=</mo><mn>6</mn></math> vào tử và mẫu đều bằng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math> (dạng vô định <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>0</mn></mrow><mrow><mn>0</mn></mrow></mfrac></math>).</p><p><strong>• Bước 1 (Nhân liên hợp của tử):</strong> Nhân cả tử và mẫu với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow></math>:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>6</mn></mrow></munder><mfrac><mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>6</mn></mrow></munder><mfrac><mrow><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>3</mn><mo>)</mo></mrow><mo>-</mo><mn>9</mn></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>6</mn></mrow></munder><mfrac><mrow><mi>x</mi><mo>-</mo><mn>6</mn></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>6</mn><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn><mo>)</mo></mrow></mrow></mfrac></math></p><p><strong>• Bước 2 (Rút gọn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>6</mn><mo>)</mo></mrow></math>):</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>6</mn></mrow></munder><mfrac><mrow><mn>1</mn></mrow><mrow><msqrt><mrow><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn></mrow></mfrac></math>.</p><p><strong>• Bước 3 (Thay số):</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msqrt><mrow><mn>6</mn><mo>+</mo><mn>3</mn></mrow></msqrt><mo>+</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn><mo>+</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>6</mn></mrow></mfrac></math>.</p>
+          </details>
+        </div>
+      </div>
+    
+
+        <div class="section-heading">III. Bài tập vận dụng</div>
+        <div class="practice-toolbar">
+          <span class="progress-pill" id="prog-t-0">Tiến độ: 0/6 câu</span>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(0)">🎲 Sinh bài tập tương tự</button>
+            <button class="btn btn-outline" id="btn-orig-0" style="display:none;" onclick="restoreOriginal(0)">↩️ Bài tập gốc</button>
+          </div>
+        </div>
+
+        <div id="ex-list-0">
+    <div class="q-card" id="card-d1_c1">
+      <div class="q-header">
+        <span class="q-num">Bài 1</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Giá trị của giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>2</mn></mrow></munder><mfrac><mrow><mn>4</mn><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></mfrac></math> bằng:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c1-0">
+        <input type="radio" name="ans-d1_c1" value="0" onchange="setMC(0, 'd1_c1', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c1-1">
+        <input type="radio" name="ans-d1_c1" value="1" onchange="setMC(0, 'd1_c1', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c1-2">
+        <input type="radio" name="ans-d1_c1" value="2" onchange="setMC(0, 'd1_c1', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c1-3">
+        <input type="radio" name="ans-d1_c1" value="3" onchange="setMC(0, 'd1_c1', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c1"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Dùng hằng đẳng thức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>4</mn><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>=</mo><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mn>2</mn><mo>+</mo><mi>x</mi><mo>)</mo></mrow></math> để rút gọn nhân tử chung <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math> rồi thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>=</mo><mo>-</mo><mn>2</mn></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>2</mn></mrow></munder><mfrac><mrow><mn>4</mn><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>2</mn></mrow></munder><mfrac><mrow><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mrow><mo>(</mo><mn>2</mn><mo>+</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>2</mn></mrow></munder><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mn>2</mn><mo>-</mo><mrow><mo>(</mo><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mo>=</mo><mn>4</mn></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c2">
+      <div class="q-header">
+        <span class="q-num">Bài 2</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>1</mn></mrow></munder><mfrac><mrow><mn>5</mn><mi>x</mi><mo>+</mo><mn>5</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn></mrow></mfrac></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c2-0">
+        <input type="radio" name="ans-d1_c2" value="0" onchange="setMC(0, 'd1_c2', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>5</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c2-1">
+        <input type="radio" name="ans-d1_c2" value="1" onchange="setMC(0, 'd1_c2', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>5</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c2-2">
+        <input type="radio" name="ans-d1_c2" value="2" onchange="setMC(0, 'd1_c2', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>5</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c2-3">
+        <input type="radio" name="ans-d1_c2" value="3" onchange="setMC(0, 'd1_c2', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c2"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>5</mn></math> làm nhân tử chung ở tử và phân tích mẫu <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math>, sau đó rút gọn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Phân tích tử và mẫu thành nhân tử: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>1</mn></mrow></munder><mfrac><mrow><mn>5</mn><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mn>1</mn></mrow></munder><mfrac><mrow><mn>5</mn></mrow><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>5</mn></mrow><mrow><mo>-</mo><mn>1</mn><mo>+</mo><mn>2</mn></mrow></mfrac><mo>=</mo><mn>5</mn></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c3">
+      <div class="q-header">
+        <span class="q-num">Bài 3</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Kết quả của giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>2</mn></mrow></munder><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mrow><msqrt><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></msqrt><mo>-</mo><mn>2</mn></mrow></mfrac></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c3-0">
+        <input type="radio" name="ans-d1_c3" value="0" onchange="setMC(0, 'd1_c3', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>1</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c3-1">
+        <input type="radio" name="ans-d1_c3" value="1" onchange="setMC(0, 'd1_c3', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c3-2">
+        <input type="radio" name="ans-d1_c3" value="2" onchange="setMC(0, 'd1_c3', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c3-3">
+        <input type="radio" name="ans-d1_c3" value="3" onchange="setMC(0, 'd1_c3', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>4</mn></mrow></mfrac></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c3"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Phân tích tử thức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow></math>, đồng thời nhân cả tử và mẫu với biểu thức liên hợp của mẫu là <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></msqrt><mo>+</mo><mn>2</mn><mo>)</mo></mrow></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Phân tích tử và nhân liên hợp mẫu: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>2</mn></mrow></munder><mfrac><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></msqrt><mo>+</mo><mn>2</mn><mo>)</mo></mrow></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow><mo>-</mo><mn>4</mn></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>2</mn></mrow></munder><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><msqrt><mrow><mi>x</mi><mo>+</mo><mn>2</mn></mrow></msqrt><mo>+</mo><mn>2</mn><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mn>2</mn><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><mn>2</mn><mo>+</mo><mn>2</mn><mo>)</mo></mrow><mo>=</mo><mn>4</mn></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c4">
+      <div class="q-header">
+        <span class="q-num">Bài 4</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>3</mn></mrow></munder><mfrac><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi></mrow></mfrac></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c4-0">
+        <input type="radio" name="ans-d1_c4" value="0" onchange="setMC(0, 'd1_c4', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>7</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c4-1">
+        <input type="radio" name="ans-d1_c4" value="1" onchange="setMC(0, 'd1_c4', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>5</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c4-2">
+        <input type="radio" name="ans-d1_c4" value="2" onchange="setMC(0, 'd1_c4', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>3</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c4-3">
+        <input type="radio" name="ans-d1_c4" value="3" onchange="setMC(0, 'd1_c4', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>4</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c4"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Chia đa thức tử <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi><mo>-</mo><mn>3</mn></math> cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math> (hoặc dùng lược đồ Horner), đồng thời đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> làm nhân tử chung ở mẫu.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi><mo>-</mo><mn>3</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></math>. Khi đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>3</mn></mrow></munder><mfrac><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><mi>x</mi><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>3</mn></mrow></munder><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><msup><mn>3</mn><mn>2</mn></msup><mo>-</mo><mn>3</mn><mo>+</mo><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>7</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c5">
+      <div class="q-header">
+        <span class="q-num">Bài 5</span>
+        <span class="q-tag">Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Giá trị của giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>1</mn></mrow></munder><mfrac><mrow><msqrt><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></msqrt><mo>+</mo><mi>x</mi><mo>-</mo><mn>4</mn></mrow><mrow><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn></mrow></mfrac></math> bằng:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c5-0">
+        <input type="radio" name="ans-d1_c5" value="0" onchange="setMC(0, 'd1_c5', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>4</mn></mrow><mrow><mn>15</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c5-1">
+        <input type="radio" name="ans-d1_c5" value="1" onchange="setMC(0, 'd1_c5', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>4</mn></mrow><mrow><mn>15</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c5-2">
+        <input type="radio" name="ans-d1_c5" value="2" onchange="setMC(0, 'd1_c5', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>2</mn></mrow><mrow><mn>5</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c5-3">
+        <input type="radio" name="ans-d1_c5" value="3" onchange="setMC(0, 'd1_c5', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>5</mn></mrow></mfrac></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c5"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Tách hạng tử trên tử thành <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msqrt><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></msqrt><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow></math> rồi nhân liên hợp nhóm chứa căn. Dưới mẫu phân tích <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Tách tử thức: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msqrt><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></msqrt><mo>+</mo><mi>x</mi><mo>-</mo><mn>4</mn><mo>=</mo><mrow><mo>(</mo><msqrt><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></msqrt><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mo>+</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>2</mn><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow></mrow><mrow><msqrt><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></msqrt><mo>+</mo><mn>3</mn></mrow></mfrac><mo>+</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow></math>.</p><p>Phân tích mẫu: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>3</mn></msup><mo>-</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math>.</p><p>Rút gọn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow></math> và thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>=</mo><mn>1</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>1</mn></mrow></munder><mfrac><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><msqrt><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></msqrt><mo>+</mo><mn>3</mn></mrow></mfrac><mo>+</mo><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mfrac><mrow><mn>2</mn></mrow><mrow><mn>6</mn></mrow></mfrac><mo>+</mo><mn>1</mn></mrow><mrow><mn>1</mn><mo>-</mo><mn>3</mn><mo>-</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mn>4</mn></mrow><mrow><mn>15</mn></mrow></mfrac></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c6">
+      <div class="q-header">
+        <span class="q-num">Bài 6</span>
+        <span class="q-tag">Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Biết <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>2</mn></mrow></munder><mfrac><mrow><mroot><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><mn>3</mn></mrow></mroot><mo>-</mo><mn>1</mn></mrow><mrow><mi>x</mi><mo>-</mo><mn>2</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></math> với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mi>a</mi></mrow><mrow><mi>b</mi></mrow></mfrac></math> là phân số tối giản và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>b</mi><mo>&gt;</mo><mn>0</mn></math>. Tổng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>a</mi><mo>+</mo><mi>b</mi></math> bằng:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c6-0">
+        <input type="radio" name="ans-d1_c6" value="0" onchange="setMC(0, 'd1_c6', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>5</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c6-1">
+        <input type="radio" name="ans-d1_c6" value="1" onchange="setMC(0, 'd1_c6', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c6-2">
+        <input type="radio" name="ans-d1_c6" value="2" onchange="setMC(0, 'd1_c6', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>7</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c6-3">
+        <input type="radio" name="ans-d1_c6" value="3" onchange="setMC(0, 'd1_c6', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>8</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c6"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Áp dụng hằng đẳng thức liên hợp bậc ba <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>A</mi><mn>3</mn></msup><mo>-</mo><msup><mi>B</mi><mn>3</mn></msup><mo>=</mo><mrow><mo>(</mo><mi>A</mi><mo>-</mo><mi>B</mi><mo>)</mo></mrow><mrow><mo>(</mo><msup><mi>A</mi><mn>2</mn></msup><mo>+</mo><mi>A</mi><mi>B</mi><mo>+</mo><msup><mi>B</mi><mn>2</mn></msup><mo>)</mo></mrow></math> với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mo>=</mo><mroot><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><mn>3</mn></mrow></mroot></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>B</mi><mo>=</mo><mn>1</mn></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Nhân cả tử và mẫu với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>[</mo><msup><mrow><mo>(</mo><mroot><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><mn>3</mn></mrow></mroot><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mroot><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mn>1</mn><mo>]</mo></mrow></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mn>2</mn></mrow></munder><mfrac><mrow><mn>2</mn><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow></mrow><mrow><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><mrow><mo>[</mo><msup><mrow><mo>(</mo><mroot><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><mn>3</mn></mrow></mroot><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mroot><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mn>1</mn><mo>]</mo></mrow></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>2</mn></mrow><mrow><mn>1</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math>. Suy ra <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>a</mi><mo>=</mo><mn>2</mn><mo>,</mo><mi>b</mi><mo>=</mo><mn>3</mn><mo>⇒</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>=</mo><mn>5</mn></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+        <!-- Slogan cổ vũ tinh thần khi hoàn thành hết bài tập của trang -->
+        <div class="slogan-banner" id="slogan-t-0">
+          <div class="slogan-icon">🏆</div>
+          <div class="slogan-text" id="slogan-text-0"></div>
+          <div class="slogan-sub" id="slogan-sub-0"></div>
+          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(0)">🎲 Luyện thêm bộ bài tương tự</button>
+            <button class="btn btn-primary" onclick="switchTopic(1)">Sang Dạng 2: Vô định ∞/∞ →</button>
+          </div>
+        </div>
+      </main>
+    
+
+      <main id="page-t-1" class="page-content ">
+        <div class="topic-banner">DẠNG 2. GIỚI HẠN VÔ ĐỊNH DẠNG <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mi>∞</mi></mrow><mrow><mi>∞</mi></mrow></mfrac></math></div>
+
+        <div class="section-heading">I. Cách giải</div>
+        <div class="method-card"><p>Khi tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>±</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>g</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></mfrac></math>, nếu cả tử thức và mẫu thức đều tiến ra vô cực (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>±</mo><mi>∞</mi></math>), ta gặp dạng vô định <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mi>∞</mi></mrow><mrow><mi>∞</mi></mrow></mfrac></math>. Quy trình giải gồm 3 bước:</p><p><strong>• Bước 1:</strong> Chia cả tử thức và mẫu thức cho lũy thừa bậc cao nhất của <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> ở mẫu thức (hoặc bậc cao nhất của cả tử và mẫu). Nếu có căn bậc hai, đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math> ra khỏi căn thức trước khi chia, chú ý <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mo>=</mo><mo>|</mo><mi>x</mi><mo>|</mo></math>.</p><p><strong>• Bước 2:</strong> Rút gọn biểu thức ở tử và mẫu để xuất hiện các số hạng dạng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mi>c</mi></mrow><mrow><msup><mi>x</mi><mi>k</mi></msup></mrow></mfrac></math> (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>k</mi><mo>∈</mo><msup><mi>ℕ</mi><mo>*</mo></msup></math>).</p><p><strong>• Bước 3:</strong> Thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>±</mo><mi>∞</mi></math> và áp dụng giới hạn cơ bản <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>±</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mi>c</mi></mrow><mrow><msup><mi>x</mi><mi>k</mi></msup></mrow></mfrac><mo>=</mo><mn>0</mn></math> để tìm kết quả cuối cùng.</p><p><strong>Lưu ý quan trọng về dấu khi đưa biến ra khỏi căn bậc hai:</strong></p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></msqrt><mo>=</mo><mo>|</mo><mi>x</mi><mo>|</mo><mo>=</mo><mrow><mo>{</mo><mtable columnalign="left"><mtr><mtd><mi>x</mi></mtd><mtd><mtext>khi </mtext><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi><mrow><mo>(</mo><mi>x</mi><mo>&gt;</mo><mn>0</mn><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mo>-</mo><mi>x</mi></mtd><mtd><mtext>khi </mtext><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi><mrow><mo>(</mo><mi>x</mi><mo>&lt;</mo><mn>0</mn><mo>)</mo></mrow></mtd></mtr></mtable></mrow></math></p><p><strong>• Mẹo tính nhanh trắc nghiệm (khi bậc tử bằng bậc mẫu):</strong> Giới hạn bằng tỉ số hệ số của lũy thừa bậc cao nhất ở tử và mẫu (lưu ý xét đúng dấu của căn thức khi <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></math>).</p></div>
+
+        <div class="section-heading">II. Ví dụ minh họa</div>
+        
+      <div class="example-card">
+        <div class="example-header">Ví dụ 1 (Cả tử và mẫu ở dạng đa thức)</div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>A</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mi>x</mi><mo>-</mo><mn>2</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p><strong>• Bước 1 & Bước 2 (Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>3</mn></msup></math> rồi rút gọn):</strong></p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>A</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>2</mn></mrow><mrow><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mn>3</mn></mrow></mfrac></math></p><p><strong>• Bước 3 (Thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></math>):</strong> Vì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>=</mo><mn>0</mn></math>, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mn>0</mn></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn></mrow><mrow><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac><mo>=</mo><mn>0</mn></math> nên:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>A</mi><mo>=</mo><mfrac><mrow><mn>2</mn><mo>+</mo><mn>0</mn><mo>-</mo><mn>0</mn></mrow><mrow><mn>0</mn><mo>-</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></p>
+          </details>
+        </div>
+      </div>
+    
+
+      <div class="example-card">
+        <div class="example-header">Ví dụ 2 (Tử có căn bậc hai khi x → -∞)</div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>B</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>-</mo><mn>1</mn></mrow></msqrt><mo>+</mo><mn>3</mn><mi>x</mi></mrow><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></mfrac></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p><strong>• Bước 1 (Đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math> ra khỏi căn):</strong> Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>-</mo><mn>1</mn></mrow></msqrt><mo>=</mo><mo>|</mo><mi>x</mi><mo>|</mo><msqrt><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt></math>. Vì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></math> nên <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>&lt;</mo><mn>0</mn><mo>⇒</mo><mo>|</mo><mi>x</mi><mo>|</mo><mo>=</mo><mo>-</mo><mi>x</mi></math>.</p><p><strong>• Bước 2 (Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> rồi rút gọn):</strong></p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>B</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mo>-</mo><mi>x</mi><msqrt><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt><mo>+</mo><mn>3</mn><mi>x</mi></mrow><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>7</mn></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mo>-</mo><msqrt><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt><mo>+</mo><mn>3</mn></mrow><mrow><mn>2</mn><mo>+</mo><mfrac><mrow><mn>7</mn></mrow><mrow><mi>x</mi></mrow></mfrac></mrow></mfrac></math></p><p><strong>• Bước 3 (Thay <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></math>):</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>B</mi><mo>=</mo><mfrac><mrow><mo>-</mo><msqrt><mrow><mn>1</mn><mo>-</mo><mn>0</mn><mo>-</mo><mn>0</mn></mrow></msqrt><mo>+</mo><mn>3</mn></mrow><mrow><mn>2</mn><mo>+</mo><mn>0</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>1</mn><mo>+</mo><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>=</mo><mn>1</mn></math>.</p>
+          </details>
+        </div>
+      </div>
+    
+
+        <div class="section-heading">III. Bài tập vận dụng</div>
+        <div class="practice-toolbar">
+          <span class="progress-pill" id="prog-t-1">Tiến độ: 0/6 câu</span>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(1)">🎲 Sinh bài tập tương tự</button>
+            <button class="btn btn-outline" id="btn-orig-1" style="display:none;" onclick="restoreOriginal(1)">↩️ Bài tập gốc</button>
+          </div>
+        </div>
+
+        <div id="ex-list-1">
+    <div class="q-card" id="card-d2_c1">
+      <div class="q-header">
+        <span class="q-num">Bài 1</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Giá trị của giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn><mi>x</mi><mo>-</mo><mn>6</mn></mrow><mrow><mn>4</mn><mo>-</mo><mi>x</mi></mrow></mfrac></math> bằng:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c1-0">
+        <input type="radio" name="ans-d2_c1" value="0" onchange="setMC(1, 'd2_c1', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c1-1">
+        <input type="radio" name="ans-d2_c1" value="1" onchange="setMC(1, 'd2_c1', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>2</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c1-2">
+        <input type="radio" name="ans-d2_c1" value="2" onchange="setMC(1, 'd2_c1', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c1-3">
+        <input type="radio" name="ans-d2_c1" value="3" onchange="setMC(1, 'd2_c1', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c1"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math>, chú ý hệ số của <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> dưới mẫu là <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>1</mn></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn><mo>-</mo><mfrac><mrow><mn>6</mn></mrow><mrow><mi>x</mi></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>4</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>2</mn><mo>-</mo><mn>0</mn></mrow><mrow><mn>0</mn><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mn>2</mn></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c2">
+      <div class="q-header">
+        <span class="q-num">Bài 2</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>1</mn><mo>-</mo><mn>3</mn><mi>x</mi></mrow><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></mfrac></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c2-0">
+        <input type="radio" name="ans-d2_c2" value="0" onchange="setMC(1, 'd2_c2', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c2-1">
+        <input type="radio" name="ans-d2_c2" value="1" onchange="setMC(1, 'd2_c2', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>1</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c2-2">
+        <input type="radio" name="ans-d2_c2" value="2" onchange="setMC(1, 'd2_c2', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c2-3">
+        <input type="radio" name="ans-d2_c2" value="3" onchange="setMC(1, 'd2_c2', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c2"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> rồi dùng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>=</mo><mn>0</mn></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>L</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mn>3</mn></mrow><mrow><mn>2</mn><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>0</mn><mo>-</mo><mn>3</mn></mrow><mrow><mn>2</mn><mo>+</mo><mn>0</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math>. Chọn C.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c3">
+      <div class="q-header">
+        <span class="q-num">Bài 3</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Kết quả của giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn></mrow><mrow><mn>1</mn><mo>-</mo><mi>x</mi><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c3-0">
+        <input type="radio" name="ans-d2_c3" value="0" onchange="setMC(1, 'd2_c3', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c3-1">
+        <input type="radio" name="ans-d2_c3" value="1" onchange="setMC(1, 'd2_c3', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>2</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c3-2">
+        <input type="radio" name="ans-d2_c3" value="2" onchange="setMC(1, 'd2_c3', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>3</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c3-3">
+        <input type="radio" name="ans-d2_c3" value="3" onchange="setMC(1, 'd2_c3', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>0</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c3"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Chia cả tử và mẫu cho lũy thừa bậc cao nhất là <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math>, chú ý hệ số của <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math> ở mẫu là <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>1</mn></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>2</mn><mo>-</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mn>2</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>2</mn><mo>-</mo><mn>0</mn><mo>+</mo><mn>0</mn></mrow><mrow><mn>0</mn><mo>-</mo><mn>0</mn><mo>-</mo><mn>1</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mn>2</mn></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c4">
+      <div class="q-header">
+        <span class="q-num">Bài 4</span>
+        <span class="q-tag">Thông hiểu</span>
+      </div>
+      <div class="q-text">Tính giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><msup><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>2</mn></msup></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></mfrac></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c4-0">
+        <input type="radio" name="ans-d2_c4" value="0" onchange="setMC(1, 'd2_c4', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c4-1">
+        <input type="radio" name="ans-d2_c4" value="1" onchange="setMC(1, 'd2_c4', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c4-2">
+        <input type="radio" name="ans-d2_c4" value="2" onchange="setMC(1, 'd2_c4', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>4</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c4-3">
+        <input type="radio" name="ans-d2_c4" value="3" onchange="setMC(1, 'd2_c4', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>1</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c4"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Khai triển <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>2</mn></msup><mo>=</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>1</mn></math> rồi chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>4</mn><mi>x</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mn>4</mn><mo>+</mo><mfrac><mrow><mn>4</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>4</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>4</mn></mrow><mrow><mn>1</mn></mrow></mfrac><mo>=</mo><mn>4</mn></math>. Chọn C.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c5">
+      <div class="q-header">
+        <span class="q-num">Bài 5</span>
+        <span class="q-tag">Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Giá trị của giới hạn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><msqrt><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>1</mn></mrow></msqrt><mo>+</mo><mi>x</mi></mrow><mrow><mn>3</mn><mi>x</mi><mo>-</mo><mn>2</mn></mrow></mfrac></math> bằng:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c5-0">
+        <input type="radio" name="ans-d2_c5" value="0" onchange="setMC(1, 'd2_c5', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>1</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c5-1">
+        <input type="radio" name="ans-d2_c5" value="1" onchange="setMC(1, 'd2_c5', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c5-2">
+        <input type="radio" name="ans-d2_c5" value="2" onchange="setMC(1, 'd2_c5', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c5-3">
+        <input type="radio" name="ans-d2_c5" value="3" onchange="setMC(1, 'd2_c5', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>1</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c5"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Chú ý <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></math> nên <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msqrt><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>1</mn></mrow></msqrt><mo>=</mo><mo>|</mo><mi>x</mi><mo>|</mo><msqrt><mrow><mn>4</mn><mo>+</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt><mo>=</mo><mo>-</mo><mi>x</mi><msqrt><mrow><mn>4</mn><mo>+</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt></math>. Sau đó chia tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Vì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></math> nên <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>|</mo><mi>x</mi><mo>|</mo><mo>=</mo><mo>-</mo><mi>x</mi></math>. Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>-</mo><mi>∞</mi></mrow></munder><mfrac><mrow><mo>-</mo><msqrt><mrow><mn>4</mn><mo>+</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt><mo>+</mo><mn>1</mn></mrow><mrow><mn>3</mn><mo>-</mo><mfrac><mrow><mn>2</mn></mrow><mrow><mi>x</mi></mrow></mfrac></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><msqrt><mrow><mn>4</mn></mrow></msqrt><mo>+</mo><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mo>-</mo><mn>2</mn><mo>+</mo><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c6">
+      <div class="q-header">
+        <span class="q-num">Bài 6</span>
+        <span class="q-tag">Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Biết <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><msqrt><mrow><mn>9</mn><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>5</mn></mrow></msqrt><mo>-</mo><mn>2</mn><mi>x</mi></mrow><mrow><mn>2</mn><mi>x</mi><mo>+</mo><mn>3</mn></mrow></mfrac><mo>=</mo><mi>m</mi></math>. Giá trị của biểu thức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>P</mi><mo>=</mo><mn>4</mn><mi>m</mi><mo>+</mo><mn>1</mn></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c6-0">
+        <input type="radio" name="ans-d2_c6" value="0" onchange="setMC(1, 'd2_c6', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>3</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c6-1">
+        <input type="radio" name="ans-d2_c6" value="1" onchange="setMC(1, 'd2_c6', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>9</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c6-2">
+        <input type="radio" name="ans-d2_c6" value="2" onchange="setMC(1, 'd2_c6', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c6-3">
+        <input type="radio" name="ans-d2_c6" value="3" onchange="setMC(1, 'd2_c6', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>5</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c6"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Vì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></math> nên <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>|</mo><mi>x</mi><mo>|</mo><mo>=</mo><mi>x</mi></math>. Đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup></math> ra khỏi căn, chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> để tìm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>m</mi></math>, rồi thay vào <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>P</mi><mo>=</mo><mn>4</mn><mi>m</mi><mo>+</mo><mn>1</mn></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Vì <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></math> nên <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>|</mo><mi>x</mi><mo>|</mo><mo>=</mo><mi>x</mi></math>. Chia cả tử và mẫu cho <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>m</mi><mo>=</mo><munder><mo>lim</mo><mrow><mi>x</mi><mo>→</mo><mo>+</mo><mi>∞</mi></mrow></munder><mfrac><mrow><msqrt><mrow><mn>9</mn><mo>-</mo><mfrac><mrow><mn>2</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mn>5</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac></mrow></msqrt><mo>-</mo><mn>2</mn></mrow><mrow><mn>2</mn><mo>+</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mi>x</mi></mrow></mfrac></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>3</mn><mo>-</mo><mn>2</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac></math>. Do đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>P</mi><mo>=</mo><mn>4</mn><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>+</mo><mn>1</mn><mo>=</mo><mn>3</mn></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+        <!-- Slogan cổ vũ tinh thần khi hoàn thành hết bài tập của trang -->
+        <div class="slogan-banner" id="slogan-t-1">
+          <div class="slogan-icon">🏆</div>
+          <div class="slogan-text" id="slogan-text-1"></div>
+          <div class="slogan-sub" id="slogan-sub-1"></div>
+          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(1)">🎲 Luyện thêm bộ bài tương tự</button>
+            
+          </div>
+        </div>
+      </main>
+    
+
+  <footer>
+    Phiếu Bài Tập Theo Từng Dạng Bài • Thiết kế bởi Skill pbt_dangbai (GDPT 2018 – Công văn 5512 – Kết Nối Tri Thức)
+  </footer>
+</div>
+
+<!-- MODAL MẬT KHẨU GIÁO VIÊN (008397) -->
+<div id="modal-pass" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔒 Xác thực Giáo viên</div>
+      <button class="close-btn" onclick="closeModal('modal-pass')">&times;</button>
+    </div>
+    <p style="font-size:0.9rem; color:var(--gray-600); margin-bottom:10px;">Nhập mật khẩu giáo viên để xem kết quả luyện tập của học sinh.</p>
+    <input type="password" id="teacher-pass-input" inputmode="numeric" placeholder="Nhập mật khẩu..." style="width:100%; padding:10px 12px; min-height:44px; border:1.5px solid var(--gray-300); border-radius:7px; font-size:1rem;" onkeydown="if(event.key==='Enter') verifyTeacherPassword()">
+    <div id="pass-error" class="error-msg"></div>
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('modal-pass')">Hủy</button>
+      <button class="btn btn-primary btn-sm" onclick="verifyTeacherPassword()">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CỔNG GIÁO VIÊN -->
+<div id="modal-teacher" class="modal-backdrop">
+  <div class="modal-box modal-wide">
+    <div class="modal-header">
+      <div class="modal-title">👩‍🏫 Bảng kết quả luyện tập theo Dạng bài</div>
+      <button class="close-btn" onclick="closeModal('modal-teacher')">&times;</button>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="btn btn-success btn-sm" onclick="exportCSV()">📊 Xuất bảng điểm Excel (.csv)</button>
+      <div class="btn btn-outline btn-sm file-btn-wrap">
+        <span>📂 Nhập / Gộp bài làm HS (.json)</span>
+        <input type="file" accept=".json" multiple onchange="importSubmissions(event)">
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="clearAllSubmissions()">🗑️ Xóa tất cả</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>STT</th><th>Họ và tên</th><th>Lớp</th><th>Dạng bài</th><th>Kết quả</th><th>Thời gian</th></tr></thead>
+        <tbody id="teacher-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.remove('no-js');
+
+/* === DATA START === */
+const TOPICS_DATA = {"id":"pbt-dangbai-gioihan00-vocungvocung","grade":"Toán 11 • Chương V","curriculum":"Chương trình GDPT 2018 • Công văn 5512 • Kết nối tri thức","title":"PHIẾU HƯỚNG DẪN TỰ HỌC: KHỬ CÁC DẠNG VÔ ĐỊNH 0/0 VÀ ∞/∞","subtitle":"Luyện tập chuyên sâu theo từng dạng bài — Có phím tự sinh bài tập tương tự","topics":[{"id":"dang1","tabTitle":"Dạng 1: Vô định 0/0","title":"DẠNG 1. GIỚI HẠN VÔ ĐỊNH DẠNG $\\frac{0}{0}$","method":["Khi tính $\\lim_{x \\to x_0} \\frac{f(x)}{g(x)}$, nếu thay trực tiếp $x = x_0$ vào tử và mẫu đều nhận được giá trị bằng $0$ (tức $f(x_0) = 0$ và $g(x_0) = 0$), ta gặp dạng vô định $\\frac{0}{0}$. Quy trình giải gồm 3 bước:","<strong>• Bước 1:</strong> Phân tích tử thức $f(x)$ và mẫu thức $g(x)$ thành nhân tử để làm xuất hiện nhân tử chung $(x - x_0)$. Nếu có căn thức, nhân cả tử và mẫu với biểu thức liên hợp thích hợp trước khi phân tích nhân tử.","<strong>• Bước 2:</strong> Rút gọn (triệt tiêu) nhân tử chung $(x - x_0)$ của tử thức và mẫu thức (vì $x \\to x_0 \\Rightarrow x \\neq x_0$).","<strong>• Bước 3:</strong> Thay số $x = x_0$ vào biểu thức đã rút gọn để tính giá trị giới hạn cuối cùng.","<strong>Công thức bổ trợ cần nhớ:</strong>","— Hằng đẳng thức: $a^2 - b^2 = (a - b)(a + b)$; $a^3 - b^3 = (a - b)(a^2 + ab + b^2)$; $a^3 + b^3 = (a + b)(a^2 - ab + b^2)$.","— Tam thức bậc hai: Nếu $ax^2 + bx + c = 0$ có hai nghiệm $x_1, x_2$ thì $ax^2 + bx + c = a(x - x_1)(x - x_2)$.","— Biểu thức liên hợp: $(\\sqrt{A} - B)(\\sqrt{A} + B) = A - B^2$; $(\\sqrt{A} - \\sqrt{B})(\\sqrt{A} + \\sqrt{B}) = A - B$."],"examples":[{"title":"Ví dụ 1 (Cả tử và mẫu ở dạng đa thức)","prompt":"Tính giới hạn $L = \\lim_{x \\to 3} \\frac{x^2 - 5x + 6}{x^2 - 8x + 15}$.","solution":["Thay $x = 3$ vào tử và mẫu ta có $3^2 - 5 \\cdot 3 + 6 = 0$ và $3^2 - 8 \\cdot 3 + 15 = 0$. Đây là dạng vô định $\\frac{0}{0}$.","<strong>• Bước 1 (Phân tích nhân tử):</strong> $x^2 - 5x + 6 = (x - 2)(x - 3)$ và $x^2 - 8x + 15 = (x - 3)(x - 5)$.","<strong>• Bước 2 (Rút gọn nhân tử chung $(x - 3)$):</strong>","$$L = \\lim_{x \\to 3} \\frac{(x - 2)(x - 3)}{(x - 3)(x - 5)} = \\lim_{x \\to 3} \\frac{x - 2}{x - 5}$$","<strong>• Bước 3 (Thay số):</strong> $L = \\frac{3 - 2}{3 - 5} = -\\frac{1}{2}$."]},{"title":"Ví dụ 2 (Tử có căn bậc hai, mẫu ở dạng đa thức)","prompt":"Tính giới hạn $I = \\lim_{x \\to 6} \\frac{\\sqrt{x + 3} - 3}{x - 6}$.","solution":["Thay $x = 6$ vào tử và mẫu đều bằng $0$ (dạng vô định $\\frac{0}{0}$).","<strong>• Bước 1 (Nhân liên hợp của tử):</strong> Nhân cả tử và mẫu với $(\\sqrt{x + 3} + 3)$:","$$I = \\lim_{x \\to 6} \\frac{(\\sqrt{x + 3} - 3)(\\sqrt{x + 3} + 3)}{(x - 6)(\\sqrt{x + 3} + 3)} = \\lim_{x \\to 6} \\frac{(x + 3) - 9}{(x - 6)(\\sqrt{x + 3} + 3)} = \\lim_{x \\to 6} \\frac{x - 6}{(x - 6)(\\sqrt{x + 3} + 3)}$$","<strong>• Bước 2 (Rút gọn $(x - 6)$):</strong> $I = \\lim_{x \\to 6} \\frac{1}{\\sqrt{x + 3} + 3}$.","<strong>• Bước 3 (Thay số):</strong> $I = \\frac{1}{\\sqrt{6 + 3} + 3} = \\frac{1}{3 + 3} = \\frac{1}{6}$."]}],"exercises":[{"id":"d1_c1","type":"mc","level":"Thông hiểu","text":"Giá trị của giới hạn $\\lim_{x \\to -2} \\frac{4 - x^2}{x + 2}$ bằng:","options":["$4$","$-4$","$0$","$2$"],"correctIndex":0,"hint":"Dùng hằng đẳng thức $4 - x^2 = (2 - x)(2 + x)$ để rút gọn nhân tử chung $(x + 2)$ rồi thay $x = -2$.","solution":"Ta có $\\lim_{x \\to -2} \\frac{4 - x^2}{x + 2} = \\lim_{x \\to -2} \\frac{(2 - x)(2 + x)}{x + 2} = \\lim_{x \\to -2} (2 - x) = 2 - (-2) = 4$. Chọn A."},{"id":"d1_c2","type":"mc","level":"Thông hiểu","text":"Tính giới hạn $L = \\lim_{x \\to -1} \\frac{5x + 5}{x^2 + 3x + 2}$.","options":["$5$","$-5$","$\\frac{5}{3}$","$0$"],"correctIndex":0,"hint":"Đặt $5$ làm nhân tử chung ở tử và phân tích mẫu $x^2 + 3x + 2 = (x + 1)(x + 2)$, sau đó rút gọn $(x + 1)$.","solution":"Phân tích tử và mẫu thành nhân tử: $L = \\lim_{x \\to -1} \\frac{5(x + 1)}{(x + 1)(x + 2)} = \\lim_{x \\to -1} \\frac{5}{x + 2} = \\frac{5}{-1 + 2} = 5$. Chọn A."},{"id":"d1_c3","type":"mc","level":"Thông hiểu","text":"Kết quả của giới hạn $\\lim_{x \\to 2} \\frac{x^2 - 3x + 2}{\\sqrt{x + 2} - 2}$ là:","options":["$1$","$4$","$-4$","$\\frac{1}{4}$"],"correctIndex":1,"hint":"Phân tích tử thức $x^2 - 3x + 2 = (x - 1)(x - 2)$, đồng thời nhân cả tử và mẫu với biểu thức liên hợp của mẫu là $(\\sqrt{x + 2} + 2)$.","solution":"Phân tích tử và nhân liên hợp mẫu: $\\lim_{x \\to 2} \\frac{(x - 1)(x - 2)(\\sqrt{x + 2} + 2)}{(x + 2) - 4} = \\lim_{x \\to 2} (x - 1)(\\sqrt{x + 2} + 2) = (2 - 1)(2 + 2) = 4$. Chọn B."},{"id":"d1_c4","type":"mc","level":"Thông hiểu","text":"Tính giới hạn $I = \\lim_{x \\to 3} \\frac{x^3 - 4x^2 + 4x - 3}{x^2 - 3x}$.","options":["$\\frac{7}{3}$","$\\frac{5}{3}$","$3$","$\\frac{4}{3}$"],"correctIndex":0,"hint":"Chia đa thức tử $x^3 - 4x^2 + 4x - 3$ cho $(x - 3)$ (hoặc dùng lược đồ Horner), đồng thời đặt $x$ làm nhân tử chung ở mẫu.","solution":"Ta có $x^3 - 4x^2 + 4x - 3 = (x - 3)(x^2 - x + 1)$. Khi đó $I = \\lim_{x \\to 3} \\frac{(x - 3)(x^2 - x + 1)}{x(x - 3)} = \\lim_{x \\to 3} \\frac{x^2 - x + 1}{x} = \\frac{3^2 - 3 + 1}{3} = \\frac{7}{3}$. Chọn A."},{"id":"d1_c5","type":"mc","level":"Vận dụng thấp","text":"Giá trị của giới hạn $\\lim_{x \\to 1} \\frac{\\sqrt{2x + 7} + x - 4}{x^3 - 4x^2 + 3}$ bằng:","options":["$-\\frac{4}{15}$","$\\frac{4}{15}$","$-\\frac{2}{5}$","$-\\frac{1}{5}$"],"correctIndex":0,"hint":"Tách hạng tử trên tử thành $(\\sqrt{2x + 7} - 3) + (x - 1)$ rồi nhân liên hợp nhóm chứa căn. Dưới mẫu phân tích $x^3 - 4x^2 + 3 = (x - 1)(x^2 - 3x - 3)$.","solution":["Tách tử thức: $\\sqrt{2x + 7} + x - 4 = (\\sqrt{2x + 7} - 3) + (x - 1) = \\frac{2(x - 1)}{\\sqrt{2x + 7} + 3} + (x - 1)$.","Phân tích mẫu: $x^3 - 4x^2 + 3 = (x - 1)(x^2 - 3x - 3)$.","Rút gọn $(x - 1)$ và thay $x = 1$: $\\lim_{x \\to 1} \\frac{\\frac{2}{\\sqrt{2x + 7} + 3} + 1}{x^2 - 3x - 3} = \\frac{\\frac{2}{6} + 1}{1 - 3 - 3} = -\\frac{4}{15}$. Chọn A."]},{"id":"d1_c6","type":"mc","level":"Vận dụng thấp","text":"Biết $\\lim_{x \\to 2} \\frac{\\sqrt[3]{2x - 3} - 1}{x - 2} = \\frac{a}{b}$ với $\\frac{a}{b}$ là phân số tối giản và $b > 0$. Tổng $a + b$ bằng:","options":["$5$","$4$","$7$","$8$"],"correctIndex":0,"hint":"Áp dụng hằng đẳng thức liên hợp bậc ba $A^3 - B^3 = (A - B)(A^2 + AB + B^2)$ với $A = \\sqrt[3]{2x - 3}$ và $B = 1$.","solution":"Nhân cả tử và mẫu với $\\left[(\\sqrt[3]{2x - 3})^2 + \\sqrt[3]{2x - 3} + 1\\right]$: $\\lim_{x \\to 2} \\frac{2(x - 2)}{(x - 2)\\left[(\\sqrt[3]{2x - 3})^2 + \\sqrt[3]{2x - 3} + 1\\right]} = \\frac{2}{1 + 1 + 1} = \\frac{2}{3}$. Suy ra $a = 2, b = 3 \\Rightarrow a + b = 5$. Chọn A."}],"generatorCode":"function(rInt, rPick, rShuffle, fmtTerm) { var res = []; var a1 = rInt(2, 6); var ans1 = 2 * a1; var o1 = rShuffle([{t:'$'+ans1+'$',ok:true},{t:'$'+( -ans1 )+'$',ok:false},{t:'$0$',ok:false},{t:'$'+a1+'$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Giá trị của giới hạn $\\\\lim_{x \\\\to -'+a1+'} \\\\frac{'+(a1*a1)+' - x^2}{x + '+a1+'}$ bằng:', options:o1.map(function(x){return x.t;}), correctIndex:o1.findIndex(function(x){return x.ok;}), hint:'Phân tích tử thức $'+(a1*a1)+' - x^2 = ('+a1+' - x)('+a1+' + x)$ rồi rút gọn $(x + '+a1+')$.', solution:'Ta có $\\\\lim_{x \\\\to -'+a1+'} \\\\frac{('+a1+' - x)('+a1+' + x)}{x + '+a1+'} = \\\\lim_{x \\\\to -'+a1+'} ('+a1+' - x) = '+a1+' - (-'+a1+') = '+ans1+'$.' }); var x2 = rInt(1, 3); var m2 = rPick([-3, -2, 4, 5]); var k2 = rInt(2, 5); var ans2 = k2 * (x2 - m2); var S2 = x2 + m2; var P2 = x2 * m2; var num2 = 'x^2 ' + fmtTerm(-S2, 'x', false) + ' ' + fmtTerm(P2, '', false); var o2 = rShuffle([{t:'$'+ans2+'$',ok:true},{t:'$'+(ans2+k2)+'$',ok:false},{t:'$'+(ans2-k2)+'$',ok:false},{t:'$'+(ans2+2*k2)+'$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Tính giới hạn $L = \\\\lim_{x \\\\to '+x2+'} \\\\frac{'+k2+'('+num2+')}{x - '+x2+'}$.', options:o2.map(function(x){return x.t;}), correctIndex:o2.findIndex(function(x){return x.ok;}), hint:'Phân tích tam thức $'+num2+' = (x - '+x2+')(x ' + fmtTerm(-m2, '', false) + ')$ rồi rút gọn $(x - '+x2+')$.', solution:'Rút gọn $(x - '+x2+')$: $L = \\\\lim_{x \\\\to '+x2+'} '+k2+'(x ' + fmtTerm(-m2, '', false) + ') = '+k2+'('+(x2 - m2)+') = '+ans2+'$.' }); var b3 = rInt(2, 4); var c3 = rInt(1, 3); var x3 = b3 * b3 - c3; var den3 = 2 * b3; var o3 = rShuffle([{t:'$\\\\frac{1}{'+den3+'}$',ok:true},{t:'$\\\\frac{1}{'+b3+'}$',ok:false},{t:'$'+den3+'$',ok:false},{t:'$0$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Liên hợp)', text:'Tính giới hạn $I = \\\\lim_{x \\\\to '+x3+'} \\\\frac{\\\\sqrt{x + '+c3+'} - '+b3+'}{x - '+x3+'}$.', options:o3.map(function(x){return x.t;}), correctIndex:o3.findIndex(function(x){return x.ok;}), hint:'Nhân cả tử và mẫu với biểu thức liên hợp $(\\\\sqrt{x + '+c3+'} + '+b3+')$ để khử căn ở tử.', solution:'Nhân liên hợp: $I = \\\\lim_{x \\\\to '+x3+'} \\\\frac{(x + '+c3+') - '+(b3*b3)+'}{(x - '+x3+')(\\\\sqrt{x + '+c3+'} + '+b3+')} = \\\\lim_{x \\\\to '+x3+'} \\\\frac{1}{\\\\sqrt{x + '+c3+'} + '+b3+'} = \\\\frac{1}{'+b3+' + '+b3+'} = \\\\frac{1}{'+den3+'}$.' }); var x4 = rInt(1, 3); var p4 = rInt(1, 4); var ans4 = 2 * x4 + p4; var S4 = -p4; var P4 = -x4 * (x4 + p4); var num4 = 'x^2 ' + fmtTerm(p4, 'x', false) + ' ' + fmtTerm(P4, '', false); res.push({ type:'short', level:'Tự sinh (Trả lời ngắn)', text:'Tính giá trị giới hạn $K = \\\\lim_{x \\\\to '+x4+'} \\\\frac{'+num4+'}{x - '+x4+'}$.', answer:String(ans4), tol:0.001, hint:'Phân tích tử thức thành $(x - '+x4+')(x + '+(x4 + p4)+')$ rồi rút gọn $(x - '+x4+')$.', solution:'Ta có $K = \\\\lim_{x \\\\to '+x4+'} \\\\frac{(x - '+x4+')(x + '+(x4 + p4)+')}{x - '+x4+'} = '+x4+' + '+(x4 + p4)+' = '+ans4+'$.' }); return res; }"},{"id":"dang2","tabTitle":"Dạng 2: Vô định ∞/∞","title":"DẠNG 2. GIỚI HẠN VÔ ĐỊNH DẠNG $\\frac{\\infty}{\\infty}$","method":["Khi tính $\\lim_{x \\to \\pm\\infty} \\frac{f(x)}{g(x)}$, nếu cả tử thức và mẫu thức đều tiến ra vô cực ($\\pm\\infty$), ta gặp dạng vô định $\\frac{\\infty}{\\infty}$. Quy trình giải gồm 3 bước:","<strong>• Bước 1:</strong> Chia cả tử thức và mẫu thức cho lũy thừa bậc cao nhất của $x$ ở mẫu thức (hoặc bậc cao nhất của cả tử và mẫu). Nếu có căn bậc hai, đưa $x^2$ ra khỏi căn thức trước khi chia, chú ý $\\sqrt{x^2} = |x|$.","<strong>• Bước 2:</strong> Rút gọn biểu thức ở tử và mẫu để xuất hiện các số hạng dạng $\\frac{c}{x^k}$ ($k \\in \\mathbb{N}^*$).","<strong>• Bước 3:</strong> Thay $x \\to \\pm\\infty$ và áp dụng giới hạn cơ bản $\\lim_{x \\to \\pm\\infty} \\frac{c}{x^k} = 0$ để tìm kết quả cuối cùng.","<strong>Lưu ý quan trọng về dấu khi đưa biến ra khỏi căn bậc hai:</strong>","$$\\sqrt{x^2} = |x| = \\begin{cases} x & \\text{khi } x \\to +\\infty \\ (x > 0) \\\\ -x & \\text{khi } x \\to -\\infty \\ (x < 0) \\end{cases}$$","<strong>• Mẹo tính nhanh trắc nghiệm (khi bậc tử bằng bậc mẫu):</strong> Giới hạn bằng tỉ số hệ số của lũy thừa bậc cao nhất ở tử và mẫu (lưu ý xét đúng dấu của căn thức khi $x \\to -\\infty$)."],"examples":[{"title":"Ví dụ 1 (Cả tử và mẫu ở dạng đa thức)","prompt":"Tính giới hạn $A = \\lim_{x \\to -\\infty} \\frac{2x^3 + x - 2}{x^2 - 3x^3}$.","solution":["<strong>• Bước 1 & Bước 2 (Chia cả tử và mẫu cho $x^3$ rồi rút gọn):</strong>","$$A = \\lim_{x \\to -\\infty} \\frac{2 + \\frac{1}{x^2} - \\frac{2}{x^3}}{\\frac{1}{x} - 3}$$","<strong>• Bước 3 (Thay $x \\to -\\infty$):</strong> Vì $\\lim_{x \\to -\\infty} \\frac{1}{x} = 0$, $\\lim_{x \\to -\\infty} \\frac{1}{x^2} = 0$ và $\\lim_{x \\to -\\infty} \\frac{2}{x^3} = 0$ nên:","$$A = \\frac{2 + 0 - 0}{0 - 3} = -\\frac{2}{3}$$"]},{"title":"Ví dụ 2 (Tử có căn bậc hai khi x → -∞)","prompt":"Tính giới hạn $B = \\lim_{x \\to -\\infty} \\frac{\\sqrt{x^2 - x - 1} + 3x}{2x + 7}$.","solution":["<strong>• Bước 1 (Đưa $x^2$ ra khỏi căn):</strong> Ta có $\\sqrt{x^2 - x - 1} = |x|\\sqrt{1 - \\frac{1}{x} - \\frac{1}{x^2}}$. Vì $x \\to -\\infty$ nên $x < 0 \\Rightarrow |x| = -x$.","<strong>• Bước 2 (Chia cả tử và mẫu cho $x$ rồi rút gọn):</strong>","$$B = \\lim_{x \\to -\\infty} \\frac{-x\\sqrt{1 - \\frac{1}{x} - \\frac{1}{x^2}} + 3x}{2x + 7} = \\lim_{x \\to -\\infty} \\frac{-\\sqrt{1 - \\frac{1}{x} - \\frac{1}{x^2}} + 3}{2 + \\frac{7}{x}}$$","<strong>• Bước 3 (Thay $x \\to -\\infty$):</strong> $B = \\frac{-\\sqrt{1 - 0 - 0} + 3}{2 + 0} = \\frac{-1 + 3}{2} = 1$."]}],"exercises":[{"id":"d2_c1","type":"mc","level":"Thông hiểu","text":"Giá trị của giới hạn $\\lim_{x \\to +\\infty} \\frac{2x - 6}{4 - x}$ bằng:","options":["$2$","$-2$","$-\\frac{3}{2}$","$\\frac{1}{2}$"],"correctIndex":1,"hint":"Chia cả tử và mẫu cho $x$, chú ý hệ số của $x$ dưới mẫu là $-1$.","solution":"Chia cả tử và mẫu cho $x$: $\\lim_{x \\to +\\infty} \\frac{2 - \\frac{6}{x}}{\\frac{4}{x} - 1} = \\frac{2 - 0}{0 - 1} = -2$. Chọn B."},{"id":"d2_c2","type":"mc","level":"Thông hiểu","text":"Tính giới hạn $L = \\lim_{x \\to +\\infty} \\frac{1 - 3x}{2x + 1}$.","options":["$\\frac{1}{2}$","$1$","$-\\frac{3}{2}$","$\\frac{3}{2}$"],"correctIndex":2,"hint":"Chia cả tử và mẫu cho $x$ rồi dùng $\\lim_{x \\to +\\infty} \\frac{1}{x} = 0$.","solution":"Chia cả tử và mẫu cho $x$: $L = \\lim_{x \\to +\\infty} \\frac{\\frac{1}{x} - 3}{2 + \\frac{1}{x}} = \\frac{0 - 3}{2 + 0} = -\\frac{3}{2}$. Chọn C."},{"id":"d2_c3","type":"mc","level":"Thông hiểu","text":"Kết quả của giới hạn $\\lim_{x \\to -\\infty} \\frac{2x^2 - 3x + 2}{1 - x - x^2}$ là:","options":["$2$","$-2$","$3$","$0$"],"correctIndex":1,"hint":"Chia cả tử và mẫu cho lũy thừa bậc cao nhất là $x^2$, chú ý hệ số của $x^2$ ở mẫu là $-1$.","solution":"Chia cả tử và mẫu cho $x^2$: $\\lim_{x \\to -\\infty} \\frac{2 - \\frac{3}{x} + \\frac{2}{x^2}}{\\frac{1}{x^2} - \\frac{1}{x} - 1} = \\frac{2 - 0 + 0}{0 - 0 - 1} = -2$. Chọn B."},{"id":"d2_c4","type":"mc","level":"Thông hiểu","text":"Tính giới hạn $I = \\lim_{x \\to -\\infty} \\frac{(2x + 1)^2}{x^2 - 4x + 1}$.","options":["$2$","$-4$","$4$","$1$"],"correctIndex":2,"hint":"Khai triển $(2x + 1)^2 = 4x^2 + 4x + 1$ rồi chia cả tử và mẫu cho $x^2$.","solution":"Ta có $I = \\lim_{x \\to -\\infty} \\frac{4x^2 + 4x + 1}{x^2 - 4x + 1} = \\lim_{x \\to -\\infty} \\frac{4 + \\frac{4}{x} + \\frac{1}{x^2}}{1 - \\frac{4}{x} + \\frac{1}{x^2}} = \\frac{4}{1} = 4$. Chọn C."},{"id":"d2_c5","type":"mc","level":"Vận dụng thấp","text":"Giá trị của giới hạn $\\lim_{x \\to -\\infty} \\frac{\\sqrt{4x^2 + 3x - 1} + x}{3x - 2}$ bằng:","options":["$1$","$-\\frac{1}{3}$","$\\frac{1}{3}$","$-1$"],"correctIndex":1,"hint":"Chú ý $x \\to -\\infty$ nên $\\sqrt{4x^2 + 3x - 1} = |x|\\sqrt{4 + \\frac{3}{x} - \\frac{1}{x^2}} = -x\\sqrt{4 + \\frac{3}{x} - \\frac{1}{x^2}}$. Sau đó chia tử và mẫu cho $x$.","solution":"Vì $x \\to -\\infty$ nên $|x| = -x$. Chia cả tử và mẫu cho $x$: $\\lim_{x \\to -\\infty} \\frac{-\\sqrt{4 + \\frac{3}{x} - \\frac{1}{x^2}} + 1}{3 - \\frac{2}{x}} = \\frac{-\\sqrt{4} + 1}{3} = \\frac{-2 + 1}{3} = -\\frac{1}{3}$. Chọn B."},{"id":"d2_c6","type":"mc","level":"Vận dụng thấp","text":"Biết $\\lim_{x \\to +\\infty} \\frac{\\sqrt{9x^2 - 2x + 5} - 2x}{2x + 3} = m$. Giá trị của biểu thức $P = 4m + 1$ là:","options":["$3$","$-9$","$2$","$5$"],"correctIndex":0,"hint":"Vì $x \\to +\\infty$ nên $|x| = x$. Đưa $x^2$ ra khỏi căn, chia cả tử và mẫu cho $x$ để tìm $m$, rồi thay vào $P = 4m + 1$.","solution":"Vì $x \\to +\\infty$ nên $|x| = x$. Chia cả tử và mẫu cho $x$: $m = \\lim_{x \\to +\\infty} \\frac{\\sqrt{9 - \\frac{2}{x} + \\frac{5}{x^2}} - 2}{2 + \\frac{3}{x}} = \\frac{3 - 2}{2} = \\frac{1}{2}$. Do đó $P = 4 \\cdot \\frac{1}{2} + 1 = 3$. Chọn A."}],"generatorCode":"function(rInt, rPick, rShuffle, fmtTerm) { var res = []; var k1 = rPick([-4, -3, -2, 2, 3, 4]); var c1 = rInt(2, 4); var a1 = k1 * c1; var b1 = rInt(1, 7); var d1 = rInt(1, 6); var o1 = rShuffle([{t:'$'+k1+'$',ok:true},{t:'$'+(-k1)+'$',ok:false},{t:'$0$',ok:false},{t:'$'+a1+'$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Giá trị của giới hạn $\\\\lim_{x \\\\to +\\\\infty} \\\\frac{'+a1+'x + '+b1+'}{'+c1+'x - '+d1+'}$ bằng:', options:o1.map(function(x){return x.t;}), correctIndex:o1.findIndex(function(x){return x.ok;}), hint:'Chia cả tử và mẫu cho $x$ rồi áp dụng $\\\\lim_{x \\\\to +\\\\infty} \\\\frac{1}{x} = 0$.', solution:'Chia tử và mẫu cho $x$: $\\\\lim_{x \\\\to +\\\\infty} \\\\frac{'+a1+' + \\\\frac{'+b1+'}{x}}{'+c1+' - \\\\frac{'+d1+'}{x}} = \\\\frac{'+a1+'}{'+c1+'} = '+k1+'$.' }); var a2 = rInt(2, 5); var b2 = rInt(1, 4); var c2 = rInt(1, 5); var ans2 = a2 * a2; var o2 = rShuffle([{t:'$'+ans2+'$',ok:true},{t:'$'+a2+'$',ok:false},{t:'$'+(-ans2)+'$',ok:false},{t:'$1$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Tính giới hạn $I = \\\\lim_{x \\\\to -\\\\infty} \\\\frac{('+a2+'x + '+b2+')^2}{x^2 - '+c2+'x + 1}$.', options:o2.map(function(x){return x.t;}), correctIndex:o2.findIndex(function(x){return x.ok;}), hint:'Khai triển tử thức để lấy hệ số của $x^2$ rồi chia cả tử và mẫu cho $x^2$.', solution:'Hệ số bậc cao nhất của tử là $'+a2+'^2 = '+ans2+'$, của mẫu là $1$. Chia tử và mẫu cho $x^2$ ta được $I = '+ans2+'$.' }); var a3 = rPick([2, 3]); var d3 = rPick([1, 2]); var ans3 = rPick([-2, -1, 1, 2]); var c3 = ans3 * d3 + a3; var o3 = rShuffle([{t:'$'+ans3+'$',ok:true},{t:'$'+(ans3 + 1)+'$',ok:false},{t:'$'+(ans3 - 1)+'$',ok:false},{t:'$'+(ans3 + 3)+'$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Vận dụng)', text:'Giá trị của giới hạn $\\\\lim_{x \\\\to -\\\\infty} \\\\frac{\\\\sqrt{'+(a3*a3)+'x^2 + 3x + 1} ' + fmtTerm(c3, 'x', false) + '}{' + fmtTerm(d3, 'x', true) + ' + 5}$ bằng:', options:o3.map(function(x){return x.t;}), correctIndex:o3.findIndex(function(x){return x.ok;}), hint:'Vì $x \\\\to -\\\\infty$ nên $\\\\sqrt{'+(a3*a3)+'x^2 + 3x + 1} = -x\\\\sqrt{'+(a3*a3)+' + \\\\frac{3}{x} + \\\\frac{1}{x^2}}$. Chú ý dấu trừ khi chia cho $x$!', solution:'Khi $x \\\\to -\\\\infty$, $|x| = -x$. Chia cả tử và mẫu cho $x$: $\\\\frac{-'+a3+' ' + fmtTerm(c3, '', false) + '}{'+d3+'} = '+ans3+'$.' }); var a4 = rPick([2, 3, 4]); var d4 = rPick([1, 2]); var ans4 = rInt(2, 5); var c4 = ans4 * d4 - a4; res.push({ type:'short', level:'Tự sinh (Trả lời ngắn)', text:'Tính giá trị giới hạn $M = \\\\lim_{x \\\\to +\\\\infty} \\\\frac{\\\\sqrt{'+(a4*a4)+'x^2 - 2x + 3} ' + fmtTerm(c4, 'x', false) + '}{' + fmtTerm(d4, 'x', true) + ' + 1}$.', answer:String(ans4), tol:0.001, hint:'Vì $x \\\\to +\\\\infty$ nên $|x| = x$. Đưa $x^2$ ra khỏi căn rồi chia cả tử và mẫu cho $x$.', solution:'Chia tử và mẫu cho $x$ (với $|x| = x$): $M = \\\\frac{'+a4+' ' + fmtTerm(c4, '', false) + '}{'+d4+'} = '+ans4+'$.' }); return res; }"}]};
+/* === DATA END === */
+
+const TEACHER_PASS = "008397";
+const STORAGE_KEY = "pbtdangbai_subs_" + (TOPICS_DATA.id || "default");
+
+// Kho lời khích lệ khi học sinh làm ĐÚNG 1 câu (hiện trên nền màu XANH)
+const PRAISE_MESSAGES = [
+  "🎉 Xuất sắc! Em nắm rất chắc dạng bài này rồi đấy!",
+  "🌟 Chuẩn không cần chỉnh! Tiếp tục giữ vững phong độ nhé!",
+  "👏 Tuyệt vời! Tư duy giải toán của em rất sắc bén!",
+  "🔥 Quá đỉnh! Một bước tiến cực kỳ vững chắc!",
+  "💪 Chính xác 100%! Thầy Hưng rất tự hào về em!",
+  "✨ Quá hay! Cứ đà này em sẽ chinh phục mọi bài khó!",
+  "🎯 Trúng phóc! Làm toán chuẩn sách giáo khoa luôn!"
+];
+
+// Kho câu động viên khi học sinh làm SAI 1 câu (hiện trên nền màu ĐỎ)
+const ENCOURAGE_MESSAGES = [
+  "💪 Đừng nản nhé! Sai một chút là chuyện bình thường — em thử xem 💡 Gợi ý rồi chọn lại đáp án chuẩn nào!",
+  "❤️ Cố lên em! Mình kiểm tra lại phép tính hoặc bấm 💡 Gợi ý để tìm ra hướng giải đúng nhé!",
+  "🌱 Không sao cả, mỗi lần sai là một lần nhớ kỹ hơn! Thử chọn lại câu trả lời khác xem sao em nhé!",
+  "🔥 Suýt nữa thì đúng rồi! Em bấm 💡 Gợi ý để xem mẹo làm nhanh rồi thử lại ngay nhé!"
+];
+
+// Kho Slogan cổ vũ tinh thần khi hoàn thành HẾT bài tập của một trang (1 dạng bài)
+const COMPLETION_SLOGANS = [
+  "🚀 ĐỈNH CAO! Em đã chinh phục trọn vẹn dạng bài này — Không có bài toán nào khó với người kiên trì!",
+  "🏆 TUYỆT ĐỈNH TOÁN HỌC! Hoàn thành xuất sắc — Hôm nay em đã giỏi hơn chính mình ngày hôm qua!",
+  "✨ CHIẾN THẮNG RỰC RỠ! Chinh phục xong dạng này, tự tin bước sang thử thách tiếp theo nhé!",
+  "🌟 XUẤT SẮC VƯỢT BẬC! Kiến thức vững vàng, tương lai rộng mở — Cố lên chiến binh Toán học!"
+];
+
+// Active exercises per topic index (starts with original exercises, replaced when student clicks "Sinh bài tập tương tự")
+let activeExercises = (TOPICS_DATA.topics || []).map(function(t) { return (t.exercises || []).slice(); });
+let userAnswers = {};      // { [qId]: val }
+let checkedStatus = {};    // { [tIdx]: { [qId]: true/false } }
+let memorySubs = [];
+
+// =========================================================
+// MATHML CORE PARSER (Cho các bài tập tự sinh hiển thị chuẩn trên điện thoại)
+// =========================================================
+function parseTexInner(tex) {
+  var s = String(tex || '').trim();
+  s = s.replace(/\\left\s*([\(\[\|])/g, '$1').replace(/\\right\s*([\)\]\|])/g, '$1');
+  function findBrace(str, openIdx) {
+    if (str[openIdx] !== '{') return -1;
+    var depth = 0;
+    for (var i = openIdx; i < str.length; i++) {
+      if (str[i] === '{') depth++;
+      else if (str[i] === '}') { depth--; if (depth === 0) return i; }
+    }
+    return -1;
+  }
+  function tokenizePlain(chunk) {
+    var out = '', i = 0;
+    while (i < chunk.length) {
+      var ch = chunk[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      if (/\d/.test(ch)) {
+        var j = i;
+        while (j < chunk.length && /[\d,.]/.test(chunk[j])) {
+          if ((chunk[j] === ',' || chunk[j] === '.') && !/\d/.test(chunk[j + 1] || '')) break;
+          j++;
+        }
+        out += '<mn>' + chunk.slice(i, j) + '</mn>'; i = j; continue;
+      }
+      if (/[a-zA-Z]/.test(ch)) { out += '<mi>' + ch + '</mi>'; i++; continue; }
+      var esc = ch === '<' ? '&lt;' : (ch === '>' ? '&gt;' : (ch === '&' ? '&amp;' : ch));
+      out += '<mo>' + esc + '</mo>'; i++;
+    }
+    return out;
+  }
+  function parseSeq(str) {
+    var items = [], i = 0, n = str.length;
+    var symMap = {
+      'infty': '<mi>∞</mi>', 'Leftrightarrow': '<mo>⇔</mo>', 'iff': '<mo>⇔</mo>',
+      'Rightarrow': '<mo>⇒</mo>', 'implies': '<mo>⇒</mo>', 'to': '<mo>→</mo>',
+      'rightarrow': '<mo>→</mo>', 'setminus': '<mo>\\</mo>', 'neq': '<mo>≠</mo>',
+      'ge': '<mo>≥</mo>', 'geq': '<mo>≥</mo>', 'le': '<mo>≤</mo>', 'leq': '<mo>≤</mo>',
+      'pm': '<mo>±</mo>', 'cdot': '<mo>·</mo>', 'times': '<mo>×</mo>',
+      'in': '<mo>∈</mo>', 'notin': '<mo>∉</mo>', 'subset': '<mo>⊂</mo>',
+      'cup': '<mo>∪</mo>', 'cap': '<mo>∩</mo>', 'Delta': '<mi>Δ</mi>', 'pi': '<mi>π</mi>'
+    };
+    var bbMap = { R: 'ℝ', N: 'ℕ', Z: 'ℤ', Q: 'ℚ', C: 'ℂ' };
+    function readArg() {
+      while (i < n && /\s/.test(str[i])) i++;
+      if (i >= n) return '<mrow></mrow>';
+      if (str[i] === '{') {
+        var end = findBrace(str, i);
+        if (end !== -1) { var inner = str.slice(i + 1, end); i = end + 1; return '<mrow>' + parseSeq(inner).join('') + '</mrow>'; }
+      }
+      if (str[i] === '\\') {
+        var m = str.slice(i + 1).match(/^[a-zA-Z]+/);
+        if (m) { var cmd = m[0]; i += 1 + cmd.length; return symMap[cmd] || ('<mo>' + cmd + '</mo>'); }
+      }
+      return tokenizePlain(str[i++]);
+    }
+    while (i < n) {
+      var ch = str[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      if (ch === '(' || ch === '[') {
+        var closeCh = ch === '(' ? ')' : ']';
+        var depth = 0, j = i;
+        for (; j < n; j++) { if (str[j] === ch) depth++; else if (str[j] === closeCh) { depth--; if (depth === 0) break; } }
+        if (j < n && str[j] === closeCh) { items.push('<mrow><mo>' + ch + '</mo>' + parseSeq(str.slice(i + 1, j)).join('') + '<mo>' + closeCh + '</mo></mrow>'); i = j + 1; continue; }
+      }
+      if (ch === '{') {
+        var end = findBrace(str, i);
+        if (end !== -1) { items.push('<mrow>' + parseSeq(str.slice(i + 1, end)).join('') + '</mrow>'); i = end + 1; continue; }
+      }
+      if (ch === '^' || ch === '_') {
+        var isSup = ch === '^'; i++;
+        var arg = readArg();
+        var base = items.length ? items.pop() : '<mrow></mrow>';
+        items.push(isSup ? ('<msup>' + base + arg + '</msup>') : ('<msub>' + base + arg + '</msub>'));
+        continue;
+      }
+      if (ch === '\\') {
+        if (str[i + 1] === '{' || str[i + 1] === '}') { items.push('<mo>' + str[i + 1] + '</mo>'); i += 2; continue; }
+        var m = str.slice(i + 1).match(/^[a-zA-Z]+/);
+        if (!m) { i++; continue; }
+        var cmd = m[0]; i += 1 + cmd.length;
+        if (cmd === 'frac' || cmd === 'dfrac' || cmd === 'tfrac') { items.push('<mfrac>' + readArg() + readArg() + '</mfrac>'); continue; }
+        if (cmd === 'sqrt') {
+          while (i < n && /\s/.test(str[i])) i++;
+          if (str[i] === '[') { var ci = str.indexOf(']', i); var ri = str.slice(i + 1, ci); i = ci + 1; items.push('<mroot>' + readArg() + '<mrow>' + parseSeq(ri).join('') + '</mrow></mroot>'); }
+          else items.push('<msqrt>' + readArg() + '</msqrt>');
+          continue;
+        }
+        if (cmd === 'lim') {
+          while (i < n && /\s/.test(str[i])) i++;
+          if (str[i] === '_') { i++; items.push('<munder><mo>lim</mo>' + readArg() + '</munder>'); }
+          else items.push('<mo>lim</mo>');
+          continue;
+        }
+        if (cmd === 'vec' || cmd === 'overrightarrow') { items.push('<mover>' + readArg() + '<mo>→</mo></mover>'); continue; }
+        if (cmd === 'mathbb') {
+          while (i < n && /\s/.test(str[i])) i++;
+          var eb = findBrace(str, i); var cs = eb !== -1 ? str.slice(i + 1, eb).trim() : ''; i = eb !== -1 ? eb + 1 : i;
+          items.push('<mi>' + (bbMap[cs] || cs) + '</mi>'); continue;
+        }
+        if (symMap[cmd]) { items.push(symMap[cmd]); continue; }
+        items.push('<mo>' + cmd + '</mo>'); continue;
+      }
+      if (/\d/.test(ch)) {
+        var j2 = i; while (j2 < n && /[\d,.]/.test(str[j2])) { if ((str[j2] === ',' || str[j2] === '.') && !/\d/.test(str[j2 + 1] || '')) break; j2++; }
+        items.push('<mn>' + str.slice(i, j2) + '</mn>'); i = j2; continue;
+      }
+      if (/[a-zA-Z]/.test(ch)) { items.push('<mi>' + ch + '</mi>'); i++; continue; }
+      var esc2 = ch === '<' ? '&lt;' : (ch === '>' ? '&gt;' : (ch === '&' ? '&amp;' : ch));
+      items.push('<mo>' + esc2 + '</mo>'); i++;
+    }
+    return items;
+  }
+  return parseSeq(s).join('');
+}
+
+function renderMathInHtml(text) {
+  if (!text) return '';
+  var res = String(text);
+  res = res.replace(/\$\$([\s\S]+?)\$\$/g, function(_, tex) { return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">' + parseTexInner(tex) + '</math>'; });
+  res = res.replace(/\$([^\$]+?)\$/g, function(_, tex) { return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">' + parseTexInner(tex) + '</math>'; });
+  return res;
+}
+
+function renderParagraphs(val) {
+  if (Array.isArray(val)) return val.map(function(p) { return '<p>' + renderMathInHtml(p) + '</p>'; }).join('');
+  return '<p>' + renderMathInHtml(val) + '</p>';
+}
+
+// Clean sign helper passed into topic.generatorCode
+function fmtTerm(coeff, varName, isFirst) {
+  if (coeff === 0) return '';
+  var sign = coeff > 0 ? (isFirst ? '' : '+ ') : (isFirst ? '-' : '- ');
+  var abs = Math.abs(coeff);
+  var numStr = (abs === 1 && varName) ? '' : String(abs);
+  return sign + numStr + (varName || '');
+}
+
+// =========================================================
+// CHUYỂN TRANG DẠNG BÀI & LUYỆN TẬP
+// =========================================================
+function switchTopic(idx) {
+  (TOPICS_DATA.topics || []).forEach(function(_, i) {
+    var p = document.getElementById('page-t-' + i);
+    var tb = document.getElementById('tab-t-' + i);
+    if (p) p.classList.toggle('active', i === idx);
+    if (tb) tb.classList.toggle('active', i === idx);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setMC(tIdx, qId, oIdx) {
+  userAnswers[qId] = oIdx;
+  document.querySelectorAll('[id^="lbl-' + qId + '-"]').forEach(function(el) { el.classList.remove('selected'); });
+  var el = document.getElementById('lbl-' + qId + '-' + oIdx);
+  if (el) el.classList.add('selected');
+  // Phản hồi ngay lập tức khi học sinh bấm chọn phương án (không cần bấm nút kiểm tra!)
+  checkOne(tIdx, qId, true);
+}
+
+function setShort(tIdx, qId, val) {
+  userAnswers[qId] = String(val || '').trim();
+}
+
+function parseMathNumber(raw) {
+  if (raw === undefined || raw === null) return NaN;
+  var s = String(raw).trim().replace(/,/g, '.').replace(/\s+/g, '');
+  if (!s) return NaN;
+  if (s.indexOf('/') !== -1) {
+    var p = s.split('/');
+    if (p.length === 2) { var a = parseFloat(p[0]), b = parseFloat(p[1]); if (!isNaN(a) && !isNaN(b) && b !== 0) return a / b; }
+    return NaN;
+  }
+  return parseFloat(s);
+}
+
+// Kiểm tra 1 câu -> nếu ĐÚNG thì hiện ngay LỜI ĐỘNG VIÊN!
+function checkOne(tIdx, qId, silent) {
+  var list = activeExercises[tIdx] || [];
+  var q = list.find(function(x) { return x.id === qId; });
+  if (!q) return false;
+
+  var isRight = false;
+  var card = document.getElementById('card-' + qId);
+  if (card) card.classList.remove('correct', 'incorrect');
+
+  if (q.type === 'mc') {
+    var chosen = userAnswers[qId];
+    if (chosen === undefined) return false;
+    isRight = chosen === q.correctIndex;
+    (q.options || []).forEach(function(_, oIdx) {
+      var lbl = document.getElementById('lbl-' + qId + '-' + oIdx);
+      if (!lbl) return;
+      lbl.classList.remove('is-correct', 'is-wrong');
+      if (isRight && oIdx === q.correctIndex) lbl.classList.add('is-correct');
+      else if (!isRight && chosen === oIdx) lbl.classList.add('is-wrong');
+    });
+  } else {
+    var raw = userAnswers[qId] || '';
+    if (!raw) return false;
+    var uNum = parseMathNumber(raw), tNum = parseMathNumber(q.answer);
+    var tol = q.tol !== undefined ? q.tol : 1e-3;
+    if (!isNaN(uNum) && !isNaN(tNum)) isRight = Math.abs(uNum - tNum) <= tol;
+    else isRight = raw.toLowerCase() === String(q.answer).trim().toLowerCase();
+    var inp = document.getElementById('inp-' + qId);
+    if (inp) { inp.classList.remove('is-correct', 'is-wrong'); inp.classList.add(isRight ? 'is-correct' : 'is-wrong'); }
+  }
+
+  if (card) card.classList.add(isRight ? 'correct' : 'incorrect');
+
+  // Phản hồi tức thì: ĐÚNG -> nền XANH + câu khích lệ; SAI -> nền ĐỎ + câu động viên
+  var toast = document.getElementById('praise-' + qId);
+  if (toast) {
+    toast.classList.remove('show-ok', 'show-err');
+    if (isRight) {
+      var msg = PRAISE_MESSAGES[Math.floor(Math.random() * PRAISE_MESSAGES.length)];
+      toast.innerText = msg;
+      toast.classList.add('show-ok');
+    } else {
+      var enc = ENCOURAGE_MESSAGES[Math.floor(Math.random() * ENCOURAGE_MESSAGES.length)];
+      toast.innerText = enc;
+      toast.classList.add('show-err');
+    }
+  }
+
+  if (!checkedStatus[tIdx]) checkedStatus[tIdx] = {};
+  checkedStatus[tIdx][qId] = isRight;
+  updateTopicProgress(tIdx);
+  return isRight;
+}
+
+function checkTopicAll(tIdx) {
+  var list = activeExercises[tIdx] || [];
+  list.forEach(function(q) { checkOne(tIdx, q.id, true); });
+  saveStudentTopicRecord(tIdx);
+}
+
+// Cập nhật tiến độ & hiện SLOGAN CỔ VŨ TINH THẦN khi hoàn thành hết bài tập ở 1 trang
+function updateTopicProgress(tIdx) {
+  var list = activeExercises[tIdx] || [];
+  var st = checkedStatus[tIdx] || {};
+  var doneCount = Object.keys(st).length;
+  var okCount = Object.keys(st).filter(function(k) { return st[k]; }).length;
+
+  var pill = document.getElementById('prog-t-' + tIdx);
+  if (pill) pill.innerText = 'Tiến độ: ' + doneCount + '/' + list.length + ' câu (Đúng ' + okCount + ')';
+
+  var sloganBox = document.getElementById('slogan-t-' + tIdx);
+  if (sloganBox && list.length > 0 && doneCount >= list.length) {
+    var slogan = COMPLETION_SLOGANS[tIdx % COMPLETION_SLOGANS.length];
+    document.getElementById('slogan-text-' + tIdx).innerText = slogan;
+    document.getElementById('slogan-sub-' + tIdx).innerText =
+      'Em đã hoàn thành hết ' + list.length + '/' + list.length + ' bài tập vận dụng của trang này (Đúng ' + okCount + '/' + list.length + ' câu)!';
+    sloganBox.classList.add('show');
+    saveStudentTopicRecord(tIdx);
+  }
+}
+
+// =========================================================
+// PHÍM TỰ SINH BÀI TẬP TƯƠNG TỰ CHO TỪNG DẠNG BÀI
+// =========================================================
+function renderDynamicExercises(tIdx, list) {
+  var wrap = document.getElementById('ex-list-' + tIdx);
+  if (!wrap) return;
+  var letters = ['A', 'B', 'C', 'D'];
+  wrap.innerHTML = list.map(function(q, qIdx) {
+    var bodyInput = '';
+    if (q.type === 'mc') {
+      bodyInput = '<div class="options-grid">' + (q.options || []).map(function(opt, oIdx) {
+        return '<label class="opt-label" id="lbl-' + q.id + '-' + oIdx + '">' +
+          '<input type="radio" name="ans-' + q.id + '" value="' + oIdx + '" onchange="setMC(' + tIdx + ', \'' + q.id + '\', ' + oIdx + ')">' +
+          '<span><strong>' + letters[oIdx] + '.</strong> ' + renderMathInHtml(opt) + '</span></label>';
+      }).join('') + '</div>';
+    } else {
+      bodyInput = '<div class="short-row"><label for="inp-' + q.id + '"><strong>Đáp số:</strong></label>' +
+        '<input type="text" class="short-input" id="inp-' + q.id + '" placeholder="Nhập số..." oninput="setShort(' + tIdx + ', \'' + q.id + '\', this.value)" onchange="setShort(' + tIdx + ', \'' + q.id + '\', this.value); checkOne(' + tIdx + ', \'' + q.id + '\', true)" onkeydown="if(event.key===\'Enter\') checkOne(' + tIdx + ', \'' + q.id + '\', true)">' +
+        '<button class="btn btn-primary btn-sm" onclick="checkOne(' + tIdx + ', \'' + q.id + '\', true)">Trả lời</button></div>';
+    }
+    return '<div class="q-card" id="card-' + q.id + '">' +
+      '<div class="q-header"><span class="q-num">Bài ' + (qIdx + 1) + '</span><span class="q-tag">' + (q.level || 'Tự sinh luyện tập') + '</span></div>' +
+      '<div class="q-text">' + renderMathInHtml(q.text) + '</div>' +
+      bodyInput +
+      '<div class="praise-toast" id="praise-' + q.id + '"></div>' +
+      '<div class="q-drawers">' +
+        '<details class="q-drawer q-drawer-hint"><summary>💡 Gợi ý</summary><div class="drawer-body">' + renderParagraphs(q.hint) + '</div></details>' +
+        '<details class="q-drawer q-drawer-sol"><summary>📖 Lời giải chi tiết</summary><div class="drawer-body">' + renderParagraphs(q.solution) + '</div></details>' +
+      '</div></div>';
+  }).join('');
+}
+
+function generateSimilar(tIdx) {
+  var topic = (TOPICS_DATA.topics || [])[tIdx];
+  if (!topic || !topic.generatorCode) return;
+
+  var rInt = function(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; };
+  var rPick = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+  var rShuffle = function(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  };
+
+  try {
+    var genFn = new Function('rInt', 'rPick', 'rShuffle', 'fmtTerm', 'return (' + topic.generatorCode + ')(rInt, rPick, rShuffle, fmtTerm);');
+    var generated = genFn(rInt, rPick, rShuffle, fmtTerm);
+    if (!Array.isArray(generated) || !generated.length) throw new Error('Bộ sinh không trả về bài tập.');
+    var stamp = Date.now().toString(36);
+    generated.forEach(function(q, i) { q.id = 'gen_' + tIdx + '_' + stamp + '_' + i; });
+
+    activeExercises[tIdx] = generated;
+    checkedStatus[tIdx] = {};
+    var sloganBox = document.getElementById('slogan-t-' + tIdx);
+    if (sloganBox) sloganBox.classList.remove('show');
+    var origBtn = document.getElementById('btn-orig-' + tIdx);
+    if (origBtn) origBtn.style.display = 'inline-flex';
+
+    renderDynamicExercises(tIdx, generated);
+    updateTopicProgress(tIdx);
+  } catch (e) {
+    alert('Lỗi khi sinh bài tập tương tự: ' + e.message);
+  }
+}
+
+function restoreOriginal(tIdx) {
+  var topic = (TOPICS_DATA.topics || [])[tIdx];
+  if (!topic) return;
+  activeExercises[tIdx] = (topic.exercises || []).slice();
+  checkedStatus[tIdx] = {};
+  var sloganBox = document.getElementById('slogan-t-' + tIdx);
+  if (sloganBox) sloganBox.classList.remove('show');
+  var origBtn = document.getElementById('btn-orig-' + tIdx);
+  if (origBtn) origBtn.style.display = 'none';
+  renderDynamicExercises(tIdx, activeExercises[tIdx]);
+  updateTopicProgress(tIdx);
+}
+
+// =========================================================
+// LƯU KẾT QUẢ & CỔNG GIÁO VIÊN (MẬT KHẨU: 008397)
+// =========================================================
+function loadSubmissions() {
+  try { var r = window.localStorage.getItem(STORAGE_KEY); if (r) { memorySubs = JSON.parse(r); return memorySubs; } } catch (e) {}
+  return memorySubs;
+}
+function saveSubmissions(list) {
+  memorySubs = list;
+  try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch (e) {}
+}
+
+function saveStudentTopicRecord(tIdx) {
+  var name = (document.getElementById('stu-name').value || '').trim() || 'Học sinh ẩn danh';
+  var cls = (document.getElementById('stu-class').value || '').trim() || 'Chưa ghi lớp';
+  var topic = (TOPICS_DATA.topics || [])[tIdx];
+  var list = activeExercises[tIdx] || [];
+  var st = checkedStatus[tIdx] || {};
+  var ok = Object.keys(st).filter(function(k) { return st[k]; }).length;
+  var subs = loadSubmissions();
+  subs.push({
+    name: name, className: cls,
+    topicTitle: topic ? (topic.tabTitle || topic.title) : ('Dạng ' + (tIdx + 1)),
+    correct: ok, total: list.length,
+    time: new Date().toLocaleString('vi-VN')
+  });
+  saveSubmissions(subs);
+}
+
+function downloadMyProgress() {
+  var subs = loadSubmissions();
+  var blob = new Blob([JSON.stringify(subs, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'BaiLam_' + (TOPICS_DATA.id || 'pbt') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function openPasswordModal() {
+  document.getElementById('teacher-pass-input').value = '';
+  document.getElementById('pass-error').innerText = '';
+  document.getElementById('modal-pass').classList.add('show');
+  setTimeout(function() { document.getElementById('teacher-pass-input').focus(); }, 80);
+}
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+function verifyTeacherPassword() {
+  if (document.getElementById('teacher-pass-input').value.trim() === TEACHER_PASS) {
+    closeModal('modal-pass');
+    renderTeacherTable();
+    document.getElementById('modal-teacher').classList.add('show');
+  } else {
+    document.getElementById('pass-error').innerText = 'Mật khẩu không chính xác!';
+  }
+}
+function renderTeacherTable() {
+  var subs = loadSubmissions();
+  var tb = document.getElementById('teacher-table-body');
+  if (!subs.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:14px;">Chưa có dữ liệu học sinh.</td></tr>'; return; }
+  tb.innerHTML = subs.map(function(s, i) {
+    return '<tr><td>' + (i + 1) + '</td><td><strong>' + s.name + '</strong></td><td>' + s.className + '</td><td>' + s.topicTitle + '</td><td><strong>' + s.correct + '/' + s.total + '</strong></td><td>' + s.time + '</td></tr>';
+  }).join('');
+}
+function exportCSV() {
+  var subs = loadSubmissions();
+  if (!subs.length) { alert('Chưa có dữ liệu!'); return; }
+  var header = 'STT,Ho_va_ten,Lop,Dang_bai,Ket_qua,Thoi_gian';
+  var rows = subs.map(function(s, i) { return [i + 1, '"' + s.name + '"', '"' + s.className + '"', '"' + s.topicTitle + '"', '"' + s.correct + '/' + s.total + '"', '"' + s.time + '"'].join(','); });
+  var blob = new Blob(['\uFEFF' + [header].concat(rows).join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'BangDiem_' + (TOPICS_DATA.id || 'pbt') + '.csv'; a.click(); URL.revokeObjectURL(url);
+}
+function importSubmissions(event) {
+  var files = Array.prototype.slice.call(event.target.files || []);
+  var subs = loadSubmissions(), done = 0;
+  files.forEach(function(f) {
+    var r = new FileReader();
+    r.onload = function(e) {
+      try { var d = JSON.parse(e.target.result); if (Array.isArray(d)) subs = subs.concat(d); else if (d && d.name) subs.push(d); } catch (err) {}
+      if (++done === files.length) { saveSubmissions(subs); renderTeacherTable(); event.target.value = ''; }
+    };
+    r.readAsText(f, 'UTF-8');
+  });
+}
+function clearAllSubmissions() {
+  if (confirm('Xóa toàn bộ kết quả đã lưu?')) { saveSubmissions([]); renderTeacherTable(); }
+}
+</script>
+</body>
+</html>
