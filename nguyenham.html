@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="vi" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>HƯỚNG DẪN TỰ HỌC: NGUYÊN HÀM ĐỔI BIẾN & TỪNG PHẦN</title>
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-light: #eff6ff;
+      --primary-border: #bfdbfe;
+      --accent: #0f766e;
+      --accent-light: #f0fdfa;
+      --success: #15803d;
+      --success-light: #f0fdf4;
+      --danger: #b91c1c;
+      --danger-light: #fef2f2;
+      --warning: #b45309;
+      --warning-light: #fffbeb;
+      --purple: #6d28d9;
+      --purple-light: #f5f3ff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --radius: 10px;
+      --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f1f5f9;
+      color: var(--gray-800);
+      line-height: 1.65;
+      padding: 12px;
+      -webkit-text-size-adjust: 100%;
+    }
+    .app-shell {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .no-js-banner {
+      display: none;
+      background: #fef3c7;
+      color: #92400e;
+      border-bottom: 1.5px solid #fcd34d;
+      padding: 10px 16px;
+      font-size: 0.86rem;
+    }
+    html.no-js .no-js-banner { display: block; }
+    html.no-js .page-content { display: block !important; }
+
+    /* Header */
+    .hero-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 60%, #2563eb 100%);
+      color: #ffffff;
+      padding: 20px 24px 16px;
+    }
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.84rem;
+      opacity: 0.95;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,0.18);
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .hero-title { font-size: 1.45rem; font-weight: 800; margin-top: 8px; }
+    .hero-subtitle { font-size: 0.93rem; opacity: 0.92; margin-top: 4px; }
+
+    /* Topic Tabs Navigation */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      background: var(--gray-50);
+      border-bottom: 1.5px solid var(--gray-200);
+      padding: 10px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .tab-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid var(--gray-300);
+      background: #ffffff;
+      color: var(--gray-700);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { background: var(--gray-100); }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.28);
+    }
+    .teacher-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 8px;
+      border: 1.5px solid #c4b5fd;
+      background: var(--purple-light);
+      color: var(--purple);
+      font-weight: 700;
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .teacher-btn:hover { background: var(--purple); color: #fff; border-color: var(--purple); }
+
+    /* Student bar */
+    .student-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 20px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 0.88rem;
+    }
+    .student-strip input {
+      padding: 7px 10px;
+      min-height: 38px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 6px;
+      font-size: 0.92rem;
+      outline: none;
+    }
+    .student-strip input:focus { border-color: var(--primary); }
+
+    /* Pages */
+    .page-content {
+      padding: 20px 24px 28px;
+      display: none;
+    }
+    .page-content.active { display: block; }
+
+    .topic-banner {
+      background: linear-gradient(90deg, #eff6ff 0%, #f0fdfa 100%);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 16px;
+    }
+    .section-heading {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      border-left: 4px solid var(--primary);
+      padding: 5px 12px;
+      background: var(--primary-light);
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0 12px;
+    }
+
+    /* Method card */
+    .method-card {
+      border: 1px solid #99f6e4;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+    }
+    .method-card p { margin-bottom: 6px; }
+
+    /* Example card */
+    .example-card {
+      border: 1px solid var(--primary-border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+    .example-header {
+      background: var(--primary-light);
+      padding: 9px 16px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .example-body { padding: 14px 16px; overflow-x: auto; }
+    details.example-details {
+      margin-top: 10px;
+      background: var(--success-light);
+      border-left: 3.5px solid var(--success);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: #14532d;
+    }
+    details.example-details summary {
+      font-weight: 700;
+      color: var(--success);
+      cursor: pointer;
+      list-style: none;
+      min-height: 30px;
+    }
+    details.example-details summary::-webkit-details-marker { display: none; }
+    details.example-details[open] summary { margin-bottom: 6px; }
+
+    /* Practice toolbar */
+    .practice-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 9px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+    }
+    .progress-pill {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid var(--primary-border);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    /* Buttons */
+    button { font-family: inherit; cursor: pointer; }
+    .btn {
+      padding: 9px 14px;
+      min-height: 42px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      font-size: 0.88rem;
+      transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .btn-sm { padding: 7px 12px; min-height: 38px; font-size: 0.84rem; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-accent:hover { background: #115e59; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #166534; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-outline { background: #fff; border-color: var(--gray-300); color: var(--gray-700); }
+    .btn-outline:hover { background: var(--gray-100); }
+
+    /* Exercise cards */
+    .q-card {
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #ffffff;
+      box-shadow: var(--shadow);
+      overflow-x: auto;
+    }
+    .q-card.correct { border-left: 5px solid var(--success); }
+    .q-card.incorrect { border-left: 5px solid var(--danger); }
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .q-num { font-weight: 800; color: var(--primary); }
+    .q-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--gray-100);
+      color: var(--gray-700);
+    }
+    .q-text { margin-bottom: 10px; }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      min-height: 44px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 7px;
+      background: var(--gray-50);
+      cursor: pointer;
+    }
+    .opt-label.selected { background: var(--primary-light); border-color: var(--primary); }
+    .opt-label.is-correct { background: var(--success-light); border-color: var(--success); color: var(--success); font-weight: 700; }
+    .opt-label.is-wrong { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
+
+    .short-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .short-input {
+      padding: 9px 12px;
+      min-height: 44px;
+      border: 1.5px solid var(--gray-300);
+      border-radius: 7px;
+      font-size: 1rem;
+      width: 210px;
+      max-width: 100%;
+    }
+    .short-input.is-correct { border-color: var(--success); background: var(--success-light); }
+    .short-input.is-wrong { border-color: var(--danger); background: var(--danger-light); }
+
+    /* Multi-short grid (mobile 2-col friendly for Statistics) */
+    .multi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .multi-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .multi-field label { font-size: 0.88rem; font-weight: 700; color: var(--gray-700); }
+    .multi-input { width: 100%; min-height: 40px; padding: 7px 10px; font-size: 0.96rem; }
+    .freq-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 8px 0 10px;
+      font-size: 0.88rem;
+      background: #fff;
+    }
+    .freq-table th, .freq-table td {
+      border: 1px solid var(--gray-300);
+      padding: 6px 8px;
+      text-align: center;
+    }
+    .freq-table th { background: var(--primary-light); color: var(--primary-dark); font-weight: 700; }
+
+    .q-check-row { margin-bottom: 8px; }
+
+    /* Feedback toast: Green background when right (khích lệ), Red background when wrong (động viên) */
+    .praise-toast {
+      display: none;
+      margin: 10px 0;
+      padding: 11px 14px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      line-height: 1.5;
+      animation: popIn 0.25s ease;
+    }
+    .praise-toast.show-ok {
+      display: block;
+      background: #dcfce7;
+      border: 1.5px solid #22c55e;
+      color: #14532d;
+    }
+    .praise-toast.show-err {
+      display: block;
+      background: #fee2e2;
+      border: 1.5px solid #ef4444;
+      color: #991b1b;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.96); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Native <details> drawers for 2 shortcuts: Gợi ý & Lời giải chi tiết */
+    .q-drawers { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    details.q-drawer summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      min-height: 38px;
+      border-radius: 7px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      list-style: none;
+    }
+    details.q-drawer summary::-webkit-details-marker { display: none; }
+    details.q-drawer-hint summary { background: var(--warning-light); border: 1px solid #fcd34d; color: var(--warning); }
+    details.q-drawer-sol summary { background: var(--success-light); border: 1px solid #86efac; color: var(--success); }
+    details.q-drawer .drawer-body {
+      margin-top: 6px;
+      padding: 11px 14px;
+      border-radius: 7px;
+      overflow-x: auto;
+    }
+    details.q-drawer-hint .drawer-body { background: var(--warning-light); border-left: 3.5px solid #f59e0b; color: #78350f; }
+    details.q-drawer-sol .drawer-body { background: var(--success-light); border-left: 3.5px solid var(--success); color: #14532d; }
+
+    /* Completion Slogan Banner when all exercises on a page are completed */
+    .slogan-banner {
+      display: none;
+      margin-top: 22px;
+      padding: 22px 18px;
+      border-radius: 12px;
+      text-align: center;
+      background: linear-gradient(135deg, #eff6ff 0%, #fef3c7 50%, #dcfce7 100%);
+      border: 2px solid #f59e0b;
+      box-shadow: 0 6px 18px rgba(245, 158, 11, 0.18);
+      animation: popIn 0.35s ease;
+    }
+    .slogan-banner.show { display: block; }
+    .slogan-icon { font-size: 2.2rem; margin-bottom: 6px; }
+    .slogan-text { font-size: 1.18rem; font-weight: 900; color: #92400e; }
+    .slogan-sub { font-size: 0.94rem; color: var(--gray-700); margin-top: 6px; }
+
+    /* Modals */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      padding: 20px 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .modal-box.modal-wide { max-width: 920px; max-height: 90vh; overflow-y: auto; }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--gray-200);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+    .modal-title { font-size: 1.1rem; font-weight: 800; color: var(--primary-dark); }
+    .close-btn { background: none; border: none; font-size: 1.5rem; color: var(--gray-600); padding: 2px 8px; }
+    .error-msg { color: var(--danger); font-size: 0.85rem; margin-top: 6px; min-height: 18px; font-weight: 600; }
+
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin-bottom: 12px; }
+    .data-table th, .data-table td { border: 1px solid var(--gray-200); padding: 8px; text-align: left; }
+    .data-table th { background: var(--gray-100); font-weight: 700; }
+    .file-btn-wrap { position: relative; overflow: hidden; display: inline-flex; align-items: center; cursor: pointer; }
+    .file-btn-wrap input[type="file"] { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+
+    math { font-family: "Cambria Math", "STIX Two Math", "Latin Modern Math", serif; font-size: 1.05em; }
+    math[display="block"] { display: block; overflow-x: auto; padding: 6px 0; text-align: center; }
+
+    footer {
+      text-align: center;
+      padding: 14px;
+      border-top: 1px solid var(--gray-200);
+      color: var(--gray-600);
+      font-size: 0.82rem;
+      background: var(--gray-50);
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 6px; }
+      .hero-header, .page-content { padding: 14px; }
+      .nav-bar { padding: 8px 10px; }
+      .teacher-btn { width: 100%; }
+      .options-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="no-js-banner">
+    <strong>📱 Chế độ xem nhanh:</strong> Trình xem tệp hiện đang tắt JavaScript, em vẫn xem được đầy đủ Cách giải, Ví dụ, Bài tập và Gợi ý / Lời giải chi tiết. Hãy mở bằng <strong>Chrome / Safari</strong> để dùng tính năng <em>Kiểm tra nhận lời động viên</em> và <em>Sinh bài tập tương tự</em>!
+  </div>
+
+  <header class="hero-header">
+    <div class="hero-top">
+      <span>Chương trình GDPT 2018 • Công văn 5512/BGDĐT • Kết nối tri thức</span>
+      <span class="hero-tag">Toán 12 • Chuyên đề Nguyên hàm</span>
+    </div>
+    <div class="hero-title">HƯỚNG DẪN TỰ HỌC: NGUYÊN HÀM ĐỔI BIẾN & TỪNG PHẦN</div>
+    <div class="hero-subtitle">Luyện tập theo từng dạng bài — Phản hồi tức thì & Tự sinh bài tập tương tự trên điện thoại</div>
+  </header>
+
+  <nav class="nav-bar">
+    <div class="nav-tabs"><button class="tab-btn active" id="tab-t-0" onclick="switchTopic(0)">📘 Dạng 1: Đổi biến số</button>
+<button class="tab-btn " id="tab-t-1" onclick="switchTopic(1)">📘 Dạng 2: Từng phần</button></div>
+    <button class="teacher-btn" onclick="openPasswordModal()">🔒 Giáo viên: Xem kết quả</button>
+  </nav>
+
+  <div class="student-strip">
+    <div style="display:flex; gap:8px; flex-wrap:wrap; width:100%; align-items:center;">
+      <input type="text" id="stu-name" placeholder="Họ và tên học sinh..." style="flex:1; min-width:160px;">
+      <input type="text" id="stu-class" placeholder="Lớp (VD: 11A1)" style="width:125px;">
+      <button class="btn btn-outline btn-sm" onclick="downloadMyProgress()">📥 Tải bài làm</button>
+    </div>
+  </div>
+
+  <!-- CÁC TRANG DẠNG BÀI (MỖI TRANG = 1 DẠNG BÀI) -->
+  
+      <main id="page-t-0" class="page-content active">
+        <div class="topic-banner">DẠNG 1. TÍNH NGUYÊN HÀM BẰNG PHƯƠNG PHÁP ĐỔI BIẾN SỐ</div>
+
+        <div class="section-heading">I. Cách giải</div>
+        <div class="method-card"><p><strong>Khi nào dùng phương pháp này?</strong> Khi tính nguyên hàm của biểu thức hợp cồng kềnh (lũy thừa bậc cao, căn thức, hàm mũ, lượng giác, logarit mà lõi không phải là <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> đơn thuần), cần đặt ẩn phụ <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mi>u</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math> để đưa về dạng cơ bản <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>∫</mo><mi>f</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>.</p><p><strong>• Bước 1:</strong> Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mi>u</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math> (chọn biểu thức trong ngoặc lũy thừa cao, dưới dấu căn, trên số mũ hoặc biểu thức mà đạo hàm của nó xuất hiện ở phần còn lại).</p><p><strong>• Bước 2:</strong> Tính vi phân <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>u</mi><mo>=</mo><mi>u</mi><mo>'</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> và rút <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>x</mi></math> (hoặc cụm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>'</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>) theo <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>u</mi></math>.</p><p><strong>• Bước 3:</strong> Thay toàn bộ biểu thức sang biến mới <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>u</mi></math>, tính nguyên hàm theo bảng nguyên hàm cơ bản.</p><p><strong>• Bước 4:</strong> Thay ngược <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mi>u</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math> trở lại biến <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi></math> ban đầu (nhớ cộng hằng số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>C</mi></math>).</p></div>
+
+        <div class="section-heading">II. Ví dụ minh họa</div>
+        
+      <div class="example-card">
+        <div class="example-header">Ví dụ 1: Tìm họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>sin</mi><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow></math></div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>sin</mi><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p><strong>• Bước 1:</strong> Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></math>.</p><p><strong>• Bước 2:</strong> Lấy vi phân hai vế: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>u</mi><mo>=</mo><mn>2</mn><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>⇒</mo><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>.</p><p><strong>• Bước 3:</strong> Thay vào nguyên hàm: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>sin</mi><mi>u</mi><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><mi>sin</mi><mi>u</mi><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>cos</mi><mi>u</mi><mo>+</mo><mi>C</mi></math></p><p><strong>• Bước 4:</strong> Thay ngược <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>I</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>cos</mi><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mo>+</mo><mi>C</mi></math></p>
+          </details>
+        </div>
+      </div>
+    
+
+      <div class="example-card">
+        <div class="example-header">Ví dụ 2: Tìm họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>y</mi><mo>=</mo><mi>x</mi><mo>·</mo><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>1</mn></mrow></msup></math></div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>J</mi><mo>=</mo><mo>∫</mo><mi>x</mi><mo>·</mo><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>1</mn></mrow></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p><strong>• Bước 1:</strong> Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>1</mn></math> (biểu thức trên số mũ của <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>e</mi></math>).</p><p><strong>• Bước 2:</strong> Tính vi phân: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>u</mi><mo>=</mo><mn>2</mn><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>⇒</mo><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>.</p><p><strong>• Bước 3:</strong> Thay vào nguyên hàm: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>J</mi><mo>=</mo><mo>∫</mo><msup><mi>e</mi><mi>u</mi></msup><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>e</mi><mi>u</mi></msup><mo>+</mo><mi>C</mi></math></p><p><strong>• Bước 4:</strong> Thay ngược <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>1</mn></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>J</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>e</mi><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>1</mn></mrow></msup><mo>+</mo><mi>C</mi></math></p>
+          </details>
+        </div>
+      </div>
+    
+
+        <div class="section-heading">III. Bài tập vận dụng</div>
+        <div class="practice-toolbar">
+          <span class="progress-pill" id="prog-t-0">Tiến độ: 0/6 câu</span>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(0)">🎲 Sinh bài tập tương tự</button>
+            <button class="btn btn-outline" id="btn-orig-0" style="display:none;" onclick="restoreOriginal(0)">↩️ Bài tập gốc</button>
+          </div>
+        </div>
+
+        <div id="ex-list-0">
+    <div class="q-card" id="card-d1_c1">
+      <div class="q-header">
+        <span class="q-num">Bài 1</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>x</mi><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>3</mn></msup></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c1-0">
+        <input type="radio" name="ans-d1_c1" value="0" onchange="setMC(0, 'd1_c1', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>8</mn></mrow></mfrac><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>4</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c1-1">
+        <input type="radio" name="ans-d1_c1" value="1" onchange="setMC(0, 'd1_c1', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>4</mn></mrow></mfrac><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>4</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c1-2">
+        <input type="radio" name="ans-d1_c1" value="2" onchange="setMC(0, 'd1_c1', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>4</mn><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>4</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c1-3">
+        <input type="radio" name="ans-d1_c1" value="3" onchange="setMC(0, 'd1_c1', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>4</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c1"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>⇒</mo><mtext>d</mtext><mi>u</mi><mo>=</mo><mn>2</mn><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>⇒</mo><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>, rồi tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><msup><mi>u</mi><mn>3</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>⇒</mo><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>. Khi đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>∫</mo><mi>x</mi><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>3</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><msup><mi>u</mi><mn>3</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>·</mo><mfrac><mrow><msup><mi>u</mi><mn>4</mn></msup></mrow><mrow><mn>4</mn></mrow></mfrac><mo>+</mo><mi>C</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>8</mn></mrow></mfrac><msup><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mn>4</mn></msup><mo>+</mo><mi>C</mi></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c2">
+      <div class="q-header">
+        <span class="q-num">Bài 2</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Tính nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>)</mo></mrow><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> (với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>).</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c2-0">
+        <input type="radio" name="ans-d1_c2" value="0" onchange="setMC(0, 'd1_c2', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c2-1">
+        <input type="radio" name="ans-d1_c2" value="1" onchange="setMC(0, 'd1_c2', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c2-2">
+        <input type="radio" name="ans-d1_c2" value="2" onchange="setMC(0, 'd1_c2', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>ln</mi><mo>|</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>|</mo><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c2-3">
+        <input type="radio" name="ans-d1_c2" value="3" onchange="setMC(0, 'd1_c2', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c2"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Nhận xét đạo hàm của <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi></math> chính là <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac></math>. Hãy đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>⇒</mo><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>. Khi đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>u</mi><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><msup><mi>u</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn></mrow></mfrac><mo>+</mo><mi>C</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mrow><mo>(</mo><mn>1</mn><mo>+</mo><mi>ln</mi><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup><mo>+</mo><mi>C</mi></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c3">
+      <div class="q-header">
+        <span class="q-num">Bài 3</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Tìm họ nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><msup><mrow><mo>(</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mn>4</mn></msup><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c3-0">
+        <input type="radio" name="ans-d1_c3" value="0" onchange="setMC(0, 'd1_c3', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>5</mn></mrow></mfrac><msup><mrow><mo>(</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mn>5</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c3-1">
+        <input type="radio" name="ans-d1_c3" value="1" onchange="setMC(0, 'd1_c3', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>2</mn></mrow><mrow><mn>5</mn></mrow></mfrac><msup><mrow><mo>(</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mn>5</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c3-2">
+        <input type="radio" name="ans-d1_c3" value="2" onchange="setMC(0, 'd1_c3', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>10</mn></mrow></mfrac><msup><mrow><mo>(</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mn>5</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c3-3">
+        <input type="radio" name="ans-d1_c3" value="3" onchange="setMC(0, 'd1_c3', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>10</mn><msup><mrow><mo>(</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mn>5</mn></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c3"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>⇒</mo><mtext>d</mtext><mi>u</mi><mo>=</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>⇒</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>⇒</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>. Khi đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><msup><mi>u</mi><mn>4</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>·</mo><mfrac><mrow><msup><mi>u</mi><mn>5</mn></msup></mrow><mrow><mn>5</mn></mrow></mfrac><mo>+</mo><mi>C</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>10</mn></mrow></mfrac><msup><mrow><mo>(</mo><mn>2</mn><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mn>5</mn></msup><mo>+</mo><mi>C</mi></math>. Chọn C.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c4">
+      <div class="q-header">
+        <span class="q-num">Bài 4</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>sin</mi><mi>x</mi><mo>·</mo><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c4-0">
+        <input type="radio" name="ans-d1_c4" value="0" onchange="setMC(0, 'd1_c4', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c4-1">
+        <input type="radio" name="ans-d1_c4" value="1" onchange="setMC(0, 'd1_c4', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>2</mn><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c4-2">
+        <input type="radio" name="ans-d1_c4" value="2" onchange="setMC(0, 'd1_c4', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c4-3">
+        <input type="radio" name="ans-d1_c4" value="3" onchange="setMC(0, 'd1_c4', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c4"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></math>. Lưu ý đạo hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>cos</mi><mi>x</mi><mo>)</mo></mrow><mo>'</mo><mo>=</mo><mo>-</mo><mi>sin</mi><mi>x</mi></math> để không nhầm dấu trừ!</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn><mo>⇒</mo><mtext>d</mtext><mi>u</mi><mo>=</mo><mo>-</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>⇒</mo><mi>sin</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>. Do đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>∫</mo><mi>sin</mi><mi>x</mi><mo>·</mo><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>e</mi><mi>u</mi></msup><mo>+</mo><mi>C</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>2</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mn>3</mn></mrow></msup><mo>+</mo><mi>C</mi></math>. Chọn D.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c5">
+      <div class="q-header">
+        <span class="q-num">Bài 5</span>
+        <span class="q-tag">DOK 3 – Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Tìm nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mfrac><mrow><mi>ln</mi><mi>x</mi><mo>·</mo><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> (với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>).</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c5-0">
+        <input type="radio" name="ans-d1_c5" value="0" onchange="setMC(0, 'd1_c5', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>3</mn></mrow><mrow><mn>8</mn></mrow></mfrac><mrow><mo>(</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi><mo>)</mo></mrow><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c5-1">
+        <input type="radio" name="ans-d1_c5" value="1" onchange="setMC(0, 'd1_c5', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>3</mn></mrow><mrow><mn>4</mn></mrow></mfrac><mrow><mo>(</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi><mo>)</mo></mrow><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c5-2">
+        <input type="radio" name="ans-d1_c5" value="2" onchange="setMC(0, 'd1_c5', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>3</mn></mrow><mrow><mn>8</mn></mrow></mfrac><mroot><mrow><msup><mrow><mo>(</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi><mo>)</mo></mrow><mn>2</mn></msup></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c5-3">
+        <input type="radio" name="ans-d1_c5" value="3" onchange="setMC(0, 'd1_c5', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>2</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mrow><mo>(</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi><mo>)</mo></mrow><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c5"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mo>⇒</mo><msup><mi>u</mi><mn>3</mn></msup><mo>=</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></math>, lấy vi phân hai vế để rút <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mi>ln</mi><mi>x</mi></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> theo <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>u</mi><mn>2</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mo>⇒</mo><msup><mi>u</mi><mn>3</mn></msup><mo>=</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi><mo>⇒</mo><mn>3</mn><msup><mi>u</mi><mn>2</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>2</mn><mi>ln</mi><mi>x</mi></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>⇒</mo><mfrac><mrow><mi>ln</mi><mi>x</mi></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac><msup><mi>u</mi><mn>2</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math>. Khi đó <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><msup><mi>u</mi><mn>3</mn></msup><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>8</mn></mrow></mfrac><msup><mi>u</mi><mn>4</mn></msup><mo>+</mo><mi>C</mi><mo>=</mo><mfrac><mrow><mn>3</mn></mrow><mrow><mn>8</mn></mrow></mfrac><mrow><mo>(</mo><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi><mo>)</mo></mrow><mroot><mrow><mn>2</mn><mo>+</mo><msup><mi>ln</mi><mn>2</mn></msup><mi>x</mi></mrow><mrow><mn>3</mn></mrow></mroot><mo>+</mo><mi>C</mi></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d1_c6">
+      <div class="q-header">
+        <span class="q-num">Bài 6</span>
+        <span class="q-tag">DOK 3 – Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Tìm nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mfrac><mrow><mrow><mo>(</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>-</mo><mn>3</mn><mo>)</mo></mrow><mi>cos</mi><mi>x</mi></mrow><mrow><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d1_c6-0">
+        <input type="radio" name="ans-d1_c6" value="0" onchange="setMC(0, 'd1_c6', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>sin</mi><mi>x</mi><mo>+</mo><mn>2</mn><mi>ln</mi><mo>|</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>|</mo><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c6-1">
+        <input type="radio" name="ans-d1_c6" value="1" onchange="setMC(0, 'd1_c6', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>sin</mi><mi>x</mi><mo>-</mo><mn>2</mn><mi>ln</mi><mo>|</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>|</mo><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c6-2">
+        <input type="radio" name="ans-d1_c6" value="2" onchange="setMC(0, 'd1_c6', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn><mi>sin</mi><mi>x</mi><mo>-</mo><mn>4</mn><mi>ln</mi><mo>|</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>|</mo><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d1_c6-3">
+        <input type="radio" name="ans-d1_c6" value="3" onchange="setMC(0, 'd1_c6', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>sin</mi><mi>x</mi><mo>-</mo><mi>ln</mi><mo>|</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>|</mo><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d1_c6"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>⇒</mo><mi>cos</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math> và biểu diễn <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn><mi>sin</mi><mi>x</mi><mo>-</mo><mn>3</mn><mo>=</mo><mi>u</mi><mo>-</mo><mn>4</mn></math>, sau đó chia tử cho mẫu.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Đặt <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>⇒</mo><mi>cos</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math> và <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>2</mn><mi>sin</mi><mi>x</mi><mo>-</mo><mn>3</mn><mo>=</mo><mi>u</mi><mo>-</mo><mn>4</mn></math>. Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><mrow><mo>(</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mn>4</mn></mrow><mrow><mi>u</mi></mrow></mfrac><mo>)</mo></mrow><mtext>d</mtext><mi>u</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mrow><mo>(</mo><mi>u</mi><mo>-</mo><mn>4</mn><mi>ln</mi><mo>|</mo><mi>u</mi><mo>|</mo><mo>)</mo></mrow><mo>+</mo><msub><mi>C</mi><mn>1</mn></msub><mo>=</mo><mi>sin</mi><mi>x</mi><mo>-</mo><mn>2</mn><mi>ln</mi><mo>|</mo><mn>2</mn><mi>sin</mi><mi>x</mi><mo>+</mo><mn>1</mn><mo>|</mo><mo>+</mo><mi>C</mi></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+        <!-- Slogan cổ vũ tinh thần khi hoàn thành hết bài tập của trang -->
+        <div class="slogan-banner" id="slogan-t-0">
+          <div class="slogan-icon">🏆</div>
+          <div class="slogan-text" id="slogan-text-0"></div>
+          <div class="slogan-sub" id="slogan-sub-0"></div>
+          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(0)">🎲 Luyện thêm bộ bài tương tự</button>
+            <button class="btn btn-primary" onclick="switchTopic(1)">Sang Dạng 2: Từng phần →</button>
+          </div>
+        </div>
+      </main>
+    
+
+      <main id="page-t-1" class="page-content ">
+        <div class="topic-banner">DẠNG 2. TÍNH NGUYÊN HÀM BẰNG PHƯƠNG PHÁP TỪNG PHẦN</div>
+
+        <div class="section-heading">I. Cách giải</div>
+        <div class="method-card"><p><strong>Khi nào dùng phương pháp này?</strong> Khi tính nguyên hàm của tích hai loại hàm số khác nhau (đa thức × hàm mũ, đa thức × lượng giác, đa thức × logarit, hàm mũ × lượng giác) hoặc hàm logarit đứng độc lập.</p><p><strong>• Bước 1 (Đưa vào dấu vi phân):</strong> Đưa biểu thức về dạng <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>∫</mo><mi>u</mi><mspace width="0.2em"/><mtext>d</mtext><mi>v</mi></math> theo thứ tự ưu tiên đưa vào dấu vi phân:</p><p><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mtext>Hàm mũ </mtext><mrow><mo>(</mo><msup><mi>e</mi><mrow><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow></msup><mo>)</mo></mrow><mspace width="0.9em"/><mo>⟶</mo><mspace width="0.9em"/><mtext>Lượng giác </mtext><mrow><mo>(</mo><mi>sin</mi><mo>,</mo><mi>cos</mi><mo>)</mo></mrow><mspace width="0.9em"/><mo>⟶</mo><mspace width="0.9em"/><mtext>Đa thức </mtext><mrow><mo>(</mo><mi>P</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>)</mo></mrow><mspace width="0.9em"/><mo>⟶</mo><mspace width="0.9em"/><mtext>Logarit </mtext><mrow><mo>(</mo><mi>ln</mi><mi>x</mi><mo>)</mo></mrow></math></p><p><em>(Hàm đứng trước trong dãy ưu tiên đưa vào dấu vi phân <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>v</mi></math>, hàm còn lại giữ nguyên làm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi></math>).</em></p><p><strong>• Bước 2 (Lắp công thức từng phần):</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mo>∫</mo><mi>u</mi><mspace width="0.2em"/><mtext>d</mtext><mi>v</mi><mo>=</mo><mi>u</mi><mo>·</mo><mi>v</mi><mo>-</mo><mo>∫</mo><mi>v</mi><mspace width="0.2em"/><mtext>d</mtext><mi>u</mi></math></p><p><strong>• Bước 3 (Tính toán):</strong> Khai triển <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mi>u</mi><mo>=</mo><mi>u</mi><mo>'</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>, tính nguyên hàm còn lại và rút gọn kết quả.</p></div>
+
+        <div class="section-heading">II. Ví dụ minh họa</div>
+        
+      <div class="example-card">
+        <div class="example-header">Ví dụ 1: Tìm họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mi>x</mi><mo>·</mo><msup><mi>e</mi><mi>x</mi></msup></math></div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>x</mi><mo>·</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p><strong>• Bước 1:</strong> Ưu tiên đưa hàm mũ <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>e</mi><mi>x</mi></msup></math> vào dấu vi phân (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mtext>d</mtext><mrow><mo>(</mo><msup><mi>e</mi><mi>x</mi></msup><mo>)</mo></mrow></math>): <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><msup><mi>e</mi><mi>x</mi></msup><mo>)</mo></mrow></math>.</p><p><strong>• Bước 2:</strong> Lắp công thức với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>u</mi><mo>=</mo><mi>x</mi><mo>,</mo><mi>v</mi><mo>=</mo><msup><mi>e</mi><mi>x</mi></msup></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mo>∫</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</p><p><strong>• Bước 3:</strong> Tính toán: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>I</mi><mo>=</mo><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math></p>
+          </details>
+        </div>
+      </div>
+    
+
+      <div class="example-card">
+        <div class="example-header">Ví dụ 2: Tìm họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>y</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mi>cos</mi><mi>x</mi></math></div>
+        <div class="example-body">
+          <div><strong>Đề bài:</strong> Tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>J</mi><mo>=</mo><mo>∫</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mi>cos</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+          <details class="example-details" open>
+            <summary>📖 Lời giải chi tiết (bấm để ẩn / hiện)</summary>
+            <p><strong>• Bước 1:</strong> Đưa lượng giác <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>cos</mi><mi>x</mi></math> vào dấu vi phân (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>cos</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mtext>d</mtext><mrow><mo>(</mo><mi>sin</mi><mi>x</mi><mo>)</mo></mrow></math>): <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>J</mi><mo>=</mo><mo>∫</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><mi>sin</mi><mi>x</mi><mo>)</mo></mrow></math>.</p><p><strong>• Bước 2:</strong> Lắp công thức: <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>J</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>-</mo><mo>∫</mo><mi>sin</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow></math>.</p><p><strong>• Bước 3:</strong> Với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mo>=</mo><mn>3</mn><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>: <math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mi>J</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>-</mo><mn>3</mn><mo>∫</mo><mi>sin</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>5</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>+</mo><mn>3</mn><mi>cos</mi><mi>x</mi><mo>+</mo><mi>C</mi></math></p>
+          </details>
+        </div>
+      </div>
+    
+
+        <div class="section-heading">III. Bài tập vận dụng</div>
+        <div class="practice-toolbar">
+          <span class="progress-pill" id="prog-t-1">Tiến độ: 0/6 câu</span>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(1)">🎲 Sinh bài tập tương tự</button>
+            <button class="btn btn-outline" id="btn-orig-1" style="display:none;" onclick="restoreOriginal(1)">↩️ Bài tập gốc</button>
+          </div>
+        </div>
+
+        <div id="ex-list-1">
+    <div class="q-card" id="card-d2_c1">
+      <div class="q-header">
+        <span class="q-num">Bài 1</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Họ nguyên hàm của hàm số <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>f</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>cos</mi><mi>x</mi></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c1-0">
+        <input type="radio" name="ans-d2_c1" value="0" onchange="setMC(1, 'd2_c1', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>-</mo><mi>cos</mi><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c1-1">
+        <input type="radio" name="ans-d2_c1" value="1" onchange="setMC(1, 'd2_c1', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>+</mo><mi>cos</mi><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c1-2">
+        <input type="radio" name="ans-d2_c1" value="2" onchange="setMC(1, 'd2_c1', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>+</mo><mi>cos</mi><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c1-3">
+        <input type="radio" name="ans-d2_c1" value="3" onchange="setMC(1, 'd2_c1', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>+</mo><mi>cos</mi><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c1"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>cos</mi><mi>x</mi></math> vào dấu vi phân thành <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mrow><mo>(</mo><mi>sin</mi><mi>x</mi><mo>)</mo></mrow></math>, chú ý <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mo>∫</mo><mi>sin</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mo>+</mo><mi>cos</mi><mi>x</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>∫</mo><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><mi>sin</mi><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>-</mo><mo>∫</mo><mi>sin</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mrow><mo>(</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><mi>sin</mi><mi>x</mi><mo>+</mo><mi>cos</mi><mi>x</mi><mo>+</mo><mi>C</mi></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c2">
+      <div class="q-header">
+        <span class="q-num">Bài 2</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Tính nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c2-0">
+        <input type="radio" name="ans-d2_c2" value="0" onchange="setMC(1, 'd2_c2', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c2-1">
+        <input type="radio" name="ans-d2_c2" value="1" onchange="setMC(1, 'd2_c2', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>5</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c2-2">
+        <input type="radio" name="ans-d2_c2" value="2" onchange="setMC(1, 'd2_c2', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c2-3">
+        <input type="radio" name="ans-d2_c2" value="3" onchange="setMC(1, 'd2_c2', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>2</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c2"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>e</mi><mi>x</mi></msup></math> vào dấu vi phân thành <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mtext>d</mtext><mrow><mo>(</mo><msup><mi>e</mi><mi>x</mi></msup><mo>)</mo></mrow></math> rồi tính <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>3</mn><mo>∫</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>3</mn><mo>∫</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>3</mn><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi><mo>=</mo><mrow><mo>(</mo><mn>3</mn><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c3">
+      <div class="q-header">
+        <span class="q-num">Bài 3</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Tìm họ nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> (với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>).</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c3-0">
+        <input type="radio" name="ans-d2_c3" value="0" onchange="setMC(1, 'd2_c3', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>+</mo><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn></mrow></mfrac><mo>-</mo><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c3-1">
+        <input type="radio" name="ans-d2_c3" value="1" onchange="setMC(1, 'd2_c3', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c3-2">
+        <input type="radio" name="ans-d2_c3" value="2" onchange="setMC(1, 'd2_c3', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>-</mo><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn></mrow></mfrac><mo>+</mo><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c3-3">
+        <input type="radio" name="ans-d2_c3" value="3" onchange="setMC(1, 'd2_c3', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>-</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>x</mi><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c3"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Theo thứ tự ưu tiên (Đa thức <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>→</mo></math> Loga), đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mrow><mo>(</mo><mn>2</mn><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mtext>d</mtext><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow></math> vào dấu vi phân.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>ln</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>-</mo><mo>∫</mo><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mo>·</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>x</mi></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>-</mo><mo>∫</mo><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mi>x</mi><mo>)</mo></mrow><mi>ln</mi><mi>x</mi><mo>-</mo><mfrac><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn></mrow></mfrac><mo>+</mo><mi>x</mi><mo>+</mo><mi>C</mi></math>. Chọn C.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c4">
+      <div class="q-header">
+        <span class="q-num">Bài 4</span>
+        <span class="q-tag">DOK 2 – Thông hiểu</span>
+      </div>
+      <div class="q-text">Nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> bằng:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c4-0">
+        <input type="radio" name="ans-d2_c4" value="0" onchange="setMC(1, 'd2_c4', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>9</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c4-1">
+        <input type="radio" name="ans-d2_c4" value="1" onchange="setMC(1, 'd2_c4', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>3</mn><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>-</mo><mn>9</mn><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c4-2">
+        <input type="radio" name="ans-d2_c4" value="2" onchange="setMC(1, 'd2_c4', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c4-3">
+        <input type="radio" name="ans-d2_c4" value="3" onchange="setMC(1, 'd2_c4', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>9</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c4"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mtext>d</mtext><mrow><mo>(</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>)</mo></mrow></math> vào dấu vi phân rồi lắp công thức từng phần.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>)</mo></mrow><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mo>∫</mo><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>3</mn></mrow></mfrac><mi>x</mi><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>9</mn></mrow></mfrac><msup><mi>e</mi><mrow><mn>3</mn><mi>x</mi></mrow></msup><mo>+</mo><mi>C</mi></math>. Chọn D.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c5">
+      <div class="q-header">
+        <span class="q-num">Bài 5</span>
+        <span class="q-tag">DOK 3 – Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Biết <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>∫</mo><msup><mi>x</mi><mn>2</mn></msup><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mrow><mo>(</mo><mi>a</mi><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mi>b</mi><mi>x</mi><mo>+</mo><mi>c</mi><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math>. Giá trị của <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mi>c</mi></math> là:</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c5-0">
+        <input type="radio" name="ans-d2_c5" value="0" onchange="setMC(1, 'd2_c5', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>1</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c5-1">
+        <input type="radio" name="ans-d2_c5" value="1" onchange="setMC(1, 'd2_c5', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>5</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c5-2">
+        <input type="radio" name="ans-d2_c5" value="2" onchange="setMC(1, 'd2_c5', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mn>1</mn></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c5-3">
+        <input type="radio" name="ans-d2_c5" value="3" onchange="setMC(1, 'd2_c5', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mn>3</mn></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c5"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Thực hiện nguyên hàm từng phần 2 lần liên tiếp (lần 1 đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>e</mi><mi>x</mi></msup></math> vào vi phân ra <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><msup><mi>x</mi><mn>2</mn></msup><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>2</mn><mo>∫</mo><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math>, lần 2 dùng kết quả Ví dụ 1).</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>2</mn><mo>∫</mo><mi>x</mi><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><msup><mi>e</mi><mi>x</mi></msup><mo>-</mo><mn>2</mn><mrow><mo>(</mo><mi>x</mi><mo>-</mo><mn>1</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi><mo>=</mo><mrow><mo>(</mo><msup><mi>x</mi><mn>2</mn></msup><mo>-</mo><mn>2</mn><mi>x</mi><mo>+</mo><mn>2</mn><mo>)</mo></mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></math>. Suy ra <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>a</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>b</mi><mo>=</mo><mo>-</mo><mn>2</mn><mo>,</mo><mi>c</mi><mo>=</mo><mn>2</mn><mo>⇒</mo><mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo>=</mo><mn>1</mn></math>. Chọn A.</p></div>
+        </details>
+      </div>
+    </div>
+  
+
+    <div class="q-card" id="card-d2_c6">
+      <div class="q-header">
+        <span class="q-num">Bài 6</span>
+        <span class="q-tag">DOK 3 – Vận dụng thấp</span>
+      </div>
+      <div class="q-text">Tìm họ nguyên hàm <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mfrac><mrow><mi>ln</mi><mi>x</mi></mrow><mrow><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi></math> (với <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>x</mi><mo>&gt;</mo><mn>0</mn></math>).</div>
+      <div class="options-grid">
+      <label class="opt-label" id="lbl-d2_c6-0">
+        <input type="radio" name="ans-d2_c6" value="0" onchange="setMC(1, 'd2_c6', 0)">
+        <span><strong>A.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mi>ln</mi><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c6-1">
+        <input type="radio" name="ans-d2_c6" value="1" onchange="setMC(1, 'd2_c6', 1)">
+        <span><strong>B.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>2</mn><mi>ln</mi><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c6-2">
+        <input type="radio" name="ans-d2_c6" value="2" onchange="setMC(1, 'd2_c6', 2)">
+        <span><strong>C.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>2</mn><mi>ln</mi><mi>x</mi><mo>-</mo><mn>1</mn></mrow><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    
+      <label class="opt-label" id="lbl-d2_c6-3">
+        <input type="radio" name="ans-d2_c6" value="3" onchange="setMC(1, 'd2_c6', 3)">
+        <span><strong>D.</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mo>-</mo><mfrac><mrow><mn>2</mn><mi>ln</mi><mi>x</mi><mo>-</mo><mn>1</mn></mrow><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>C</mi></math></span>
+      </label>
+    </div>
+      <div class="praise-toast" id="praise-d2_c6"></div>
+      <div class="q-drawers">
+        <details class="q-drawer q-drawer-hint">
+          <summary>💡 Gợi ý</summary>
+          <div class="drawer-body"><p>Đưa <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mfrac><mrow><mn>1</mn></mrow><mrow><msup><mi>x</mi><mn>3</mn></msup></mrow></mfrac><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mtext>d</mtext><mrow><mo>(</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>)</mo></mrow></math> vào dấu vi phân rồi áp dụng từng phần.</p></div>
+        </details>
+        <details class="q-drawer q-drawer-sol">
+          <summary>📖 Lời giải chi tiết</summary>
+          <div class="drawer-body"><p>Ta có <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline"><mi>I</mi><mo>=</mo><mo>∫</mo><mi>ln</mi><mi>x</mi><mspace width="0.2em"/><mtext>d</mtext><mrow><mo>(</mo><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>)</mo></mrow><mo>=</mo><mo>-</mo><mfrac><mrow><mi>ln</mi><mi>x</mi></mrow><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mo>∫</mo><msup><mi>x</mi><mrow><mo>-</mo><mn>3</mn></mrow></msup><mspace width="0.2em"/><mtext>d</mtext><mi>x</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mi>ln</mi><mi>x</mi></mrow><mrow><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>-</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>C</mi><mo>=</mo><mo>-</mo><mfrac><mrow><mn>2</mn><mi>ln</mi><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup></mrow></mfrac><mo>+</mo><mi>C</mi></math>. Chọn B.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+
+        <!-- Slogan cổ vũ tinh thần khi hoàn thành hết bài tập của trang -->
+        <div class="slogan-banner" id="slogan-t-1">
+          <div class="slogan-icon">🏆</div>
+          <div class="slogan-text" id="slogan-text-1"></div>
+          <div class="slogan-sub" id="slogan-sub-1"></div>
+          <div style="margin-top:12px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-accent" onclick="generateSimilar(1)">🎲 Luyện thêm bộ bài tương tự</button>
+            
+          </div>
+        </div>
+      </main>
+    
+
+  <footer>
+    Phiếu Bài Tập Theo Từng Dạng Bài • Thiết kế bởi Skill pbt_dangbai (GDPT 2018 – Công văn 5512 – Kết Nối Tri Thức)
+  </footer>
+</div>
+
+<!-- MODAL MẬT KHẨU GIÁO VIÊN (008397) -->
+<div id="modal-pass" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">🔒 Xác thực Giáo viên</div>
+      <button class="close-btn" onclick="closeModal('modal-pass')">&times;</button>
+    </div>
+    <p style="font-size:0.9rem; color:var(--gray-600); margin-bottom:10px;">Nhập mật khẩu giáo viên để xem kết quả luyện tập của học sinh.</p>
+    <input type="password" id="teacher-pass-input" inputmode="numeric" placeholder="Nhập mật khẩu..." style="width:100%; padding:10px 12px; min-height:44px; border:1.5px solid var(--gray-300); border-radius:7px; font-size:1rem;" onkeydown="if(event.key==='Enter') verifyTeacherPassword()">
+    <div id="pass-error" class="error-msg"></div>
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+      <button class="btn btn-outline btn-sm" onclick="closeModal('modal-pass')">Hủy</button>
+      <button class="btn btn-primary btn-sm" onclick="verifyTeacherPassword()">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CỔNG GIÁO VIÊN -->
+<div id="modal-teacher" class="modal-backdrop">
+  <div class="modal-box modal-wide">
+    <div class="modal-header">
+      <div class="modal-title">👩‍🏫 Bảng kết quả luyện tập theo Dạng bài</div>
+      <button class="close-btn" onclick="closeModal('modal-teacher')">&times;</button>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="btn btn-success btn-sm" onclick="exportCSV()">📊 Xuất bảng điểm Excel (.csv)</button>
+      <div class="btn btn-outline btn-sm file-btn-wrap">
+        <span>📂 Nhập / Gộp bài làm HS (.json)</span>
+        <input type="file" accept=".json" multiple onchange="importSubmissions(event)">
+      </div>
+      <button class="btn btn-danger btn-sm" onclick="clearAllSubmissions()">🗑️ Xóa tất cả</button>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead><tr><th>STT</th><th>Họ và tên</th><th>Lớp</th><th>Dạng bài</th><th>Kết quả</th><th>Thời gian</th></tr></thead>
+        <tbody id="teacher-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.remove('no-js');
+
+/* === DATA START === */
+const TOPICS_DATA = {"id":"pbt-dangbai-nguyen-ham-toan-12","grade":"Toán 12 • Chuyên đề Nguyên hàm","curriculum":"Chương trình GDPT 2018 • Công văn 5512/BGDĐT • Kết nối tri thức","title":"HƯỚNG DẪN TỰ HỌC: NGUYÊN HÀM ĐỔI BIẾN & TỪNG PHẦN","subtitle":"Luyện tập theo từng dạng bài — Phản hồi tức thì & Tự sinh bài tập tương tự trên điện thoại","topics":[{"id":"dang1","tabTitle":"Dạng 1: Đổi biến số","title":"DẠNG 1. TÍNH NGUYÊN HÀM BẰNG PHƯƠNG PHÁP ĐỔI BIẾN SỐ","method":["<strong>Khi nào dùng phương pháp này?</strong> Khi tính nguyên hàm của biểu thức hợp cồng kềnh (lũy thừa bậc cao, căn thức, hàm mũ, lượng giác, logarit mà lõi không phải là $x$ đơn thuần), cần đặt ẩn phụ $u = u(x)$ để đưa về dạng cơ bản $\\int f(u)\\,\\mathrm{d}u$.","<strong>• Bước 1:</strong> Đặt $u = u(x)$ (chọn biểu thức trong ngoặc lũy thừa cao, dưới dấu căn, trên số mũ hoặc biểu thức mà đạo hàm của nó xuất hiện ở phần còn lại).","<strong>• Bước 2:</strong> Tính vi phân $\\mathrm{d}u = u'(x)\\,\\mathrm{d}x$ và rút $\\mathrm{d}x$ (hoặc cụm $u'(x)\\,\\mathrm{d}x$) theo $\\mathrm{d}u$.","<strong>• Bước 3:</strong> Thay toàn bộ biểu thức sang biến mới $u$ và $\\mathrm{d}u$, tính nguyên hàm theo bảng nguyên hàm cơ bản.","<strong>• Bước 4:</strong> Thay ngược $u = u(x)$ trở lại biến $x$ ban đầu (nhớ cộng hằng số $C$)."],"examples":[{"title":"Ví dụ 1: Tìm họ nguyên hàm của hàm số $f(x) = \\sin(2x - 3)$","prompt":"Tính $I = \\int \\sin(2x - 3)\\,\\mathrm{d}x$.","solution":["<strong>• Bước 1:</strong> Đặt $u = 2x - 3$.","<strong>• Bước 2:</strong> Lấy vi phân hai vế: $\\mathrm{d}u = 2\\,\\mathrm{d}x \\Rightarrow \\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$.","<strong>• Bước 3:</strong> Thay vào nguyên hàm: $$I = \\int \\sin u \\cdot \\frac{1}{2}\\,\\mathrm{d}u = \\frac{1}{2}\\int \\sin u\\,\\mathrm{d}u = -\\frac{1}{2}\\cos u + C$$","<strong>• Bước 4:</strong> Thay ngược $u = 2x - 3$: $$I = -\\frac{1}{2}\\cos(2x - 3) + C$$"]},{"title":"Ví dụ 2: Tìm họ nguyên hàm của hàm số $y = x \\cdot e^{x^2 - 1}$","prompt":"Tính $J = \\int x \\cdot e^{x^2 - 1}\\,\\mathrm{d}x$.","solution":["<strong>• Bước 1:</strong> Đặt $u = x^2 - 1$ (biểu thức trên số mũ của $e$).","<strong>• Bước 2:</strong> Tính vi phân: $\\mathrm{d}u = 2x\\,\\mathrm{d}x \\Rightarrow x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$.","<strong>• Bước 3:</strong> Thay vào nguyên hàm: $$J = \\int e^u \\cdot \\frac{1}{2}\\,\\mathrm{d}u = \\frac{1}{2}e^u + C$$","<strong>• Bước 4:</strong> Thay ngược $u = x^2 - 1$: $$J = \\frac{1}{2}e^{x^2 - 1} + C$$"]}],"exercises":[{"id":"d1_c1","type":"mc","level":"DOK 2 – Thông hiểu","text":"Họ nguyên hàm của hàm số $f(x) = x(x^2 + 1)^3$ là:","options":["$\\frac{1}{8}(x^2 + 1)^4 + C$","$\\frac{1}{4}(x^2 + 1)^4 + C$","$4(x^2 + 1)^4 + C$","$\\frac{1}{2}(x^2 + 1)^4 + C$"],"correctIndex":0,"hint":"Đặt $u = x^2 + 1 \\Rightarrow \\mathrm{d}u = 2x\\,\\mathrm{d}x \\Rightarrow x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$, rồi tính $\\frac{1}{2}\\int u^3\\,\\mathrm{d}u$.","solution":"Đặt $u = x^2 + 1 \\Rightarrow x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$. Khi đó $\\int x(x^2 + 1)^3\\,\\mathrm{d}x = \\frac{1}{2}\\int u^3\\,\\mathrm{d}u = \\frac{1}{2} \\cdot \\frac{u^4}{4} + C = \\frac{1}{8}(x^2 + 1)^4 + C$. Chọn A."},{"id":"d1_c2","type":"mc","level":"DOK 2 – Thông hiểu","text":"Tính nguyên hàm $I = \\int (1 + \\ln x) \\cdot \\frac{1}{x}\\,\\mathrm{d}x$ (với $x > 0$).","options":["$(1 + \\ln x)^2 + C$","$\\frac{1}{2}(1 + \\ln x)^2 + C$","$\\ln|1 + \\ln x| + C$","$\\frac{1}{x^2}(1 + \\ln x)^2 + C$"],"correctIndex":1,"hint":"Nhận xét đạo hàm của $1 + \\ln x$ chính là $\\frac{1}{x}$. Hãy đặt $u = 1 + \\ln x$.","solution":"Đặt $u = 1 + \\ln x \\Rightarrow \\mathrm{d}u = \\frac{1}{x}\\,\\mathrm{d}x$. Khi đó $I = \\int u\\,\\mathrm{d}u = \\frac{u^2}{2} + C = \\frac{1}{2}(1 + \\ln x)^2 + C$. Chọn B."},{"id":"d1_c3","type":"mc","level":"DOK 2 – Thông hiểu","text":"Tìm họ nguyên hàm $I = \\int (2e^x - 1)^4 e^x\\,\\mathrm{d}x$.","options":["$\\frac{1}{5}(2e^x - 1)^5 + C$","$\\frac{2}{5}(2e^x - 1)^5 + C$","$\\frac{1}{10}(2e^x - 1)^5 + C$","$10(2e^x - 1)^5 + C$"],"correctIndex":2,"hint":"Đặt $u = 2e^x - 1 \\Rightarrow \\mathrm{d}u = 2e^x\\,\\mathrm{d}x \\Rightarrow e^x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$.","solution":"Đặt $u = 2e^x - 1 \\Rightarrow e^x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$. Khi đó $I = \\frac{1}{2}\\int u^4\\,\\mathrm{d}u = \\frac{1}{2} \\cdot \\frac{u^5}{5} + C = \\frac{1}{10}(2e^x - 1)^5 + C$. Chọn C."},{"id":"d1_c4","type":"mc","level":"DOK 2 – Thông hiểu","text":"Họ nguyên hàm của hàm số $f(x) = \\sin x \\cdot e^{2\\cos x + 3}$ là:","options":["$\\frac{1}{2}e^{2\\cos x + 3} + C$","$-2e^{2\\cos x + 3} + C$","$-e^{2\\cos x + 3} + C$","$-\\frac{1}{2}e^{2\\cos x + 3} + C$"],"correctIndex":3,"hint":"Đặt $u = 2\\cos x + 3$. Lưu ý đạo hàm $(\\cos x)' = -\\sin x$ để không nhầm dấu trừ!","solution":"Đặt $u = 2\\cos x + 3 \\Rightarrow \\mathrm{d}u = -2\\sin x\\,\\mathrm{d}x \\Rightarrow \\sin x\\,\\mathrm{d}x = -\\frac{1}{2}\\,\\mathrm{d}u$. Do đó $\\int \\sin x \\cdot e^{2\\cos x + 3}\\,\\mathrm{d}x = -\\frac{1}{2}e^u + C = -\\frac{1}{2}e^{2\\cos x + 3} + C$. Chọn D."},{"id":"d1_c5","type":"mc","level":"DOK 3 – Vận dụng thấp","text":"Tìm nguyên hàm $I = \\int \\frac{\\ln x \\cdot \\sqrt[3]{2 + \\ln^2 x}}{x}\\,\\mathrm{d}x$ (với $x > 0$).","options":["$\\frac{3}{8}(2 + \\ln^2 x)\\sqrt[3]{2 + \\ln^2 x} + C$","$\\frac{3}{4}(2 + \\ln^2 x)\\sqrt[3]{2 + \\ln^2 x} + C$","$\\frac{3}{8}\\sqrt[3]{(2 + \\ln^2 x)^2} + C$","$\\frac{2}{3}(2 + \\ln^2 x)\\sqrt[3]{2 + \\ln^2 x} + C$"],"correctIndex":0,"hint":"Đặt $u = \\sqrt[3]{2 + \\ln^2 x} \\Rightarrow u^3 = 2 + \\ln^2 x$, lấy vi phân hai vế để rút $\\frac{\\ln x}{x}\\,\\mathrm{d}x$ theo $u^2\\,\\mathrm{d}u$.","solution":"Đặt $u = \\sqrt[3]{2 + \\ln^2 x} \\Rightarrow u^3 = 2 + \\ln^2 x \\Rightarrow 3u^2\\,\\mathrm{d}u = \\frac{2\\ln x}{x}\\,\\mathrm{d}x \\Rightarrow \\frac{\\ln x}{x}\\,\\mathrm{d}x = \\frac{3}{2}u^2\\,\\mathrm{d}u$. Khi đó $I = \\frac{3}{2}\\int u^3\\,\\mathrm{d}u = \\frac{3}{8}u^4 + C = \\frac{3}{8}(2 + \\ln^2 x)\\sqrt[3]{2 + \\ln^2 x} + C$. Chọn A."},{"id":"d1_c6","type":"mc","level":"DOK 3 – Vận dụng thấp","text":"Tìm nguyên hàm $I = \\int \\frac{(2\\sin x - 3)\\cos x}{2\\sin x + 1}\\,\\mathrm{d}x$.","options":["$\\sin x + 2\\ln|2\\sin x + 1| + C$","$\\sin x - 2\\ln|2\\sin x + 1| + C$","$2\\sin x - 4\\ln|2\\sin x + 1| + C$","$\\sin x - \\ln|2\\sin x + 1| + C$"],"correctIndex":1,"hint":"Đặt $u = 2\\sin x + 1 \\Rightarrow \\cos x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$ và biểu diễn $2\\sin x - 3 = u - 4$, sau đó chia tử cho mẫu.","solution":"Đặt $u = 2\\sin x + 1 \\Rightarrow \\cos x\\,\\mathrm{d}x = \\frac{1}{2}\\,\\mathrm{d}u$ và $2\\sin x - 3 = u - 4$. Ta có $I = \\frac{1}{2}\\int \\left(1 - \\frac{4}{u}\\right)\\mathrm{d}u = \\frac{1}{2}(u - 4\\ln|u|) + C_1 = \\sin x - 2\\ln|2\\sin x + 1| + C$. Chọn B."}],"generatorCode":"function(rInt, rPick, rShuffle, fmtTerm) { var res = []; var a1 = rInt(1, 5), n1 = rInt(2, 5), d1 = 2 * (n1 + 1); var o1 = rShuffle([{t:'$\\\\frac{1}{'+d1+'}(x^2 + '+a1+')^'+(n1+1)+' + C$',ok:true},{t:'$\\\\frac{1}{'+(n1+1)+'}(x^2 + '+a1+')^'+(n1+1)+' + C$',ok:false},{t:'$'+d1+'(x^2 + '+a1+')^'+(n1+1)+' + C$',ok:false},{t:'$\\\\frac{1}{2}(x^2 + '+a1+')^'+(n1+1)+' + C$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Họ nguyên hàm của hàm số $f(x) = x(x^2 + '+a1+')^'+n1+'$ là:', options:o1.map(function(x){return x.t;}), correctIndex:o1.findIndex(function(x){return x.ok;}), hint:'Đặt $u = x^2 + '+a1+' \\\\Rightarrow x\\\\,\\\\mathrm{d}x = \\\\frac{1}{2}\\\\,\\\\mathrm{d}u$.', solution:'Đặt $u = x^2 + '+a1+'$. Ta có $\\\\frac{1}{2}\\\\int u^'+n1+'\\\\,\\\\mathrm{d}u = \\\\frac{1}{'+d1+'}(x^2 + '+a1+')^'+(n1+1)+' + C$.' }); var a2 = rInt(2, 4), b2 = rPick([-3, -1, 1, 3]), n2 = rInt(2, 4), d2 = a2 * (n2 + 1); var expr2 = a2 + 'e^x ' + fmtTerm(b2, '', false); var o2 = rShuffle([{t:'$\\\\frac{1}{'+d2+'}('+expr2+')^'+(n2+1)+' + C$',ok:true},{t:'$\\\\frac{1}{'+(n2+1)+'}('+expr2+')^'+(n2+1)+' + C$',ok:false},{t:'$\\\\frac{'+a2+'}{'+(n2+1)+'}('+expr2+')^'+(n2+1)+' + C$',ok:false},{t:'$'+d2+'('+expr2+')^'+(n2+1)+' + C$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Tìm họ nguyên hàm $I = \\\\int ('+expr2+')^'+n2+' e^x\\\\,\\\\mathrm{d}x$.', options:o2.map(function(x){return x.t;}), correctIndex:o2.findIndex(function(x){return x.ok;}), hint:'Đặt $u = '+expr2+' \\\\Rightarrow e^x\\\\,\\\\mathrm{d}x = \\\\frac{1}{'+a2+'}\\\\,\\\\mathrm{d}u$.', solution:'Ta có $I = \\\\frac{1}{'+a2+'}\\\\int u^'+n2+'\\\\,\\\\mathrm{d}u = \\\\frac{1}{'+d2+'}('+expr2+')^'+(n2+1)+' + C$.' }); var a3 = rInt(2, 5), b3 = rInt(1, 4); var exp3 = a3 + '\\\\cos x + ' + b3; var o3 = rShuffle([{t:'$-\\\\frac{1}{'+a3+'}e^{'+exp3+'} + C$',ok:true},{t:'$\\\\frac{1}{'+a3+'}e^{'+exp3+'} + C$',ok:false},{t:'$-'+a3+'e^{'+exp3+'} + C$',ok:false},{t:'$-e^{'+exp3+'} + C$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Họ nguyên hàm của hàm số $f(x) = \\\\sin x \\\\cdot e^{'+exp3+'}$ là:', options:o3.map(function(x){return x.t;}), correctIndex:o3.findIndex(function(x){return x.ok;}), hint:'Đặt $u = '+exp3+' \\\\Rightarrow \\\\sin x\\\\,\\\\mathrm{d}x = -\\\\frac{1}{'+a3+'}\\\\,\\\\mathrm{d}u$.', solution:'Đặt $u = '+exp3+' \\\\Rightarrow I = -\\\\frac{1}{'+a3+'}\\\\int e^u\\\\,\\\\mathrm{d}u = -\\\\frac{1}{'+a3+'}e^{'+exp3+'} + C$.' }); var n4 = rInt(3, 7), ans4 = 2 * (n4 + 1); res.push({ type:'short', level:'Tự sinh (Trả lời ngắn)', text:'Biết $\\\\int x(x^2 + 3)^'+n4+'\\\\,\\\\mathrm{d}x = \\\\frac{1}{m}(x^2 + 3)^'+(n4+1)+' + C$. Giá trị của số nguyên $m$ bằng bao nhiêu?', answer:String(ans4), tol:0.001, hint:'Đặt $u = x^2 + 3 \\\\Rightarrow x\\\\,\\\\mathrm{d}x = \\\\frac{1}{2}\\\\,\\\\mathrm{d}u$, từ đó suy ra $m = 2 \\\\cdot '+(n4+1)+'$.', solution:'Ta có $\\\\frac{1}{2}\\\\int u^'+n4+'\\\\,\\\\mathrm{d}u = \\\\frac{1}{'+ans4+'}u^'+(n4+1)+' + C \\\\Rightarrow m = '+ans4+'$.' }); return res; }"},{"id":"dang2","tabTitle":"Dạng 2: Từng phần","title":"DẠNG 2. TÍNH NGUYÊN HÀM BẰNG PHƯƠNG PHÁP TỪNG PHẦN","method":["<strong>Khi nào dùng phương pháp này?</strong> Khi tính nguyên hàm của tích hai loại hàm số khác nhau (đa thức × hàm mũ, đa thức × lượng giác, đa thức × logarit, hàm mũ × lượng giác) hoặc hàm logarit đứng độc lập.","<strong>• Bước 1 (Đưa vào dấu vi phân):</strong> Đưa biểu thức về dạng $\\int u\\,\\mathrm{d}v$ theo thứ tự ưu tiên đưa vào dấu vi phân:","$$\\text{Hàm mũ } (e^{ax+b}) \\quad\\longrightarrow\\quad \\text{Lượng giác } (\\sin, \\cos) \\quad\\longrightarrow\\quad \\text{Đa thức } (P(x)) \\quad\\longrightarrow\\quad \\text{Logarit } (\\ln x)$$","<em>(Hàm đứng trước trong dãy ưu tiên đưa vào dấu vi phân $\\mathrm{d}v$, hàm còn lại giữ nguyên làm $u$).</em>","<strong>• Bước 2 (Lắp công thức từng phần):</strong> $$\\int u\\,\\mathrm{d}v = u \\cdot v - \\int v\\,\\mathrm{d}u$$","<strong>• Bước 3 (Tính toán):</strong> Khai triển $\\mathrm{d}u = u'(x)\\,\\mathrm{d}x$, tính nguyên hàm còn lại và rút gọn kết quả."],"examples":[{"title":"Ví dụ 1: Tìm họ nguyên hàm của hàm số $f(x) = x \\cdot e^x$","prompt":"Tính $I = \\int x \\cdot e^x\\,\\mathrm{d}x$.","solution":["<strong>• Bước 1:</strong> Ưu tiên đưa hàm mũ $e^x$ vào dấu vi phân ($e^x\\,\\mathrm{d}x = \\mathrm{d}(e^x)$): $I = \\int x\\,\\mathrm{d}(e^x)$.","<strong>• Bước 2:</strong> Lắp công thức với $u = x, v = e^x$: $I = x e^x - \\int e^x\\,\\mathrm{d}x$.","<strong>• Bước 3:</strong> Tính toán: $$I = x e^x - e^x + C = (x - 1)e^x + C$$"]},{"title":"Ví dụ 2: Tìm họ nguyên hàm của hàm số $y = (3x - 5)\\cos x$","prompt":"Tính $J = \\int (3x - 5)\\cos x\\,\\mathrm{d}x$.","solution":["<strong>• Bước 1:</strong> Đưa lượng giác $\\cos x$ vào dấu vi phân ($\\cos x\\,\\mathrm{d}x = \\mathrm{d}(\\sin x)$): $J = \\int (3x - 5)\\,\\mathrm{d}(\\sin x)$.","<strong>• Bước 2:</strong> Lắp công thức: $J = (3x - 5)\\sin x - \\int \\sin x\\,\\mathrm{d}(3x - 5)$.","<strong>• Bước 3:</strong> Với $\\mathrm{d}(3x - 5) = 3\\,\\mathrm{d}x$: $$J = (3x - 5)\\sin x - 3\\int \\sin x\\,\\mathrm{d}x = (3x - 5)\\sin x + 3\\cos x + C$$"]}],"exercises":[{"id":"d2_c1","type":"mc","level":"DOK 2 – Thông hiểu","text":"Họ nguyên hàm của hàm số $f(x) = (x + 1)\\cos x$ là:","options":["$(x + 1)\\sin x - \\cos x + C$","$(x + 1)\\sin x + \\cos x + C$","$(x - 1)\\sin x + \\cos x + C$","$-(x + 1)\\sin x + \\cos x + C$"],"correctIndex":1,"hint":"Đưa $\\cos x$ vào dấu vi phân thành $\\mathrm{d}(\\sin x)$, chú ý $-\\int \\sin x\\,\\mathrm{d}x = +\\cos x$.","solution":"Ta có $\\int (x + 1)\\,\\mathrm{d}(\\sin x) = (x + 1)\\sin x - \\int \\sin x\\,\\mathrm{d}x = (x + 1)\\sin x + \\cos x + C$. Chọn B."},{"id":"d2_c2","type":"mc","level":"DOK 2 – Thông hiểu","text":"Tính nguyên hàm $I = \\int (3x + 2)e^x\\,\\mathrm{d}x$.","options":["$(3x - 1)e^x + C$","$(3x + 5)e^x + C$","$(3x + 1)e^x + C$","$(3x - 2)e^x + C$"],"correctIndex":0,"hint":"Đưa $e^x$ vào dấu vi phân thành $\\mathrm{d}(e^x)$ rồi tính $(3x + 2)e^x - 3\\int e^x\\,\\mathrm{d}x$.","solution":"Ta có $I = (3x + 2)e^x - 3\\int e^x\\,\\mathrm{d}x = (3x + 2)e^x - 3e^x + C = (3x - 1)e^x + C$. Chọn A."},{"id":"d2_c3","type":"mc","level":"DOK 2 – Thông hiểu","text":"Tìm họ nguyên hàm $I = \\int (2x - 1)\\ln x\\,\\mathrm{d}x$ (với $x > 0$).","options":["$(x^2 - x)\\ln x + \\frac{x^2}{2} - x + C$","$(x^2 - x)\\ln x - x^2 + x + C$","$(x^2 - x)\\ln x - \\frac{x^2}{2} + x + C$","$(2x - 1)\\ln x - x^2 + x + C$"],"correctIndex":2,"hint":"Theo thứ tự ưu tiên (Đa thức $\\to$ Loga), đưa $(2x - 1)\\,\\mathrm{d}x = \\mathrm{d}(x^2 - x)$ vào dấu vi phân.","solution":"Ta có $I = \\int \\ln x\\,\\mathrm{d}(x^2 - x) = (x^2 - x)\\ln x - \\int (x^2 - x)\\cdot \\frac{1}{x}\\,\\mathrm{d}x = (x^2 - x)\\ln x - \\int (x - 1)\\,\\mathrm{d}x = (x^2 - x)\\ln x - \\frac{x^2}{2} + x + C$. Chọn C."},{"id":"d2_c4","type":"mc","level":"DOK 2 – Thông hiểu","text":"Nguyên hàm $I = \\int x e^{3x}\\,\\mathrm{d}x$ bằng:","options":["$\\frac{1}{3}x e^{3x} + \\frac{1}{9}e^{3x} + C$","$3x e^{3x} - 9e^{3x} + C$","$\\frac{1}{3}x e^{3x} - \\frac{1}{3}e^{3x} + C$","$\\frac{1}{3}x e^{3x} - \\frac{1}{9}e^{3x} + C$"],"correctIndex":3,"hint":"Đưa $e^{3x}\\,\\mathrm{d}x = \\mathrm{d}\\left(\\frac{1}{3}e^{3x}\\right)$ vào dấu vi phân rồi lắp công thức từng phần.","solution":"Ta có $I = \\int x\\,\\mathrm{d}\\left(\\frac{1}{3}e^{3x}\\right) = \\frac{1}{3}x e^{3x} - \\frac{1}{3}\\int e^{3x}\\,\\mathrm{d}x = \\frac{1}{3}x e^{3x} - \\frac{1}{9}e^{3x} + C$. Chọn D."},{"id":"d2_c5","type":"mc","level":"DOK 3 – Vận dụng thấp","text":"Biết $\\int x^2 e^x\\,\\mathrm{d}x = (ax^2 + bx + c)e^x + C$. Giá trị của $a + b + c$ là:","options":["$1$","$5$","$-1$","$3$"],"correctIndex":0,"hint":"Thực hiện nguyên hàm từng phần 2 lần liên tiếp (lần 1 đưa $e^x$ vào vi phân ra $x^2 e^x - 2\\int x e^x\\,\\mathrm{d}x$, lần 2 dùng kết quả Ví dụ 1).","solution":"Ta có $I = x^2 e^x - 2\\int x e^x\\,\\mathrm{d}x = x^2 e^x - 2(x - 1)e^x + C = (x^2 - 2x + 2)e^x + C$. Suy ra $a = 1, b = -2, c = 2 \\Rightarrow a + b + c = 1$. Chọn A."},{"id":"d2_c6","type":"mc","level":"DOK 3 – Vận dụng thấp","text":"Tìm họ nguyên hàm $I = \\int \\frac{\\ln x}{x^3}\\,\\mathrm{d}x$ (với $x > 0$).","options":["$-\\frac{\\ln x + 1}{2x^2} + C$","$-\\frac{2\\ln x + 1}{4x^2} + C$","$\\frac{2\\ln x - 1}{4x^2} + C$","$-\\frac{2\\ln x - 1}{4x^2} + C$"],"correctIndex":1,"hint":"Đưa $\\frac{1}{x^3}\\,\\mathrm{d}x = \\mathrm{d}\\left(-\\frac{1}{2x^2}\\right)$ vào dấu vi phân rồi áp dụng từng phần.","solution":"Ta có $I = \\int \\ln x\\,\\mathrm{d}\\left(-\\frac{1}{2x^2}\\right) = -\\frac{\\ln x}{2x^2} + \\frac{1}{2}\\int x^{-3}\\,\\mathrm{d}x = -\\frac{\\ln x}{2x^2} - \\frac{1}{4x^2} + C = -\\frac{2\\ln x + 1}{4x^2} + C$. Chọn B."}],"generatorCode":"function(rInt, rPick, rShuffle, fmtTerm) { var res = []; var a1 = rInt(2, 5), b1 = rInt(1, 6), c1 = b1 - a1; var res1 = a1 + 'x ' + fmtTerm(c1, '', false); var w1 = a1 + 'x ' + fmtTerm(b1 + a1, '', false); var w2 = a1 + 'x ' + fmtTerm(b1, '', false); var w3 = a1 + 'x ' + fmtTerm(c1 - 1, '', false); var o1 = rShuffle([{t:'$('+res1+')e^x + C$',ok:true},{t:'$('+w1+')e^x + C$',ok:false},{t:'$('+w2+')e^x + C$',ok:false},{t:'$('+w3+')e^x + C$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Tính nguyên hàm $I = \\\\int ('+a1+'x + '+b1+')e^x\\\\,\\\\mathrm{d}x$.', options:o1.map(function(x){return x.t;}), correctIndex:o1.findIndex(function(x){return x.ok;}), hint:'Đưa $e^x$ vào dấu vi phân thành $\\\\mathrm{d}(e^x)$ rồi tính $('+a1+'x + '+b1+')e^x - '+a1+'\\\\int e^x\\\\,\\\\mathrm{d}x$.', solution:'Ta có $I = ('+a1+'x + '+b1+')e^x - '+a1+'e^x + C = ('+res1+')e^x + C$.' }); var a2 = rInt(2, 6); var o2 = rShuffle([{t:'$(x + '+a2+')\\\\sin x + \\\\cos x + C$',ok:true},{t:'$(x + '+a2+')\\\\sin x - \\\\cos x + C$',ok:false},{t:'$(x - '+a2+')\\\\sin x + \\\\cos x + C$',ok:false},{t:'$-(x + '+a2+')\\\\sin x + \\\\cos x + C$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Họ nguyên hàm của hàm số $f(x) = (x + '+a2+')\\\\cos x$ là:', options:o2.map(function(x){return x.t;}), correctIndex:o2.findIndex(function(x){return x.ok;}), hint:'Đưa $\\\\cos x\\\\,\\\\mathrm{d}x = \\\\mathrm{d}(\\\\sin x)$ vào dấu vi phân rồi áp dụng từng phần.', solution:'Ta có $\\\\int (x + '+a2+')\\\\,\\\\mathrm{d}(\\\\sin x) = (x + '+a2+')\\\\sin x - \\\\int \\\\sin x\\\\,\\\\mathrm{d}x = (x + '+a2+')\\\\sin x + \\\\cos x + C$.' }); var a3 = rInt(2, 5), a3sq = a3 * a3; var o3 = rShuffle([{t:'$\\\\frac{1}{'+a3+'}x e^{'+a3+'x} - \\\\frac{1}{'+a3sq+'}e^{'+a3+'x} + C$',ok:true},{t:'$\\\\frac{1}{'+a3+'}x e^{'+a3+'x} + \\\\frac{1}{'+a3sq+'}e^{'+a3+'x} + C$',ok:false},{t:'$'+a3+'x e^{'+a3+'x} - '+a3sq+'e^{'+a3+'x} + C$',ok:false},{t:'$\\\\frac{1}{'+a3+'}x e^{'+a3+'x} - \\\\frac{1}{'+a3+'}e^{'+a3+'x} + C$',ok:false}]); res.push({ type:'mc', level:'Tự sinh (Thông hiểu)', text:'Nguyên hàm $I = \\\\int x e^{'+a3+'x}\\\\,\\\\mathrm{d}x$ bằng:', options:o3.map(function(x){return x.t;}), correctIndex:o3.findIndex(function(x){return x.ok;}), hint:'Đưa $e^{'+a3+'x}\\\\,\\\\mathrm{d}x = \\\\mathrm{d}\\\\left(\\\\frac{1}{'+a3+'}e^{'+a3+'x}\\\\right)$ vào dấu vi phân.', solution:'Ta có $I = \\\\frac{1}{'+a3+'}x e^{'+a3+'x} - \\\\frac{1}{'+a3+'}\\\\int e^{'+a3+'x}\\\\,\\\\mathrm{d}x = \\\\frac{1}{'+a3+'}x e^{'+a3+'x} - \\\\frac{1}{'+a3sq+'}e^{'+a3+'x} + C$.' }); var a4 = rInt(2, 6), b4 = rInt(1, 8); res.push({ type:'short', level:'Tự sinh (Trả lời ngắn)', text:'Biết $\\\\int ('+a4+'x + '+b4+')e^x\\\\,\\\\mathrm{d}x = (mx + n)e^x + C$. Tính tổng $S = m + n$.', answer:String(b4), tol:0.001, hint:'Dùng từng phần tìm ra $m = '+a4+'$ và $n = '+b4+' - '+a4+'$, sau đó cộng $m + n$.', solution:'Ta có $I = ('+a4+'x ' + fmtTerm(b4 - a4, '', false) + ')e^x + C \\\\Rightarrow m = '+a4+', n = '+(b4 - a4)+' \\\\Rightarrow S = m + n = '+b4+'$.' }); return res; }"}]};
+/* === DATA END === */
+
+const TEACHER_PASS = "008397";
+const STORAGE_KEY = "pbtdangbai_subs_" + (TOPICS_DATA.id || "default");
+
+// Kho lời khích lệ khi học sinh làm ĐÚNG 1 câu (hiện trên nền màu XANH)
+const PRAISE_MESSAGES = [
+  "🎉 Xuất sắc! Em nắm rất chắc dạng bài này rồi đấy!",
+  "🌟 Chuẩn không cần chỉnh! Tiếp tục giữ vững phong độ nhé!",
+  "👏 Tuyệt vời! Tư duy giải toán của em rất sắc bén!",
+  "🔥 Quá đỉnh! Một bước tiến cực kỳ vững chắc!",
+  "💪 Chính xác 100%! Thầy Hưng rất tự hào về em!",
+  "✨ Quá hay! Cứ đà này em sẽ chinh phục mọi bài khó!",
+  "🎯 Trúng phóc! Làm toán chuẩn sách giáo khoa luôn!"
+];
+
+// Kho câu động viên khi học sinh làm SAI 1 câu (hiện trên nền màu ĐỎ)
+const ENCOURAGE_MESSAGES = [
+  "💪 Đừng nản nhé! Sai một chút là chuyện bình thường — em thử xem 💡 Gợi ý rồi chọn lại đáp án chuẩn nào!",
+  "❤️ Cố lên em! Mình kiểm tra lại phép tính hoặc bấm 💡 Gợi ý để tìm ra hướng giải đúng nhé!",
+  "🌱 Không sao cả, mỗi lần sai là một lần nhớ kỹ hơn! Thử chọn lại câu trả lời khác xem sao em nhé!",
+  "🔥 Suýt nữa thì đúng rồi! Em bấm 💡 Gợi ý để xem mẹo làm nhanh rồi thử lại ngay nhé!"
+];
+
+// Kho Slogan cổ vũ tinh thần khi hoàn thành HẾT bài tập của một trang (1 dạng bài)
+const COMPLETION_SLOGANS = [
+  "🚀 ĐỈNH CAO! Em đã chinh phục trọn vẹn dạng bài này — Không có bài toán nào khó với người kiên trì!",
+  "🏆 TUYỆT ĐỈNH TOÁN HỌC! Hoàn thành xuất sắc — Hôm nay em đã giỏi hơn chính mình ngày hôm qua!",
+  "✨ CHIẾN THẮNG RỰC RỠ! Chinh phục xong dạng này, tự tin bước sang thử thách tiếp theo nhé!",
+  "🌟 XUẤT SẮC VƯỢT BẬC! Kiến thức vững vàng, tương lai rộng mở — Cố lên chiến binh Toán học!"
+];
+
+// Active exercises per topic index (starts with original exercises, replaced when student clicks "Sinh bài tập tương tự")
+let activeExercises = (TOPICS_DATA.topics || []).map(function(t) { return (t.exercises || []).slice(); });
+let userAnswers = {};      // { [qId]: val }
+let checkedStatus = {};    // { [tIdx]: { [qId]: true/false } }
+let memorySubs = [];
+
+// =========================================================
+// MATHML CORE PARSER (Cho các bài tập tự sinh hiển thị chuẩn trên điện thoại)
+// =========================================================
+function parseTexInner(tex) {
+  var s = String(tex || '').trim();
+  s = s.replace(/\\left\s*([\(\[\|])/g, '$1').replace(/\\right\s*([\)\]\|])/g, '$1');
+  function findBrace(str, openIdx) {
+    if (str[openIdx] !== '{') return -1;
+    var depth = 0;
+    for (var i = openIdx; i < str.length; i++) {
+      if (str[i] === '{') depth++;
+      else if (str[i] === '}') { depth--; if (depth === 0) return i; }
+    }
+    return -1;
+  }
+  function tokenizePlain(chunk) {
+    var out = '', i = 0;
+    while (i < chunk.length) {
+      var ch = chunk[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      if (/\d/.test(ch)) {
+        var j = i;
+        while (j < chunk.length && /[\d,.]/.test(chunk[j])) {
+          if ((chunk[j] === ',' || chunk[j] === '.') && !/\d/.test(chunk[j + 1] || '')) break;
+          j++;
+        }
+        out += '<mn>' + chunk.slice(i, j) + '</mn>'; i = j; continue;
+      }
+      if (/[a-zA-Z]/.test(ch)) { out += '<mi>' + ch + '</mi>'; i++; continue; }
+      var esc = ch === '<' ? '&lt;' : (ch === '>' ? '&gt;' : (ch === '&' ? '&amp;' : ch));
+      out += '<mo>' + esc + '</mo>'; i++;
+    }
+    return out;
+  }
+  function parseSeq(str) {
+    var items = [], i = 0, n = str.length;
+    var symMap = {
+      'infty': '<mi>∞</mi>', 'Leftrightarrow': '<mo>⇔</mo>', 'iff': '<mo>⇔</mo>',
+      'Rightarrow': '<mo>⇒</mo>', 'implies': '<mo>⇒</mo>', 'to': '<mo>→</mo>',
+      'rightarrow': '<mo>→</mo>', 'setminus': '<mo>\\</mo>', 'neq': '<mo>≠</mo>',
+      'ge': '<mo>≥</mo>', 'geq': '<mo>≥</mo>', 'le': '<mo>≤</mo>', 'leq': '<mo>≤</mo>',
+      'pm': '<mo>±</mo>', 'cdot': '<mo>·</mo>', 'times': '<mo>×</mo>',
+      'in': '<mo>∈</mo>', 'notin': '<mo>∉</mo>', 'subset': '<mo>⊂</mo>',
+      'cup': '<mo>∪</mo>', 'cap': '<mo>∩</mo>', 'Delta': '<mi>Δ</mi>', 'pi': '<mi>π</mi>',
+      'dots': '<mo>…</mo>', 'ldots': '<mo>…</mo>', 'approx': '<mo>≈</mo>',
+      'quad': '<mspace width="0.9em"/>', 'max': '<mtext>max</mtext>', 'min': '<mtext>min</mtext>',
+      'circ': '<mo>°</mo>', 'sum': '<mo>∑</mo>',
+      'int': '<mo>∫</mo>', 'longrightarrow': '<mo>⟶</mo>',
+      'sin': '<mi>sin</mi>', 'cos': '<mi>cos</mi>', 'tan': '<mi>tan</mi>',
+      'cot': '<mi>cot</mi>', 'ln': '<mi>ln</mi>', 'log': '<mi>log</mi>'
+    };
+    var bbMap = { R: 'ℝ', N: 'ℕ', Z: 'ℤ', Q: 'ℚ', C: 'ℂ' };
+    function readArg() {
+      while (i < n && /\s/.test(str[i])) i++;
+      if (i >= n) return '<mrow></mrow>';
+      if (str[i] === '{') {
+        var end = findBrace(str, i);
+        if (end !== -1) { var inner = str.slice(i + 1, end); i = end + 1; return '<mrow>' + parseSeq(inner).join('') + '</mrow>'; }
+      }
+      if (str[i] === '\\') {
+        var m = str.slice(i + 1).match(/^[a-zA-Z]+/);
+        if (m) { var cmd = m[0]; i += 1 + cmd.length; return symMap[cmd] || ('<mo>' + cmd + '</mo>'); }
+      }
+      return tokenizePlain(str[i++]);
+    }
+    while (i < n) {
+      var ch = str[i];
+      if (/\s/.test(ch)) { i++; continue; }
+      if (ch === '(' || ch === '[') {
+        var closeCh = ch === '(' ? ')' : ']';
+        var depth = 0, j = i;
+        for (; j < n; j++) { if (str[j] === ch) depth++; else if (str[j] === closeCh) { depth--; if (depth === 0) break; } }
+        if (j < n && str[j] === closeCh) { items.push('<mrow><mo>' + ch + '</mo>' + parseSeq(str.slice(i + 1, j)).join('') + '<mo>' + closeCh + '</mo></mrow>'); i = j + 1; continue; }
+      }
+      if (ch === '{') {
+        var end = findBrace(str, i);
+        if (end !== -1) { items.push('<mrow>' + parseSeq(str.slice(i + 1, end)).join('') + '</mrow>'); i = end + 1; continue; }
+      }
+      if (ch === '^' || ch === '_') {
+        var isSup = ch === '^'; i++;
+        var arg = readArg();
+        var base = items.length ? items.pop() : '<mrow></mrow>';
+        items.push(isSup ? ('<msup>' + base + arg + '</msup>') : ('<msub>' + base + arg + '</msub>'));
+        continue;
+      }
+      if (ch === '\\') {
+        if (str[i + 1] === '{' || str[i + 1] === '}' || str[i + 1] === '%') { items.push('<mo>' + str[i + 1] + '</mo>'); i += 2; continue; }
+        if (str[i + 1] === ',' || str[i + 1] === ';' || str[i + 1] === ':' || str[i + 1] === ' ') { items.push('<mspace width="0.2em"/>'); i += 2; continue; }
+        var m = str.slice(i + 1).match(/^[a-zA-Z]+/);
+        if (!m) { i++; continue; }
+        var cmd = m[0]; i += 1 + cmd.length;
+        if (cmd === 'overline' || cmd === 'bar') { items.push('<mover>' + readArg() + '<mo>¯</mo></mover>'); continue; }
+        if (cmd === 'mathrm' || cmd === 'text') {
+          while (i < n && /\s/.test(str[i])) i++;
+          var endRm = findBrace(str, i); var rmTxt = endRm !== -1 ? str.slice(i + 1, endRm) : ''; i = endRm !== -1 ? endRm + 1 : i;
+          items.push('<mtext>' + rmTxt + '</mtext>'); continue;
+        }
+        if (cmd === 'frac' || cmd === 'dfrac' || cmd === 'tfrac') { items.push('<mfrac>' + readArg() + readArg() + '</mfrac>'); continue; }
+        if (cmd === 'sqrt') {
+          while (i < n && /\s/.test(str[i])) i++;
+          if (str[i] === '[') { var ci = str.indexOf(']', i); var ri = str.slice(i + 1, ci); i = ci + 1; items.push('<mroot>' + readArg() + '<mrow>' + parseSeq(ri).join('') + '</mrow></mroot>'); }
+          else items.push('<msqrt>' + readArg() + '</msqrt>');
+          continue;
+        }
+        if (cmd === 'lim') {
+          while (i < n && /\s/.test(str[i])) i++;
+          if (str[i] === '_') { i++; items.push('<munder><mo>lim</mo>' + readArg() + '</munder>'); }
+          else items.push('<mo>lim</mo>');
+          continue;
+        }
+        if (cmd === 'vec' || cmd === 'overrightarrow') { items.push('<mover>' + readArg() + '<mo>→</mo></mover>'); continue; }
+        if (cmd === 'mathbb') {
+          while (i < n && /\s/.test(str[i])) i++;
+          var eb = findBrace(str, i); var cs = eb !== -1 ? str.slice(i + 1, eb).trim() : ''; i = eb !== -1 ? eb + 1 : i;
+          items.push('<mi>' + (bbMap[cs] || cs) + '</mi>'); continue;
+        }
+        if (symMap[cmd]) { items.push(symMap[cmd]); continue; }
+        items.push('<mo>' + cmd + '</mo>'); continue;
+      }
+      if (/\d/.test(ch)) {
+        var j2 = i; while (j2 < n && /[\d,.]/.test(str[j2])) { if ((str[j2] === ',' || str[j2] === '.') && !/\d/.test(str[j2 + 1] || '')) break; j2++; }
+        items.push('<mn>' + str.slice(i, j2) + '</mn>'); i = j2; continue;
+      }
+      if (/[a-zA-Z]/.test(ch)) { items.push('<mi>' + ch + '</mi>'); i++; continue; }
+      var esc2 = ch === '<' ? '&lt;' : (ch === '>' ? '&gt;' : (ch === '&' ? '&amp;' : ch));
+      items.push('<mo>' + esc2 + '</mo>'); i++;
+    }
+    return items;
+  }
+  return parseSeq(s).join('');
+}
+
+function renderMathInHtml(text) {
+  if (!text) return '';
+  var res = String(text);
+  res = res.replace(/\$\$([\s\S]+?)\$\$/g, function(_, tex) { return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">' + parseTexInner(tex) + '</math>'; });
+  res = res.replace(/\$([^\$]+?)\$/g, function(_, tex) { return '<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline">' + parseTexInner(tex) + '</math>'; });
+  return res;
+}
+
+function renderParagraphs(val) {
+  if (Array.isArray(val)) return val.map(function(p) { return '<p>' + renderMathInHtml(p) + '</p>'; }).join('');
+  return '<p>' + renderMathInHtml(val) + '</p>';
+}
+
+// Clean sign helper passed into topic.generatorCode
+function fmtTerm(coeff, varName, isFirst) {
+  if (coeff === 0) return '';
+  var sign = coeff > 0 ? (isFirst ? '' : '+ ') : (isFirst ? '-' : '- ');
+  var abs = Math.abs(coeff);
+  var numStr = (abs === 1 && varName) ? '' : String(abs);
+  return sign + numStr + (varName || '');
+}
+
+// =========================================================
+// CHUYỂN TRANG DẠNG BÀI & LUYỆN TẬP
+// =========================================================
+function switchTopic(idx) {
+  (TOPICS_DATA.topics || []).forEach(function(_, i) {
+    var p = document.getElementById('page-t-' + i);
+    var tb = document.getElementById('tab-t-' + i);
+    if (p) p.classList.toggle('active', i === idx);
+    if (tb) tb.classList.toggle('active', i === idx);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setMC(tIdx, qId, oIdx) {
+  userAnswers[qId] = oIdx;
+  document.querySelectorAll('[id^="lbl-' + qId + '-"]').forEach(function(el) { el.classList.remove('selected'); });
+  var el = document.getElementById('lbl-' + qId + '-' + oIdx);
+  if (el) el.classList.add('selected');
+  // Phản hồi ngay lập tức khi học sinh bấm chọn phương án (không cần bấm nút kiểm tra!)
+  checkOne(tIdx, qId, true);
+}
+
+function setShort(tIdx, qId, val) {
+  userAnswers[qId] = String(val || '').trim();
+}
+
+function setMultiShort(tIdx, qId, fIdx, val) {
+  if (!userAnswers[qId] || typeof userAnswers[qId] !== 'object') userAnswers[qId] = {};
+  userAnswers[qId][fIdx] = String(val || '').trim();
+}
+
+function checkMultiField(tIdx, qId, fIdx) {
+  var list = activeExercises[tIdx] || [];
+  var q = list.find(function(x) { return x.id === qId; });
+  if (!q || !q.fields || !q.fields[fIdx]) return;
+  var f = q.fields[fIdx];
+  var raw = (userAnswers[qId] && userAnswers[qId][fIdx]) ? userAnswers[qId][fIdx] : '';
+  if (!raw) return;
+  var uNum = parseMathNumber(raw), tNum = parseMathNumber(f.answer);
+  var tol = f.tol !== undefined ? f.tol : 0.015;
+  var ok = (!isNaN(uNum) && !isNaN(tNum)) ? (Math.abs(uNum - tNum) <= tol) : (raw.toLowerCase() === String(f.answer).trim().toLowerCase());
+  var inp = document.getElementById('inp-' + qId + '-' + fIdx);
+  if (inp) { inp.classList.remove('is-correct', 'is-wrong'); inp.classList.add(ok ? 'is-correct' : 'is-wrong'); }
+
+  // Check if all fields in this question have been filled -> trigger instant green/red banner!
+  var filledCount = 0;
+  q.fields.forEach(function(_, i) {
+    if (userAnswers[qId] && userAnswers[qId][i]) filledCount++;
+  });
+  if (filledCount === q.fields.length) {
+    checkOne(tIdx, qId, true);
+  }
+}
+
+function parseMathNumber(raw) {
+  if (raw === undefined || raw === null) return NaN;
+  var s = String(raw).trim().replace(/,/g, '.').replace(/\s+/g, '');
+  if (!s) return NaN;
+  if (s.indexOf('/') !== -1) {
+    var p = s.split('/');
+    if (p.length === 2) { var a = parseFloat(p[0]), b = parseFloat(p[1]); if (!isNaN(a) && !isNaN(b) && b !== 0) return a / b; }
+    return NaN;
+  }
+  return parseFloat(s);
+}
+
+// Kiểm tra 1 câu -> nếu ĐÚNG thì hiện ngay LỜI ĐỘNG VIÊN!
+function checkOne(tIdx, qId, silent) {
+  var list = activeExercises[tIdx] || [];
+  var q = list.find(function(x) { return x.id === qId; });
+  if (!q) return false;
+
+  var isRight = false;
+  var card = document.getElementById('card-' + qId);
+  if (card) card.classList.remove('correct', 'incorrect');
+
+  if (q.type === 'mc') {
+    var chosen = userAnswers[qId];
+    if (chosen === undefined) return false;
+    isRight = chosen === q.correctIndex;
+    (q.options || []).forEach(function(_, oIdx) {
+      var lbl = document.getElementById('lbl-' + qId + '-' + oIdx);
+      if (!lbl) return;
+      lbl.classList.remove('is-correct', 'is-wrong');
+      if (isRight && oIdx === q.correctIndex) lbl.classList.add('is-correct');
+      else if (!isRight && chosen === oIdx) lbl.classList.add('is-wrong');
+    });
+  } else if (q.type === 'multi_short') {
+    var ansMap = userAnswers[qId] || {};
+    var rightFields = 0;
+    var filledFields = 0;
+    (q.fields || []).forEach(function(f, fIdx) {
+      var rawF = ansMap[fIdx] || '';
+      if (rawF) filledFields++;
+      var uNumF = parseMathNumber(rawF), tNumF = parseMathNumber(f.answer);
+      var tolF = f.tol !== undefined ? f.tol : 0.015;
+      var fOk = rawF && ((!isNaN(uNumF) && !isNaN(tNumF)) ? (Math.abs(uNumF - tNumF) <= tolF) : (rawF.toLowerCase() === String(f.answer).trim().toLowerCase()));
+      if (fOk) rightFields++;
+      var inpF = document.getElementById('inp-' + qId + '-' + fIdx);
+      if (inpF) { inpF.classList.remove('is-correct', 'is-wrong'); if (rawF) inpF.classList.add(fOk ? 'is-correct' : 'is-wrong'); }
+    });
+    if (filledFields === 0) return false;
+    isRight = (rightFields === (q.fields || []).length);
+  } else {
+    var raw = userAnswers[qId] || '';
+    if (!raw) return false;
+    var uNum = parseMathNumber(raw), tNum = parseMathNumber(q.answer);
+    var tol = q.tol !== undefined ? q.tol : 1e-3;
+    if (!isNaN(uNum) && !isNaN(tNum)) isRight = Math.abs(uNum - tNum) <= tol;
+    else isRight = raw.toLowerCase() === String(q.answer).trim().toLowerCase();
+    var inp = document.getElementById('inp-' + qId);
+    if (inp) { inp.classList.remove('is-correct', 'is-wrong'); inp.classList.add(isRight ? 'is-correct' : 'is-wrong'); }
+  }
+
+  if (card) card.classList.add(isRight ? 'correct' : 'incorrect');
+
+  // Phản hồi tức thì: ĐÚNG -> nền XANH + câu khích lệ; SAI -> nền ĐỎ + câu động viên
+  var toast = document.getElementById('praise-' + qId);
+  if (toast) {
+    toast.classList.remove('show-ok', 'show-err');
+    if (isRight) {
+      var msg = PRAISE_MESSAGES[Math.floor(Math.random() * PRAISE_MESSAGES.length)];
+      toast.innerText = msg;
+      toast.classList.add('show-ok');
+    } else {
+      var enc = ENCOURAGE_MESSAGES[Math.floor(Math.random() * ENCOURAGE_MESSAGES.length)];
+      toast.innerText = enc;
+      toast.classList.add('show-err');
+    }
+  }
+
+  if (!checkedStatus[tIdx]) checkedStatus[tIdx] = {};
+  checkedStatus[tIdx][qId] = isRight;
+  updateTopicProgress(tIdx);
+  return isRight;
+}
+
+function checkTopicAll(tIdx) {
+  var list = activeExercises[tIdx] || [];
+  list.forEach(function(q) { checkOne(tIdx, q.id, true); });
+  saveStudentTopicRecord(tIdx);
+}
+
+// Cập nhật tiến độ & hiện SLOGAN CỔ VŨ TINH THẦN khi hoàn thành hết bài tập ở 1 trang
+function updateTopicProgress(tIdx) {
+  var list = activeExercises[tIdx] || [];
+  var st = checkedStatus[tIdx] || {};
+  var doneCount = Object.keys(st).length;
+  var okCount = Object.keys(st).filter(function(k) { return st[k]; }).length;
+
+  var pill = document.getElementById('prog-t-' + tIdx);
+  if (pill) pill.innerText = 'Tiến độ: ' + doneCount + '/' + list.length + ' câu (Đúng ' + okCount + ')';
+
+  var sloganBox = document.getElementById('slogan-t-' + tIdx);
+  if (sloganBox && list.length > 0 && doneCount >= list.length) {
+    var slogan = COMPLETION_SLOGANS[tIdx % COMPLETION_SLOGANS.length];
+    document.getElementById('slogan-text-' + tIdx).innerText = slogan;
+    document.getElementById('slogan-sub-' + tIdx).innerText =
+      'Em đã hoàn thành hết ' + list.length + '/' + list.length + ' bài tập vận dụng của trang này (Đúng ' + okCount + '/' + list.length + ' câu)!';
+    sloganBox.classList.add('show');
+    saveStudentTopicRecord(tIdx);
+  }
+}
+
+// =========================================================
+// PHÍM TỰ SINH BÀI TẬP TƯƠNG TỰ CHO TỪNG DẠNG BÀI
+// =========================================================
+function renderDynamicExercises(tIdx, list) {
+  var wrap = document.getElementById('ex-list-' + tIdx);
+  if (!wrap) return;
+  var letters = ['A', 'B', 'C', 'D'];
+  wrap.innerHTML = list.map(function(q, qIdx) {
+    var bodyInput = '';
+    if (q.type === 'mc') {
+      bodyInput = '<div class="options-grid">' + (q.options || []).map(function(opt, oIdx) {
+        return '<label class="opt-label" id="lbl-' + q.id + '-' + oIdx + '">' +
+          '<input type="radio" name="ans-' + q.id + '" value="' + oIdx + '" onchange="setMC(' + tIdx + ', \'' + q.id + '\', ' + oIdx + ')">' +
+          '<span><strong>' + letters[oIdx] + '.</strong> ' + renderMathInHtml(opt) + '</span></label>';
+      }).join('') + '</div>';
+    } else if (q.type === 'multi_short') {
+      bodyInput = '<div class="multi-grid">' + (q.fields || []).map(function(f, fIdx) {
+        return '<div class="multi-field"><label for="inp-' + q.id + '-' + fIdx + '">' + renderMathInHtml(f.label) + '</label>' +
+          '<input type="text" inputmode="decimal" class="short-input multi-input" id="inp-' + q.id + '-' + fIdx + '" placeholder="..." oninput="setMultiShort(' + tIdx + ', \'' + q.id + '\', ' + fIdx + ', this.value)" onchange="setMultiShort(' + tIdx + ', \'' + q.id + '\', ' + fIdx + ', this.value); checkMultiField(' + tIdx + ', \'' + q.id + '\', ' + fIdx + ')" onkeydown="if(event.key===\'Enter\') checkMultiField(' + tIdx + ', \'' + q.id + '\', ' + fIdx + ')"></div>';
+      }).join('') + '</div><div style="margin-bottom:8px;"><button class="btn btn-primary btn-sm" onclick="checkOne(' + tIdx + ', \'' + q.id + '\', true)">Kiểm tra đáp số</button></div>';
+    } else {
+      bodyInput = '<div class="short-row"><label for="inp-' + q.id + '"><strong>Đáp số:</strong></label>' +
+        '<input type="text" class="short-input" id="inp-' + q.id + '" placeholder="Nhập số..." oninput="setShort(' + tIdx + ', \'' + q.id + '\', this.value)" onchange="setShort(' + tIdx + ', \'' + q.id + '\', this.value); checkOne(' + tIdx + ', \'' + q.id + '\', true)" onkeydown="if(event.key===\'Enter\') checkOne(' + tIdx + ', \'' + q.id + '\', true)">' +
+        '<button class="btn btn-primary btn-sm" onclick="checkOne(' + tIdx + ', \'' + q.id + '\', true)">Trả lời</button></div>';
+    }
+    return '<div class="q-card" id="card-' + q.id + '">' +
+      '<div class="q-header"><span class="q-num">Bài ' + (qIdx + 1) + '</span><span class="q-tag">' + (q.level || 'Tự sinh luyện tập') + '</span></div>' +
+      '<div class="q-text">' + renderMathInHtml(q.text) + '</div>' +
+      bodyInput +
+      '<div class="praise-toast" id="praise-' + q.id + '"></div>' +
+      '<div class="q-drawers">' +
+        '<details class="q-drawer q-drawer-hint"><summary>💡 Gợi ý</summary><div class="drawer-body">' + renderParagraphs(q.hint) + '</div></details>' +
+        '<details class="q-drawer q-drawer-sol"><summary>📖 Lời giải chi tiết</summary><div class="drawer-body">' + renderParagraphs(q.solution) + '</div></details>' +
+      '</div></div>';
+  }).join('');
+}
+
+function generateSimilar(tIdx) {
+  var topic = (TOPICS_DATA.topics || [])[tIdx];
+  if (!topic || !topic.generatorCode) return;
+
+  var rInt = function(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; };
+  var rPick = function(arr) { return arr[Math.floor(Math.random() * arr.length)]; };
+  var rShuffle = function(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  };
+
+  try {
+    var genFn = new Function('rInt', 'rPick', 'rShuffle', 'fmtTerm', 'return (' + topic.generatorCode + ')(rInt, rPick, rShuffle, fmtTerm);');
+    var generated = genFn(rInt, rPick, rShuffle, fmtTerm);
+    if (!Array.isArray(generated) || !generated.length) throw new Error('Bộ sinh không trả về bài tập.');
+    var stamp = Date.now().toString(36);
+    generated.forEach(function(q, i) { q.id = 'gen_' + tIdx + '_' + stamp + '_' + i; });
+
+    activeExercises[tIdx] = generated;
+    checkedStatus[tIdx] = {};
+    var sloganBox = document.getElementById('slogan-t-' + tIdx);
+    if (sloganBox) sloganBox.classList.remove('show');
+    var origBtn = document.getElementById('btn-orig-' + tIdx);
+    if (origBtn) origBtn.style.display = 'inline-flex';
+
+    renderDynamicExercises(tIdx, generated);
+    updateTopicProgress(tIdx);
+  } catch (e) {
+    alert('Lỗi khi sinh bài tập tương tự: ' + e.message);
+  }
+}
+
+function restoreOriginal(tIdx) {
+  var topic = (TOPICS_DATA.topics || [])[tIdx];
+  if (!topic) return;
+  activeExercises[tIdx] = (topic.exercises || []).slice();
+  checkedStatus[tIdx] = {};
+  var sloganBox = document.getElementById('slogan-t-' + tIdx);
+  if (sloganBox) sloganBox.classList.remove('show');
+  var origBtn = document.getElementById('btn-orig-' + tIdx);
+  if (origBtn) origBtn.style.display = 'none';
+  renderDynamicExercises(tIdx, activeExercises[tIdx]);
+  updateTopicProgress(tIdx);
+}
+
+// =========================================================
+// LƯU KẾT QUẢ & CỔNG GIÁO VIÊN (MẬT KHẨU: 008397)
+// =========================================================
+function loadSubmissions() {
+  try { var r = window.localStorage.getItem(STORAGE_KEY); if (r) { memorySubs = JSON.parse(r); return memorySubs; } } catch (e) {}
+  return memorySubs;
+}
+function saveSubmissions(list) {
+  memorySubs = list;
+  try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch (e) {}
+}
+
+function saveStudentTopicRecord(tIdx) {
+  var name = (document.getElementById('stu-name').value || '').trim() || 'Học sinh ẩn danh';
+  var cls = (document.getElementById('stu-class').value || '').trim() || 'Chưa ghi lớp';
+  var topic = (TOPICS_DATA.topics || [])[tIdx];
+  var list = activeExercises[tIdx] || [];
+  var st = checkedStatus[tIdx] || {};
+  var ok = Object.keys(st).filter(function(k) { return st[k]; }).length;
+  var subs = loadSubmissions();
+  subs.push({
+    name: name, className: cls,
+    topicTitle: topic ? (topic.tabTitle || topic.title) : ('Dạng ' + (tIdx + 1)),
+    correct: ok, total: list.length,
+    time: new Date().toLocaleString('vi-VN')
+  });
+  saveSubmissions(subs);
+}
+
+function downloadMyProgress() {
+  var subs = loadSubmissions();
+  var blob = new Blob([JSON.stringify(subs, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'BaiLam_' + (TOPICS_DATA.id || 'pbt') + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function openPasswordModal() {
+  document.getElementById('teacher-pass-input').value = '';
+  document.getElementById('pass-error').innerText = '';
+  document.getElementById('modal-pass').classList.add('show');
+  setTimeout(function() { document.getElementById('teacher-pass-input').focus(); }, 80);
+}
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+function verifyTeacherPassword() {
+  if (document.getElementById('teacher-pass-input').value.trim() === TEACHER_PASS) {
+    closeModal('modal-pass');
+    renderTeacherTable();
+    document.getElementById('modal-teacher').classList.add('show');
+  } else {
+    document.getElementById('pass-error').innerText = 'Mật khẩu không chính xác!';
+  }
+}
+function renderTeacherTable() {
+  var subs = loadSubmissions();
+  var tb = document.getElementById('teacher-table-body');
+  if (!subs.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#64748b;padding:14px;">Chưa có dữ liệu học sinh.</td></tr>'; return; }
+  tb.innerHTML = subs.map(function(s, i) {
+    return '<tr><td>' + (i + 1) + '</td><td><strong>' + s.name + '</strong></td><td>' + s.className + '</td><td>' + s.topicTitle + '</td><td><strong>' + s.correct + '/' + s.total + '</strong></td><td>' + s.time + '</td></tr>';
+  }).join('');
+}
+function exportCSV() {
+  var subs = loadSubmissions();
+  if (!subs.length) { alert('Chưa có dữ liệu!'); return; }
+  var header = 'STT,Ho_va_ten,Lop,Dang_bai,Ket_qua,Thoi_gian';
+  var rows = subs.map(function(s, i) { return [i + 1, '"' + s.name + '"', '"' + s.className + '"', '"' + s.topicTitle + '"', '"' + s.correct + '/' + s.total + '"', '"' + s.time + '"'].join(','); });
+  var blob = new Blob(['\uFEFF' + [header].concat(rows).join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a'); a.href = url; a.download = 'BangDiem_' + (TOPICS_DATA.id || 'pbt') + '.csv'; a.click(); URL.revokeObjectURL(url);
+}
+function importSubmissions(event) {
+  var files = Array.prototype.slice.call(event.target.files || []);
+  var subs = loadSubmissions(), done = 0;
+  files.forEach(function(f) {
+    var r = new FileReader();
+    r.onload = function(e) {
+      try { var d = JSON.parse(e.target.result); if (Array.isArray(d)) subs = subs.concat(d); else if (d && d.name) subs.push(d); } catch (err) {}
+      if (++done === files.length) { saveSubmissions(subs); renderTeacherTable(); event.target.value = ''; }
+    };
+    r.readAsText(f, 'UTF-8');
+  });
+}
+function clearAllSubmissions() {
+  if (confirm('Xóa toàn bộ kết quả đã lưu?')) { saveSubmissions([]); renderTeacherTable(); }
+}
+</script>
+</body>
+</html>
